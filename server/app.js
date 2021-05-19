@@ -1,6 +1,6 @@
 const app = require('express')()
 const cors = require('cors')
-
+require('./db')
 const routes = require('./routes')
 
 app.use(cors())
