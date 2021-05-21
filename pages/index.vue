@@ -71,7 +71,7 @@
             Nuxt GitHub
           </a>
         </v-card-text>
-        {{ helo.message }}
+        {{ helo }}
         <v-card-actions>
           <v-spacer />
           <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>

@@ -1,42 +1,38 @@
-// 6c09159c-a967-4b7e-90b5-36e32187d636
-const mongoose = require('mongoose')
+/* eslint-disable no-console */
 
-// require chalk module to give colors to console text
+const MongoClient = require('mongodb').MongoClient
 const chalk = require('chalk')
+const url = process.env.MONGODB_URL
 
-const connected = chalk.bold.cyan
-const error = chalk.bold.yellow
-const disconnected = chalk.bold.red
-const termination = chalk.bold.magenta
+const dbName = process.env.DATABASE_NAME
 
-// export this function and imported by server.js
+class Connection {
+  constructor() {
+    this.db = null
+    this.uri = url
+  }
 
-mongoose.connect(process.env.MongodbURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+  connect() {
+    if (this.db) {
+      return Promise.resolve(this.db)
+    } else {
+      return MongoClient.connect(this.uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        poolSize: 10,
+        forceServerObjectId: true,
+        serializeFunctions: true,
+      })
+        .then((client) => {
+          this.db = client.db(dbName)
+          console.log(chalk.green('connected'))
+          return this.db
+        })
+        .catch((err) => {
+          console.log(chalk.red(err))
+        })
+    }
+  }
+}
 
-mongoose.connection.on('connected', function () {
-  console.log(connected('Mongoose default connection is open to '))
-})
-
-mongoose.connection.on('error', function (err) {
-  console.log(
-    error('Mongoose default connection has occured ' + err + ' error')
-  )
-})
-
-mongoose.connection.on('disconnected', function () {
-  console.log(disconnected('Mongoose default connection is disconnected'))
-})
-
-process.on('SIGINT', function () {
-  mongoose.connection.close(function () {
-    console.log(
-      termination(
-        'Mongoose default connection is disconnected due to application termination'
-      )
-    )
-    process.exit(0)
-  })
-})
+module.exports = new Connection()
