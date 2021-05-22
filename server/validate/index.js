@@ -58,9 +58,7 @@ const passwordChangeRules = () => {
 
 /**
  * determine if rules was pass to validate ,this method will check if request complete the requirement
- * @param {Object} req
- * @param {Object} res
- * @param {Object} next
+ *
  */
 const validate = (req, res, next) => {
   const errors = validationResult(req)

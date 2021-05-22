@@ -2,41 +2,44 @@ const express = require('express')
 
 const db = require('../db').db
 const { generateToken } = require('../utilities/auth')
-const passwordHash = require('../utilities/passwordHash').passwordHash()
+const { passwordHash } = require('../utilities/passwordHash')
 const { loginRules, registrationRules, validate } = require('../validate')
+const auth = require('../middleware/auth')
+const guest = require('../middleware/guest')
 const router = express.Router()
 
 /**
  * route for registration authenticate
  *
- * @param {express.Request} req
- * @param {express.Response} res
- *
  */
-router.post('/register', registrationRules(), validate, async (req, res) => {
-  const { password, email } = req.body
-  try {
-    const user = await db.collection('users').insertOne({
-      email,
-      password: passwordHash(password),
-      rules: ['costumer'],
-      created_at: new Date(),
-      updated_at: new Date(),
-    })
-    return res.json({ token: generateToken(user) })
-  } catch (err) {
-    return res.status(500).json({ message: 'Internal server error' })
+router.post(
+  '/register',
+  guest,
+  registrationRules(),
+  validate,
+  async (req, res) => {
+    const { password, email } = req.body
+    try {
+      const user = await db.collection('users').insertOne({
+        email,
+        password: passwordHash(password),
+        rules: ['costumer'],
+        created_at: new Date(),
+        updated_at: new Date(),
+      })
+      return res.json({ token: generateToken(user) })
+    } catch (err) {
+      return res.status(500).json({ message: 'Internal server error' })
+    }
   }
-})
+)
 
 /**
  * route for login authenticate
  *
- * @param {express.Response} req
- * @param {express.Request} res
  *
  */
-router.post('/login', loginRules(), validate, async (req, res) => {
+router.post('/login', guest, loginRules(), validate, async (req, res) => {
   const { email, password } = req.body
 
   try {
@@ -64,7 +67,7 @@ router.post('/login', loginRules(), validate, async (req, res) => {
  *  @param {express.Response} res
  *
  */
-router.post('refresh-token', (req, res) => {
+router.post('refresh-token', auth, (req, res) => {
   return res.json({
     token: generateToken(req.user),
   })
@@ -76,7 +79,9 @@ router.post('refresh-token', (req, res) => {
  * @param {express.Response} res
  *
  */
-router.get('/me', (req, res) => {})
+router.get('/me', auth, (req, res) => {
+  return res.json({ user: null })
+})
 
 /**
  * router for user to log out from the app
@@ -85,6 +90,8 @@ router.get('/me', (req, res) => {})
  * @param {express.Response} res
  *
  */
-router.post('/logout', (req, res) => {})
+router.post('/logout', (req, res) => {
+  return res.json({ message: 'logout ' })
+})
 
 module.exports = router
