@@ -1,13 +1,24 @@
 /* eslint-disable no-console */
 const { body, validationResult } = require('express-validator')
-
+const db = require('../db').db
 /**
  * specific rules for authenticate registration request
  *
  */
 const registrationRules = () => {
   return [
-    body('email').not().isEmpty().isEmail().normalizeEmail(),
+    body('email')
+      .not()
+      .isEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .custom(async (value) => {
+        const user = await db.collection('users').findOne({ email: value })
+        if (user) {
+          throw new Error('email already is use')
+        }
+        return true
+      }),
     body('password').not().isEmpty().isLength({ min: 8, max: 20 }),
     // @see https://express-validator.github.io/docs/custom-validators-sanitizers.html#example-checking-if-password-confirmation-matches-password
     body('passwordConfirmation').custom((value, { req }) => {
