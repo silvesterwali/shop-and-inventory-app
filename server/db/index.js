@@ -3,7 +3,6 @@
 const MongoClient = require('mongodb').MongoClient
 const chalk = require('chalk')
 const url = process.env.MONGODB_URL
-
 const dbName = process.env.DATABASE_NAME
 
 class Connection {

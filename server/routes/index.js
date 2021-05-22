@@ -6,4 +6,11 @@ router.get('/', async (req, res) => {
   const demo = await db.collection('demo').find().toArray()
   return await res.json({ ...demo })
 })
+
+const auth = require('./auth')
+const passwordChange = require('./passwordChange')
+
+router.use('/auth', auth)
+router.use('/auth', passwordChange)
+
 module.exports = router
