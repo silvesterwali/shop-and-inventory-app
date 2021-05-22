@@ -1,5 +1,6 @@
 const express = require('express')
 
+const bycrypt = require('bcryptjs')
 const db = require('../db').db
 const { generateToken } = require('../utilities/auth')
 const { passwordHash } = require('../utilities/passwordHash')
@@ -22,8 +23,10 @@ router.post(
     try {
       const user = await db.collection('users').insertOne({
         email,
-        password: passwordHash(password),
+        password: await passwordHash(password),
+
         rules: ['costumer'],
+        verifiedEmail: false,
         created_at: new Date(),
         updated_at: new Date(),
       })
@@ -48,14 +51,17 @@ router.post('/login', guest, loginRules(), validate, async (req, res) => {
     if (!user) {
       return res.status(422).json({ message: 'Email or password wrong' })
     }
+    const isPasswordValid = await bycrypt.compare(password, user.password)
 
-    if (user.password !== passwordHash(password)) {
+    if (!isPasswordValid) {
       return res.status(422).json({ message: 'Email or password wrong' })
     }
     return res.json({
       token: generateToken(user),
     })
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal server error' })
   }
 })
@@ -80,7 +86,7 @@ router.post('refresh-token', auth, (req, res) => {
  *
  */
 router.get('/me', auth, (req, res) => {
-  return res.json({ user: null })
+  return res.json({ user: req.user })
 })
 
 /**

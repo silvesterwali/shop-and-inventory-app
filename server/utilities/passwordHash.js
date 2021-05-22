@@ -1,7 +1,8 @@
-const crypto = require('crypto')
-function passwordHash(password) {
-  const salt = crypto.randomBytes(16).toString('hex')
-  return crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`)
+const bycrypt = require('bcryptjs')
+async function passwordHash(password) {
+  const salt = await bycrypt.genSalt(10)
+
+  return await bycrypt.hash(password, salt)
 }
 
 module.exports = { passwordHash }

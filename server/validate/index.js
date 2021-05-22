@@ -19,7 +19,7 @@ const registrationRules = () => {
         }
         return true
       }),
-    body('password').not().isEmpty().isLength({ min: 8, max: 20 }),
+    body('password').isLength({ min: 8, max: 20 }),
     // @see https://express-validator.github.io/docs/custom-validators-sanitizers.html#example-checking-if-password-confirmation-matches-password
     body('passwordConfirmation').custom((value, { req }) => {
       if (value !== req.body.password) {
@@ -36,7 +36,7 @@ const registrationRules = () => {
  **/
 const loginRules = () => {
   return [
-    body('email').not().isEmpty().isEmail().normalizeEmail(),
+    body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 8, max: 20 }),
   ]
 }
@@ -46,8 +46,8 @@ const loginRules = () => {
  */
 const passwordChangeRules = () => {
   return [
-    body('currentPassword').not().isEmpty().isLength({ min: 8, max: 20 }),
-    body('password').not().isEmpty().isLength({ min: 8, max: 20 }),
+    body('currentPassword').isLength({ min: 8, max: 20 }),
+    body('password').isLength({ min: 8, max: 20 }),
     body('passwordConfirmation').custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error('Password confirmation does not match password')

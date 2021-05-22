@@ -3,7 +3,7 @@
     <v-container>
       <v-row no-gutters justify="center" align="center" class="my-10">
         <v-col cols="12" md="5" lg="5" class="my-5">
-          <v-form>
+          <v-form ref="formRegister" @submit.prevent="validate">
             <v-card min-height="400px">
               <v-card-text>
                 <div class="mt-n10 mb-4">
@@ -18,6 +18,10 @@
                     v-model.trim="credential.email"
                     label="Email"
                     placeholder="Email"
+                    :rules="[
+                      (v) => !!v || 'email is required',
+                      (v) => /.+@.+/.test(v) || 'Email is not valid',
+                    ]"
                   ></v-text-field>
                   <v-text-field
                     v-model.trim="credential.password"
@@ -25,20 +29,31 @@
                     placeholder="Password"
                     :type="showPassword ? 'text' : 'password'"
                     :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    :rules="[(v) => !!v || 'password is required']"
                     @click:append="showPassword = !showPassword"
+                  ></v-text-field>
+                  <v-text-field
+                    v-model.trim="credential.passwordConfirmation"
+                    label="Password Confirmation"
+                    placeholder="Password"
+                    :type="showPasswordConfirm ? 'text' : 'password'"
+                    :append-icon="
+                      showPasswordConfirm ? 'mdi-eye-off' : 'mdi-eye'
+                    "
+                    :rules="[(v) => !!v || 'passord confirmation is required']"
+                    @click:append="showPasswordConfirm = !showPasswordConfirm"
                   ></v-text-field>
                 </div>
               </v-card-text>
               <v-card-actions>
-                <v-spacer /><v-btn outlined color="primary" class="rounded-pill"
-                  >Login</v-btn
+                <v-spacer /><v-btn
+                  type="submit"
+                  outlined
+                  color="primary"
+                  class="rounded-pill"
+                  >Register</v-btn
                 >
                 <v-spacer />
-              </v-card-actions>
-              <v-card-actions>
-                <div class="font-weight-light mx-auto">
-                  Jika lupa password silakan lakukan koordinasi
-                </div>
               </v-card-actions>
             </v-card>
           </v-form>
@@ -50,14 +65,35 @@
 
 <script>
 export default {
-  layout: 'login',
-  data: () => ({
-    credential: {
-      email: null,
-      password: null,
+  auth: 'guest',
+  name: 'Register',
+  data() {
+    return {
+      credential: {
+        email: null,
+        password: null,
+        passwordConfirmation: null,
+      },
+      showPassword: false,
+      showPasswordConfirm: false,
+      errors: null,
+    }
+  },
+  methods: {
+    validate() {
+      if (this.$refs.formRegister.validate()) {
+        this.register()
+      }
     },
-    showPassword: false,
-  }),
+    async register() {
+      try {
+        await this.$axios.post('api/auth/register', this.credential)
+        this.$auth.loginWith('local', { data: this.credential })
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
+  },
 }
 </script>
 
