@@ -1,4 +1,6 @@
 const express = require('express')
+
+const { loginRules, registrationRules, validate } = require('../validate')
 const router = express.Router()
 
 /**
@@ -8,7 +10,7 @@ const router = express.Router()
  * @param {express.Response} res
  *
  */
-router.post('/register', (req, res) => {})
+router.post('/register', registrationRules(), validate, (req, res) => {})
 
 /**
  * route for login authenticate
@@ -17,7 +19,7 @@ router.post('/register', (req, res) => {})
  * @param {express.Request} res
  *
  */
-router.post('/login', (req, res) => {})
+router.post('/login', loginRules(), validate, (req, res) => {})
 
 /**
  * router for user refresh token
