@@ -36,10 +36,57 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          maxAge: 1800, // one hour
+        },
+      },
+      refreshToken: {
+        property: 'token',
+        data: 'token',
+        maxAge: 60 * 60 * 24 * 30,
+      },
+      user: {
+        property: 'user',
+        autoFetch: true,
+      },
+      endpoints: {
+        login: {
+          url: '/api/auth/login',
+          method: 'post',
+        },
+        refresh: {
+          url: '/api/auth/refresh-token',
+          method: 'post',
+        },
+        logout: {
+          url: '/api/auth/logout',
+          method: 'post',
+        },
+        user: {
+          url: '/api/auth/me',
+          method: 'get',
+        },
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: 'home',
+    },
+  },
+  router: {
+    middleware: ['auth'],
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

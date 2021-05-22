@@ -64,7 +64,7 @@ router.post('/login', loginRules(), validate, async (req, res) => {
  *  @param {express.Response} res
  *
  */
-router.get('refresh-token', (req, res) => {
+router.post('refresh-token', (req, res) => {
   return res.json({
     token: generateToken(req.user),
   })
