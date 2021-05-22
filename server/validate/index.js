@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { body, validationResult } = require('express-validator')
 
 /**
