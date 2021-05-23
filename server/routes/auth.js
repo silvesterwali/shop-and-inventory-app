@@ -5,6 +5,7 @@ const db = require('../db').db
 const { generateToken } = require('../utilities/auth')
 const { passwordHash } = require('../utilities/passwordHash')
 const { loginRules, registrationRules, validate } = require('../validate')
+const { saveUseragent } = require('../utilities/useragent')
 const auth = require('../middleware/auth')
 const guest = require('../middleware/guest')
 const router = express.Router()
@@ -56,6 +57,7 @@ router.post('/login', guest, loginRules(), validate, async (req, res) => {
     if (!isPasswordValid) {
       return res.status(422).json({ message: 'Email or password wrong' })
     }
+    await saveUseragent(user, req.useragent)
     return res.json({
       token: generateToken(user),
     })

@@ -4,8 +4,10 @@ require('dotenv').config({ path: '../.env' })
 const db = require('./db')
 
 const express = require('express')
-const app = express()
+const useragent = require('express-useragent')
 
+const app = express()
+app.use(useragent.express()) // take the client information
 app.use(express.json())
 app.use(
   express.urlencoded({
