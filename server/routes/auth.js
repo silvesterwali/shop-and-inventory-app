@@ -8,6 +8,7 @@ const { loginRules, registrationRules, validate } = require('../validate')
 const { saveUseragent } = require('../utilities/useragent')
 const auth = require('../middleware/auth')
 const guest = require('../middleware/guest')
+const gate = require('../middleware/gate')
 const router = express.Router()
 
 /**
@@ -87,7 +88,7 @@ router.post('refresh-token', auth, (req, res) => {
  * @param {express.Response} res
  *
  */
-router.get('/me', auth, (req, res) => {
+router.get('/me', auth, gate('making node'), (req, res) => {
   return res.json({ user: req.user })
 })
 

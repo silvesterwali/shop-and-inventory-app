@@ -19,11 +19,12 @@ const saveUseragent = async (user, useragent) => {
     const { browser, version, os, platform, geoIp, source } = useragent
 
     // TODO : how to update the sub document if property already exists
-    await db.collection('usersLoginTracking').update(
+    await db.collection('usersLoginTracking').updateOne(
       { userId },
       {
         $push: {
           activities: {
+            isActive: true,
             browser,
             version,
             os,

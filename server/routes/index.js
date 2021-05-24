@@ -1,12 +1,8 @@
 /* eslint-disable no-console */
 const express = require('express')
 const router = express.Router()
-const db = require('../db').db
 router.get('/', async (req, res) => {
-  // eslint-disable-next-line no-console
-  console.log(req.useragent)
-  const demo = await db.collection('demo').find().toArray()
-  return await res.json({ ...demo })
+  return await res.json({ message: 'welcome' })
 })
 
 const auth = require('./auth')

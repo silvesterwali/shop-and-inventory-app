@@ -37,6 +37,9 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <template v-if="$auth.loggedIn">
+        <v-btn text @click="$auth.logout()">Log out</v-btn>
+      </template>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
