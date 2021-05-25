@@ -22,7 +22,7 @@
                 >
                   {{ errors && errors.message }}
                 </v-alert>
-                <div>
+                <div class="d-flex align-center">
                   <v-text-field
                     v-model.trim="credential.email"
                     label="Email"
@@ -33,39 +33,19 @@
                       errorKey('email'),
                     ]"
                   ></v-text-field>
-                  <v-text-field
-                    v-model.trim="credential.password"
-                    label="Password"
-                    placeholder="Password"
-                    :type="showPassword ? 'text' : 'password'"
-                    :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    :rules="[
-                      (v) => !!v || 'password is required',
-                      errorKey('password'),
-                    ]"
-                    @click:append="showPassword = !showPassword"
-                  ></v-text-field>
-                  <p>
-                    Forgot your password?
-                    <nuxt-link to="/forgot-password">Here</nuxt-link>
-                  </p>
                 </div>
+                <p>We will immediatly send you an email</p>
               </v-card-text>
               <v-card-actions>
                 <v-spacer /><v-btn
                   type="submit"
                   outlined
                   color="primary"
+                  style="text-transform: none"
                   class="rounded-pill"
-                  >Login</v-btn
+                  >Send me an email</v-btn
                 >
                 <v-spacer />
-              </v-card-actions>
-              <v-card-actions class="d-flex justify-center">
-                <p>
-                  Don't have any account ?
-                  <nuxt-link to="/register">Register</nuxt-link>
-                </p>
               </v-card-actions>
             </v-card>
           </v-form>
@@ -98,13 +78,7 @@ export default {
         this.login()
       }
     },
-    async login() {
-      try {
-        await this.$auth.loginWith('local', { data: this.credential })
-      } catch (err) {
-        this.errors = err.response.data
-      }
-    },
+
     errorKey(key) {
       if (this.errors === null) {
         return true
