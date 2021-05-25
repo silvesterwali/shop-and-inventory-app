@@ -14,14 +14,14 @@ const router = express.Router()
 /**
  * retrieve user profile
  *
- * @param {any} user_id
+ * @param {any} userId
  * @param {express.Request} req
  * @param {express.Response} res
  *
  */
-router.get('/:user_id', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
-    const userId = new ObjectId(req.params.user_id)
+    const userId = new ObjectId(req.params.userId)
     const profile = await db.collection('profile').findOne({ userId })
     return res.json(profile)
   } catch (err) {
