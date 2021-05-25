@@ -65,8 +65,14 @@
 </template>
 
 <script>
+import {
+  getUserProfile,
+  createUserProfile,
+  updateUserProfile,
+} from '@/services/profile.js'
 import errorKey from '@/mixins/errorKey.js'
 export default {
+  name: 'ProfileForm',
   mixins: [errorKey],
   props: {
     userId: {
@@ -87,6 +93,42 @@ export default {
       },
       errors: null,
     }
+  },
+  async fetch() {
+    if (this.userId === null) {
+      return
+    }
+
+    const { data } = await getUserProfile(this.userId)
+    if (data) {
+      this.dataForm = data
+    }
+  },
+  methods: {
+    validateForm() {
+      this.errors = null
+      if (this.dataForm._id === null) {
+        this._createUserProfile()
+      } else {
+        this._updateUserProfile()
+      }
+    },
+    async _createUserProfile() {
+      try {
+        await createUserProfile(this.dataForm)
+        this.$fetch()
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
+    async _updateUserProfile() {
+      try {
+        this.$fetch()
+        await updateUserProfile(this.dataForm._id, this.dataForm)
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
   },
 }
 </script>
