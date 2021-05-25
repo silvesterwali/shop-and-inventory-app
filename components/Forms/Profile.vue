@@ -65,7 +65,28 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    userId: {
+      type: String,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      dataForm: {
+        _id: null,
+        userId: this.userId,
+        fullName: null,
+        phone: null,
+        alternatePhone: null,
+        address: null,
+        alternateAddress: null,
+      },
+      errors: null,
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>
