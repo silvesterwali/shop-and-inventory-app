@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const { body, validationResult } = require('express-validator')
+const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
 /**
  * specific rules for authenticate registration request
@@ -57,6 +58,22 @@ const passwordChangeRules = () => {
 }
 
 /**
+ * profile validate
+ *
+ */
+const ProfileValidate = () => {
+  return [
+    body('fullName').not().isEmpty().trim().isString(),
+    body('phone').not().isEmpty().trim().isString(),
+    body('userId').custom((value) => {
+      if (!ObjectId.isValid(value)) {
+        throw new Error('user id is not valid for database')
+      }
+    }),
+  ]
+}
+
+/**
  * determine if rules was pass to validate ,this method will check if request complete the requirement
  *
  */
@@ -80,5 +97,6 @@ module.exports = {
   registrationRules,
   loginRules,
   passwordChangeRules,
+  ProfileValidate,
   validate,
 }
