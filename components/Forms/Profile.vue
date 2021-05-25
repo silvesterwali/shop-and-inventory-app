@@ -65,7 +65,9 @@
 </template>
 
 <script>
+import errorKey from '@/mixins/errorKey.js'
 export default {
+  mixins: [errorKey],
   props: {
     userId: {
       type: String,

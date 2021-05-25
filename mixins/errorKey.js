@@ -1,5 +1,5 @@
 export default {
-  method: {
+  methods: {
     errorKey(key) {
       if (this.errors === null) {
         return true
