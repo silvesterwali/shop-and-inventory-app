@@ -1,10 +1,11 @@
+/* eslint-disable no-console */
 <template>
   <div>
     <v-container>
       <v-row no-gutters justify="center" align="center" class="my-10">
         <v-col cols="12" md="5" lg="5" class="my-5">
           <v-form ref="formRegister" @submit.prevent="validate">
-            <v-card min-height="400px">
+            <v-card min-height="400px" elevation="1">
               <v-card-text>
                 <div class="mt-n10 mb-4">
                   <v-img
@@ -21,15 +22,20 @@
                     :rules="[
                       (v) => !!v || 'email is required',
                       (v) => /.+@.+/.test(v) || 'Email is not valid',
+                      errorKey('email'),
                     ]"
                   ></v-text-field>
+
                   <v-text-field
                     v-model.trim="credential.password"
                     label="Password"
                     placeholder="Password"
                     :type="showPassword ? 'text' : 'password'"
                     :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    :rules="[(v) => !!v || 'password is required']"
+                    :rules="[
+                      (v) => !!v || 'password is required',
+                      errorKey('password'),
+                    ]"
                     @click:append="showPassword = !showPassword"
                   ></v-text-field>
                   <v-text-field
@@ -40,7 +46,10 @@
                     :append-icon="
                       showPasswordConfirm ? 'mdi-eye-off' : 'mdi-eye'
                     "
-                    :rules="[(v) => !!v || 'passord confirmation is required']"
+                    :rules="[
+                      (v) => !!v || 'passord confirmation is required',
+                      errorKey('passwordConfirmation'),
+                    ]"
                     @click:append="showPasswordConfirm = !showPasswordConfirm"
                   ></v-text-field>
                 </div>
@@ -55,6 +64,12 @@
                 >
                 <v-spacer />
               </v-card-actions>
+              <v-card-actions class="d-flex justify-center">
+                <p>
+                  If already have account ?
+                  <nuxt-link to="/login">Login</nuxt-link>
+                </p>
+              </v-card-actions>
             </v-card>
           </v-form>
         </v-col>
@@ -67,6 +82,7 @@
 export default {
   auth: 'guest',
   name: 'Register',
+  layout: 'guest',
   data() {
     return {
       credential: {
@@ -82,6 +98,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.formRegister.validate()) {
+        this.errors = null
         this.register()
       }
     },
@@ -92,6 +109,17 @@ export default {
       } catch (err) {
         this.errors = err.response.data
       }
+    },
+    errorKey(key) {
+      if (this.errors === null) {
+        return true
+      }
+      const errors = this.errors
+      if (Array.isArray(errors)) {
+        const err = errors.filter((e) => e[key])
+        return err.length > 0 ? err[0][key] : true
+      }
+      return true
     },
   },
 }

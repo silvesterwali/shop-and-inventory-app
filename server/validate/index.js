@@ -15,7 +15,7 @@ const registrationRules = () => {
       .custom(async (value) => {
         const user = await db.collection('users').findOne({ email: value })
         if (user) {
-          throw new Error('email already is use')
+          throw new Error('email already in use')
         }
         return true
       }),
