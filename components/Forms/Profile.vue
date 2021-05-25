@@ -30,32 +30,54 @@
           </v-col>
 
           <v-col cols="12" md="8" sm="8" lg="8">
-            <v-form>
+            <v-form ref="profileForm" @submit.prevent="validateForm">
               <v-text-field
+                v-model="dataForm.fullName"
                 label="Full Name"
                 placeholder="Full Name"
+                :rules="[
+                  (v) => !!v || 'Fullname is required',
+                  errorKey('fullName'),
+                ]"
               ></v-text-field>
               <v-textarea
+                v-model="dataForm.biography"
                 rows="2"
                 label="Biorgrafi"
                 placeholder="Biografi"
               ></v-textarea>
               <p>tell someone that you are there for there</p>
-              <v-text-field label="Phone" placeholder="Phone"></v-text-field>
               <v-text-field
+                v-model="dataForm.phone"
+                :rules="[(v) => !!v || 'Phone is required', errorKey('phone')]"
+                label="Phone"
+                placeholder="Phone"
+              ></v-text-field>
+              <v-text-field
+                v-model="dataForm.alternatePhone"
                 label="Alternate Phone"
                 placeholder="Alternate Phone"
               ></v-text-field>
               <v-textarea
+                v-model="dataForm.address"
                 rows="2"
-                label="Adreess"
-                placeholder="Adreess"
+                label="Address"
+                :rules="[errorKey('phone')]"
+                placeholder="Address"
               ></v-textarea>
               <v-textarea
+                v-model="dataForm.alternateAddress"
                 rows="2"
-                label="Alternate Adreess"
-                placeholder="Alternate Adreess"
+                label="Alternate Address"
+                placeholder="Alternate Address"
               ></v-textarea>
+              <v-btn
+                type="submit"
+                :loading="loading"
+                class="float-right"
+                color="primary"
+                >{{ dataForm._id === null ? 'Add' : 'Update' }}</v-btn
+              >
             </v-form>
           </v-col>
         </v-row>
@@ -90,22 +112,29 @@ export default {
         alternatePhone: null,
         address: null,
         alternateAddress: null,
+        biography: null,
       },
       errors: null,
+      loading: false,
     }
   },
   async fetch() {
     if (this.userId === null) {
       return
     }
-
+    this.loading = true
     const { data } = await getUserProfile(this.userId)
     if (data) {
       this.dataForm = data
     }
+    this.loading = false
   },
   methods: {
     validateForm() {
+      if (!this.$refs.profileForm.validate()) {
+        return
+      }
+      this.loading = false
       this.errors = null
       if (this.dataForm._id === null) {
         this._createUserProfile()
@@ -119,6 +148,7 @@ export default {
         this.$fetch()
       } catch (err) {
         this.errors = err.response.data
+        this.loading = false
       }
     },
     async _updateUserProfile() {
@@ -126,6 +156,7 @@ export default {
         this.$fetch()
         await updateUserProfile(this.dataForm._id, this.dataForm)
       } catch (err) {
+        this.loading = false
         this.errors = err.response.data
       }
     },

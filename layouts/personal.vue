@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app elevation="1">
+    <v-app-bar :clipped-left="clipped" fixed app dense elevate-on-scroll tile>
       <v-app-bar-nav-icon @click.stop="$router.push('/')" />
 
       <v-toolbar-title v-if="!$vuetify.breakpoint.mobile" v-text="title" />

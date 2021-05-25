@@ -39,16 +39,26 @@ router.get('/:userId', async (req, res) => {
  *
  */
 router.post('/', ProfileValidate(), validate, async (req, res) => {
-  const { userId, phone, AlternatePhone, address, alternateAddress } = req.body
+  const {
+    userId,
+    fullName,
+    phone,
+    alternatePhone,
+    address,
+    alternateAddress,
+    biography,
+  } = req.body
   try {
     await db.collection('profile').updateOne(
       { userId: new ObjectId(userId) },
       {
         $set: {
+          fullName,
           phone,
-          AlternatePhone,
+          alternatePhone,
           address,
           alternateAddress,
+          biography,
           createdAt: new Date(),
         },
       },
@@ -70,23 +80,37 @@ router.post('/', ProfileValidate(), validate, async (req, res) => {
  *
  **/
 router.put('/:id', ProfileValidate(), validate, async (req, res) => {
-  const { phone, AlternatePhone, address, alternateAddress } = req.body
+  const {
+    fullName,
+    phone,
+    alternatePhone,
+    address,
+    alternateAddress,
+    biography,
+  } = req.body
   try {
     await db.collection('profile').updateOne(
       {
         _id: new ObjectId(req.params.id),
       },
       {
-        phone,
-        AlternatePhone,
-        address,
-        alternateAddress,
-        updateAt: new Date(),
+        $set: {
+          fullName,
+          phone,
+          alternatePhone,
+          address,
+          alternateAddress,
+          biography,
+          updatedAt: new Date(),
+        },
       },
+
       { upsert: true }
     )
     return res.json({ message: 'Success update profile' })
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server errors' })
   }
 })

@@ -69,6 +69,7 @@ const ProfileValidate = () => {
       if (!ObjectId.isValid(value)) {
         throw new Error('user id is not valid for database')
       }
+      return true
     }),
   ]
 }

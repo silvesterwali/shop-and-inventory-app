@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col md="12" sm="12" lg="12">
-        <profile />
+        <profile :user-id="userId" />
       </v-col>
     </v-row>
   </div>
@@ -13,6 +13,7 @@ export default {
   components: {
     Profile,
   },
+  layout: 'personal',
   head() {
     return {
       title: 'Setting profile',
@@ -27,7 +28,7 @@ export default {
   },
   computed: {
     userId() {
-      return this.$Auth.user._id
+      return this.$auth.user._id
     },
   },
 }
