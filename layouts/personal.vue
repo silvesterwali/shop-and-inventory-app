@@ -5,7 +5,6 @@
 
       <v-toolbar-title v-if="!$vuetify.breakpoint.mobile" v-text="title" />
       <v-spacer />
-      <menu-drop-user />
     </v-app-bar>
     <v-main>
       <v-container>
@@ -52,12 +51,9 @@
 </template>
 
 <script>
-import Footer from '@/components/utilspage/footer.vue'
-import MenuDropUser from '@/components/dropdown/MenuDropUser.vue'
-import socketIo from '@/plugins/socket.io'
+import Footer from '@/components/Footer/index.vue'
 export default {
   components: {
-    MenuDropUser,
     Footer,
   },
   data() {
@@ -69,7 +65,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'PT Saka Agung Abadi',
+      title: 'Inventory',
       items: [
         {
           text: 'Profile',
@@ -104,10 +100,6 @@ export default {
         this.$vuetify.theme.dark = key
       },
     },
-  },
-  beforeDestroy() {
-    socketIo.emit('disconected', 'Pulang kampung')
-    socketIo.close()
   },
 }
 </script>
