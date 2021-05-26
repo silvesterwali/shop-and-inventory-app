@@ -90,8 +90,8 @@ export default {
           url: '/settings/security',
         },
         {
-          text: 'Keluarga',
-          url: '/settings/keluarga',
+          text: 'Family',
+          url: '/settings/Family',
         },
         {
           text: 'Account Billing',
