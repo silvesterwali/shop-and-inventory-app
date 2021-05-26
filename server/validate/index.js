@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const { body, validationResult } = require('express-validator')
 const ObjectId = require('mongodb').ObjectID
+const bycrypt = require('bcryptjs')
 const db = require('../db').db
 /**
  * specific rules for authenticate registration request
@@ -47,7 +48,27 @@ const loginRules = () => {
  */
 const passwordChangeRules = () => {
   return [
-    body('currentPassword').isLength({ min: 8, max: 20 }),
+    body('currentPassword')
+      .isLength({ min: 8, max: 20 })
+      .custom(async (value, { req }) => {
+        // find current user on database
+        const user = await db
+          .collection('users')
+          .findOne({ _id: new ObjectId(req.user._id) })
+
+        // determine if user was not authenticate
+        if (!user) {
+          throw new Error('User need to authenticate')
+        }
+
+        //  do compare the user current password with exiting on db
+        const isPasswordValid = await bycrypt.compare(value, user.password)
+
+        if (!isPasswordValid) {
+          throw new Error('Current password is invalid')
+        }
+        return true
+      }),
     body('password').isLength({ min: 8, max: 20 }),
     body('passwordConfirmation').custom((value, { req }) => {
       if (value !== req.body.password) {
