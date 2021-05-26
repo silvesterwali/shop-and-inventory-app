@@ -18,6 +18,7 @@
             </v-sheet>
           </v-col>
           <v-col md="8" lg="8" sm="8" xs="12">
+            <family v-bind="$props" />
             <v-list>
               <v-list-item two-line>
                 <v-list-item-content>
@@ -81,14 +82,20 @@
           </v-col>
         </v-row>
         <p>You can adding and update family member</p>
+        {{ families }}
       </v-card-text>
     </v-card>
   </div>
 </template>
 
 <script>
+import Family from '@/components/Forms/Family.vue'
+import { getFamilies } from '@/services/personal.js'
 export default {
   name: 'FamilyGroup',
+  components: {
+    Family,
+  },
   props: {
     userId: {
       type: String,
@@ -99,6 +106,15 @@ export default {
     return {
       isReload: false, // to reload fomily data from api
       families: [],
+    }
+  },
+  async fetch() {
+    if (this.userId === false) {
+      return
+    }
+    const { data } = await getFamilies(this.userId)
+    if (data) {
+      this.families = data
     }
   },
 }

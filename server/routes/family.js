@@ -1,5 +1,5 @@
 const express = require('express')
-const ObjectId = require('mongodb').ObjectID()
+const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
 const router = express.Router()
 const auth = require('../middleware/auth')
@@ -7,9 +7,11 @@ const auth = require('../middleware/auth')
 router.get('/:userId/user', auth, async (req, res) => {
   try {
     const userId = new ObjectId(req.params.userId)
-    const family = await db.collection('personal').findOne({ userId }).family
-    return res.json(family)
+    const { families } = await db.collection('personal').findOne({ userId })
+    return res.json(families)
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error Error' })
   }
 })

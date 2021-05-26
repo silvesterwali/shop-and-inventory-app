@@ -87,12 +87,12 @@
 </template>
 
 <script>
+import errorKey from '@/mixins/errorKey.js'
 import {
   getUserProfile,
   createUserProfile,
   updateUserProfile,
-} from '@/services/profile.js'
-import errorKey from '@/mixins/errorKey.js'
+} from '~/services/personal.js'
 export default {
   name: 'ProfileForm',
   mixins: [errorKey],
