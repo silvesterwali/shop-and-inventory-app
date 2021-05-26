@@ -10,19 +10,24 @@
                 v-model="dataForm.currentPassword"
                 type="password"
                 label="Current Password"
+                autocomplete="off"
                 placeholder="Current Password"
               ></v-text-field>
               <v-text-field
                 v-model="dataForm.password"
                 type="password"
                 label="New Password"
+                autocomplete="off"
+                aria-autocomplete="false"
                 placeholder="New Password"
               ></v-text-field>
 
               <v-text-field
                 v-model="dataForm.passwordConfirmation"
                 type="password"
+                autocomplete="off"
                 label="Password Confirmation"
+                aria-autocomplete="false"
                 placeholder="Password Confirmation"
               ></v-text-field>
               <p>
@@ -32,10 +37,10 @@
 
               <div class="d-flex justify-space-between">
                 <div class="d-flex align-center">
-                  <v-btn>Update Password</v-btn>
+                  <a class="font-weight-medium">i forgot my password</a>
                 </div>
                 <div class="d-flex align-center">
-                  <a class="font-weight-medium">i forgot my password</a>
+                  <v-btn color="primary">Update Password</v-btn>
                 </div>
               </div>
             </v-col>
@@ -47,8 +52,10 @@
 </template>
 
 <script>
+import errorKey from '@/mixins/errorKey.js'
 export default {
   name: 'ChangePassword',
+  mixins: [errorKey],
   props: {
     userId: {
       type: String,
@@ -64,6 +71,7 @@ export default {
         passwordConfirmation: null,
         currentPassword: null,
       },
+      errors: null,
     }
   },
 }

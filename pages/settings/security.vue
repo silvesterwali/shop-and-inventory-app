@@ -14,6 +14,7 @@ export default {
   components: {
     ChangePassword,
   },
+  layout: 'personal',
   head() {
     return {
       title: 'Security',
