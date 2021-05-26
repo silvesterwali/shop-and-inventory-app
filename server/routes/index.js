@@ -8,10 +8,11 @@ router.get('/', async (req, res) => {
 
 const auth = require('./auth')
 const passwordChange = require('./passwordChange')
-const profile = require('./profile')
-
+const profile = require('./personal')
+const family = require('./family')
 router.use('/auth', auth)
 router.use('/auth', passwordChange)
-router.use('/auth/profile', profile)
+router.use('/auth/personal', profile)
+router.use('/personal/family', family)
 
 module.exports = router

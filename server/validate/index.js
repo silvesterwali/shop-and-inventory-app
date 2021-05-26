@@ -83,7 +83,7 @@ const passwordChangeRules = () => {
  * profile validate
  *
  */
-const ProfileValidate = () => {
+const personalValidate = () => {
   return [
     body('fullName').not().isEmpty().trim().isString(),
     body('phone').not().isEmpty().trim().isString(),
@@ -120,6 +120,6 @@ module.exports = {
   registrationRules,
   loginRules,
   passwordChangeRules,
-  ProfileValidate,
+  personalValidate,
   validate,
 }

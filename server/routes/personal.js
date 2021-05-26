@@ -9,7 +9,7 @@ const ObjectId = require('mongodb').ObjectID
 const express = require('express')
 const db = require('../db').db
 
-const { ProfileValidate, validate } = require('../validate')
+const { personalValidate, validate } = require('../validate')
 
 const router = express.Router()
 
@@ -24,8 +24,8 @@ const router = express.Router()
 router.get('/:userId', async (req, res) => {
   try {
     const userId = new ObjectId(req.params.userId)
-    const profile = await db.collection('profile').findOne({ userId })
-    return res.json(profile)
+    const personal = await db.collection('personal').findOne({ userId })
+    return res.json(personal)
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server error' })
   }
@@ -38,7 +38,7 @@ router.get('/:userId', async (req, res) => {
  * @param {express.Response} res
  *
  */
-router.post('/', ProfileValidate(), validate, async (req, res) => {
+router.post('/', personalValidate(), validate, async (req, res) => {
   const {
     userId,
     fullName,
@@ -49,7 +49,7 @@ router.post('/', ProfileValidate(), validate, async (req, res) => {
     biography,
   } = req.body
   try {
-    await db.collection('profile').updateOne(
+    await db.collection('personal').updateOne(
       { userId: new ObjectId(userId) },
       {
         $set: {
@@ -79,7 +79,7 @@ router.post('/', ProfileValidate(), validate, async (req, res) => {
  * @param {express.Response} res
  *
  **/
-router.put('/:id', ProfileValidate(), validate, async (req, res) => {
+router.put('/:id', personalValidate(), validate, async (req, res) => {
   const {
     fullName,
     phone,
@@ -89,7 +89,7 @@ router.put('/:id', ProfileValidate(), validate, async (req, res) => {
     biography,
   } = req.body
   try {
-    await db.collection('profile').updateOne(
+    await db.collection('personal').updateOne(
       {
         _id: new ObjectId(req.params.id),
       },
