@@ -8,6 +8,7 @@ const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
 const router = express.Router()
 const auth = require('../middleware/auth')
+const { passwordHash } = require('../utilities/passwordHash')
 const { passwordChangeRules, validate } = require('../validate/index')
 
 /**
@@ -21,11 +22,14 @@ router.put(
   validate,
   async (req, res) => {
     const { password } = req.body
+
     try {
       await db.collection('users').updateOne(
         { _id: new ObjectId(req.params.userId) },
         {
-          password,
+          $set: {
+            password: await passwordHash(password),
+          },
         }
       )
       return res.json({ message: 'Success update password' })

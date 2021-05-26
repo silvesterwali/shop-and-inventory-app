@@ -11,7 +11,7 @@ const passwordChange = require('./passwordChange')
 const profile = require('./profile')
 
 router.use('/auth', auth)
-router.use('/auth/password', passwordChange)
+router.use('/auth', passwordChange)
 router.use('/auth/profile', profile)
 
 module.exports = router
