@@ -4,6 +4,14 @@ const db = require('../db').db
 const router = express.Router()
 const auth = require('../middleware/auth')
 
+/**
+ * get all personal families sub collection
+ *
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ *
+ */
 router.get('/:userId/user', auth, async (req, res) => {
   try {
     const userId = new ObjectId(req.params.userId)
@@ -16,7 +24,14 @@ router.get('/:userId/user', auth, async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+/**
+ * create family resource in personal collection
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @async
+ */
+router.post('/', auth, async (req, res) => {
   const { fullName, familyStatus, phoneNumber } = req.body
   const userId = new ObjectId(req.body.userId)
   try {
@@ -35,6 +50,38 @@ router.post('/', async (req, res) => {
       }
     )
     return res.json({ message: 'success adding family' })
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+})
+
+/**
+ * update family object on personal sub collection
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @see https://www.youtube.com/watch?v=yLjfS5iKZPM documentation
+ */
+router.put('/:userId/user/:familyId/family', auth, async (req, res) => {
+  const { fullName, familyStatus, phoneNumber } = req.body
+  const userId = new ObjectId(req.params.userId)
+  const familyId = new ObjectId(req.params.userId)
+  try {
+    await db.collection('personal').updateOne(
+      {
+        userId,
+        'families._id': familyId,
+      },
+      {
+        $set: {
+          'families.$.fullName': fullName,
+          'families.$.familyStatus': familyStatus,
+          'families.$.phoneNumber': phoneNumber,
+          'families.$.updateAt': new Date(),
+        },
+      }
+    )
+    return res.json({ message: 'Success to update collection' })
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' })
   }

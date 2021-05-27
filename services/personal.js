@@ -51,10 +51,25 @@ const createFamily = async (payload) => {
   return await ApiClient.post('/api/personal/family', payload)
 }
 
+/**
+ * update user family sub documents
+ *
+ * @param {any} userId
+ * @param {any} familyId
+ * @param {Object} payload
+ */
+const updateFamily = async (userId, familyId, payload) => {
+  return await ApiClient.put(
+    `/api/personal/family/${userId}/user/${familyId}/family`,
+    payload
+  )
+}
+
 export {
   getUserProfile,
   createUserProfile,
   updateUserProfile,
   getFamilies,
   createFamily,
+  updateFamily,
 }
