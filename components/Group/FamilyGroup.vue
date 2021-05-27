@@ -18,71 +18,32 @@
             </v-sheet>
           </v-col>
           <v-col md="8" lg="8" sm="8" xs="12">
-            <family v-bind="$props" />
-            <v-list>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Mawar Melati</v-list-item-title>
-                  <v-list-item-subtitle
-                    >Instri | 20 maret 1995</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn icon>
-                    <v-icon small color="grey lighten-1">mdi-pencil</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Ramadhani </v-list-item-title>
-                  <v-list-item-subtitle
-                    >Anak I | 07 maret 2018</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn icon>
-                    <v-icon small color="grey lighten-1">mdi-pencil</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-              <v-list-item two-line>
-                <v-list-item-content>
-                  <v-list-item-title>Agnes mo</v-list-item-title>
-                  <v-list-item-subtitle
-                    >Anak II | 12 Oktober 2020</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-                <v-list-item-action>
-                  <div class="d-flex flex-row">
-                    <v-icon title="Edit data" small color="grey lighten-1"
-                      >mdi-pencil-outline</v-icon
-                    >
-
-                    <v-icon small title="Delete" color="red lighten-1"
-                      >mdi-delete-outline</v-icon
-                    >
-                  </div>
-                </v-list-item-action>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title></v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-action>
-                  <div class="d-flex flex-row">
-                    <v-btn small text color="primary">
-                      Add more
-                      <v-icon small title="Add More">mdi-plus</v-icon>
-                    </v-btn>
-                  </div>
-                </v-list-item-action>
-              </v-list-item>
+            <v-list v-if="families.length > 0">
+              <family-item
+                v-for="(family, index) in families"
+                :key="index"
+                :family="family"
+                :reload-status.sync="reloadStatus"
+                v-bind="$props"
+              />
             </v-list>
+            <v-divider class="mb-2" />
+
+            <family
+              v-if="addForm"
+              v-bind="$props"
+              :reload-status.sync="reloadStatus"
+            />
+
+            <div v-else class="d-flex flex-row">
+              <p>You can adding and update family member</p>
+              <v-spacer />
+              <v-btn small color="primary" @click.prevent="addForm = true"
+                >Add More</v-btn
+              >
+            </div>
           </v-col>
         </v-row>
-        <p>You can adding and update family member</p>
-        {{ families }}
       </v-card-text>
     </v-card>
   </div>
@@ -90,11 +51,13 @@
 
 <script>
 import Family from '@/components/Forms/Family.vue'
+import FamilyItem from '@/components/Item/FamilyItem.vue'
 import { getFamilies } from '@/services/personal.js'
 export default {
   name: 'FamilyGroup',
   components: {
     Family,
+    FamilyItem,
   },
   props: {
     userId: {
@@ -104,11 +67,14 @@ export default {
   },
   data() {
     return {
-      isReload: false, // to reload fomily data from api
+      reloadStatus: false, // to reload fomily data from api
       families: [],
+      addForm: false,
     }
   },
   async fetch() {
+    this.addForm = false
+    this.reloadStatus = false
     if (this.userId === false) {
       return
     }
@@ -116,6 +82,16 @@ export default {
     if (data) {
       this.families = data
     }
+  },
+  watch: {
+    reloadStatus: {
+      immediate: true,
+      handler(value) {
+        if (value === true && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
 }
 </script>

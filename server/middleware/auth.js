@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
   const token = authHeader && authHeader.replace('Bearer ', '')
   if (!token) return res.status(401).send('Access denied')
   try {
-    const Verified = jwt.verify(token, process.env.TOKEN)
+    const Verified = await jwt.verify(token, process.env.TOKEN)
 
     if (!Verified)
       return res.status(403).message({

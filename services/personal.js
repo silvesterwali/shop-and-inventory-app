@@ -64,6 +64,17 @@ const updateFamily = async (userId, familyId, payload) => {
     payload
   )
 }
+/**
+ * delete personal sub collection
+ *
+ * @param {any} userId
+ * @param {any} familyId
+ */
+const deleteFamily = async (userId, familyId) => {
+  return await ApiClient.delete(
+    `/api/personal/family/${userId}/user/${familyId}/family`
+  )
+}
 
 export {
   getUserProfile,
@@ -72,4 +83,5 @@ export {
   getFamilies,
   createFamily,
   updateFamily,
+  deleteFamily,
 }

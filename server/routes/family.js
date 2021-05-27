@@ -65,7 +65,7 @@ router.post('/', auth, async (req, res) => {
 router.put('/:userId/user/:familyId/family', auth, async (req, res) => {
   const { fullName, familyStatus, phoneNumber } = req.body
   const userId = new ObjectId(req.params.userId)
-  const familyId = new ObjectId(req.params.userId)
+  const familyId = new ObjectId(req.params.familyId)
   try {
     await db.collection('personal').updateOne(
       {
@@ -82,6 +82,30 @@ router.put('/:userId/user/:familyId/family', auth, async (req, res) => {
       }
     )
     return res.json({ message: 'Success to update collection' })
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+})
+
+router.delete('/:userId/user/:familyId/family', auth, async (req, res) => {
+  const userId = new ObjectId(req.params.userId)
+  const familyId = new ObjectId(req.params.familyId)
+  try {
+    await db.collection('personal').updateOne(
+      {
+        userId,
+        'families._id': familyId,
+      },
+      {
+        $pull: {
+          families: {
+            _id: familyId,
+          },
+        },
+      },
+      { new: true, multi: true }
+    )
+    return res.json({ message: 'Success remove collection' })
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' })
   }

@@ -32,7 +32,19 @@
       </v-row>
       <div class="d-flex flex-row" style="widht: 100%">
         <v-spacer />
-        <v-btn :loading="loading" type="submit" color="primary">Add</v-btn>
+        <v-btn
+          :loading="loading"
+          text
+          class="mr-1"
+          small
+          type="button"
+          color="error"
+          @click.prevent="reload"
+          >Cancel</v-btn
+        >
+        <v-btn :loading="loading" small type="submit" color="primary">{{
+          family ? 'update' : 'add'
+        }}</v-btn>
       </div>
     </v-form>
   </div>
@@ -40,13 +52,29 @@
 
 <script>
 import errorKey from '@/mixins/errorKey'
-import { createFamily } from '@/services/personal'
+import { createFamily, updateFamily } from '@/services/personal'
 export default {
   mixins: [errorKey],
   props: {
     userId: {
       type: String,
       default: null,
+    },
+    family: {
+      type: Object,
+      default: null,
+    },
+    reloadStatus: {
+      type: Boolean,
+      default: false,
+    },
+    child: {
+      type: Boolean,
+      default: false,
+    },
+    openForm: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -63,6 +91,16 @@ export default {
       loading: false,
     }
   },
+  watch: {
+    family: {
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.dataForm = value
+        }
+      },
+    },
+  },
   methods: {
     validateForm() {
       if (!this.$refs.familyFrom.validate()) {
@@ -70,15 +108,37 @@ export default {
       }
       this.errors = null
       this.loading = true
-      this._createFamily()
+      if (this.family !== null) {
+        this._updateFamily()
+      } else {
+        this._createFamily()
+      }
     },
     async _createFamily() {
       try {
         await createFamily(this.dataForm)
         this.loading = false
+        this.reload()
       } catch (err) {
         this.errors = err.response.data
         this.errors = false
+      }
+    },
+    async _updateFamily() {
+      try {
+        await updateFamily(this.userId, this.dataForm._id, this.dataForm)
+        this.loading = false
+        this.reload()
+      } catch (err) {
+        this.errors = err.response.data
+        this.loading = false
+      }
+    },
+    reload() {
+      if (this.child === false) {
+        this.$emit('update:reloadStatus', true)
+      } else {
+        this.$emit('update:openForm', false)
       }
     },
   },
