@@ -64,7 +64,7 @@ export const createPersonalAtmCard = async (req, res) => {
  */
 export const updatePersonalBankAtmCard = async (req, res) => {
   const userId = new ObjectId(req.params.userId)
-  const bankAtmCardsId = new ObjectId(req.params.bankAtmCard)
+  const bankAtmCardsId = new ObjectId(req.params.bankAtmCardId)
   const { provider, cardNumber } = req.body
   try {
     await db.collection('personal').updateOne(
@@ -96,7 +96,7 @@ export const updatePersonalBankAtmCard = async (req, res) => {
  */
 export const deletePersonalBankAtmCard = async (req, res) => {
   const userId = new ObjectId(req.params.userId)
-  const bankAtmCardsId = new ObjectId(req.params.bankAtmCard)
+  const bankAtmCardsId = new ObjectId(req.params.bankAtmCardId)
   try {
     await db.collection('personal').updateOne(
       {

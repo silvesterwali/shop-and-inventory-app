@@ -39,7 +39,7 @@ router.post(
  *
  */
 router.put(
-  '/:userId/user/:bankAtmCard/bank-atm-card',
+  '/:userId/user/:bankAtmCardId/bank-atm-card',
   bankAtmCardRules(),
   validate,
   atmCardController.updatePersonalBankAtmCard
@@ -53,7 +53,7 @@ router.put(
  */
 
 router.delete(
-  '/:userId/user/:bankAtmCard/bank-atm-card',
+  '/:userId/user/:bankAtmCardId/bank-atm-card',
   atmCardController.deletePersonalBankAtmCard
 )
 

@@ -76,6 +76,60 @@ const deleteFamily = async (userId, familyId) => {
   )
 }
 
+/** ===============================
+ *
+ * personal bank atm card endpoint
+ * ================================
+ */
+
+/**
+ * getPersonalBankAtmCard
+ *
+ * endpoint to take personal bank atm card list
+ * @param {any} userId
+ *
+ */
+const getPersonalBankAtmCard = async (userId) => {
+  return await ApiClient.get(`/api/personal/account/${userId}/user`)
+}
+
+/**
+ * createPersonalBankAtmCard
+ *
+ * endpoint to create new personal bank atm card resource
+ * @param {Object} payload
+ */
+const createPersonalBankAtmCard = async (payload) => {
+  return await ApiClient.post(`/api/personal/account`, payload)
+}
+
+/**
+ * updatePersonalBankAtmCard
+ *
+ * - update object personal bank atm card resource
+ * @param {string} userId
+ * @param {string} bankAtmCardId
+ * @param {Object} payload
+ */
+const updatePersonalBankAtmCard = async (userId, bankAtmCardId, payload) => {
+  return await ApiClient.put(
+    `/api/personal/account/${userId}/user/${bankAtmCardId}/bank-atm-card`
+  )
+}
+
+/**
+ * deletePersonalBankAtmCard
+ *
+ * - delete personal bank account resource
+ * @param {string} userId
+ * @param {string} bankAtmCardId
+ */
+const deletePersonalBankAtmCard = async (userId, bankAtmCardId) => {
+  return await ApiClient.delete(
+    `/api/personal/account/${userId}/user/${bankAtmCardId}/bank-atm-card`
+  )
+}
+
 export {
   getUserProfile,
   createUserProfile,
@@ -84,4 +138,8 @@ export {
   createFamily,
   updateFamily,
   deleteFamily,
+  getPersonalBankAtmCard,
+  createPersonalBankAtmCard,
+  updatePersonalBankAtmCard,
+  deletePersonalBankAtmCard,
 }
