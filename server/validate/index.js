@@ -3,6 +3,27 @@ const { body, validationResult } = require('express-validator')
 const ObjectId = require('mongodb').ObjectID
 const bycrypt = require('bcryptjs')
 const db = require('../db').db
+
+/**
+ * determine if rules was pass to validate ,this method will check if request complete the requirement
+ *
+ */
+const validate = (req, res, next) => {
+  const errors = validationResult(req)
+
+  if (errors.isEmpty()) {
+    return next()
+  }
+
+  const extractedErrors = []
+
+  // looping all errors  by object key or parameter according passing rules
+
+  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
+
+  return res.status(422).json(extractedErrors)
+}
+
 /**
  * specific rules for authenticate registration request
  *
@@ -97,23 +118,15 @@ const personalValidate = () => {
 }
 
 /**
- * determine if rules was pass to validate ,this method will check if request complete the requirement
+ * bankAtmCardRules
  *
- */
-const validate = (req, res, next) => {
-  const errors = validationResult(req)
-
-  if (errors.isEmpty()) {
-    return next()
-  }
-
-  const extractedErrors = []
-
-  // looping all errors  by object key or parameter according passing rules
-
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
-
-  return res.status(422).json(extractedErrors)
+ * - bank atm card rule to validate incoming request
+ **/
+const bankAtmCardRules = () => {
+  return [
+    body('provider').not().isEmpty().trim().isString(),
+    body('cardNumber').not().isEmpty().isString(),
+  ]
 }
 
 module.exports = {
@@ -122,4 +135,5 @@ module.exports = {
   passwordChangeRules,
   personalValidate,
   validate,
+  bankAtmCardRules,
 }
