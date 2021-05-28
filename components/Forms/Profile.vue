@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-card>
+    <v-skeleton-loader
+      v-if="$fetchState.pending"
+      class="mx-auto"
+      type="card"
+      boilerplate
+    ></v-skeleton-loader>
+    <v-card v-else>
       <v-card-text>
         <v-row>
           <v-col

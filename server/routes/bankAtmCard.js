@@ -27,7 +27,7 @@ router.get('/:userId/user', atmCardController.getPersonalAtmCard)
 router.post(
   '/',
   bankAtmCardRules(),
-  validate(),
+  validate,
   atmCardController.createPersonalAtmCard
 )
 

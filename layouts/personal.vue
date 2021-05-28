@@ -94,8 +94,8 @@ export default {
           url: '/settings/Family',
         },
         {
-          text: 'Account Billing',
-          url: '/settings/account-billing',
+          text: 'Bank Atm Card',
+          url: '/settings/bank-atm-card',
         },
         {
           text: 'Sound & notify',

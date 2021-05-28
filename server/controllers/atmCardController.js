@@ -11,7 +11,7 @@ const db = require('../db').db
  * @param {express.Request} req
  * @param {express.Response} res
  */
-export const getPersonalAtmCard = async (req, res) => {
+exports.getPersonalAtmCard = async (req, res) => {
   const userId = new ObjectId(req.params.userId)
   try {
     const { bankAtmCards } = await db.collection('personal').findOne({ userId })
@@ -29,8 +29,8 @@ export const getPersonalAtmCard = async (req, res) => {
  * @param {express.Request} req
  * @param {express.Response} res
  */
-export const createPersonalAtmCard = async (req, res) => {
-  const { provider, cardNumber } = req.boy
+exports.createPersonalAtmCard = async (req, res) => {
+  const { provider, cardNumber } = req.body
   const userId = new ObjectId(req.body.userId)
   try {
     await db.collection('personal').findOneAndUpdate(
@@ -62,7 +62,7 @@ export const createPersonalAtmCard = async (req, res) => {
  * @param {express.Request} req
  * @param {express.Response} res
  */
-export const updatePersonalBankAtmCard = async (req, res) => {
+exports.updatePersonalBankAtmCard = async (req, res) => {
   const userId = new ObjectId(req.params.userId)
   const bankAtmCardsId = new ObjectId(req.params.bankAtmCardId)
   const { provider, cardNumber } = req.body
@@ -94,7 +94,7 @@ export const updatePersonalBankAtmCard = async (req, res) => {
  * @param {express.Request} req
  * @param {express.Response} res
  */
-export const deletePersonalBankAtmCard = async (req, res) => {
+exports.deletePersonalBankAtmCard = async (req, res) => {
   const userId = new ObjectId(req.params.userId)
   const bankAtmCardsId = new ObjectId(req.params.bankAtmCardId)
   try {
@@ -105,13 +105,16 @@ export const deletePersonalBankAtmCard = async (req, res) => {
       },
       {
         $pull: {
-          _id: bankAtmCardsId,
+          bankAtmCards: {
+            _id: bankAtmCardsId,
+          },
         },
       },
       { new: true, multi: true }
     )
     return res.json({ message: 'Success to delete bank atm card' })
   } catch (err) {
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

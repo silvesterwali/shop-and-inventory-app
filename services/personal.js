@@ -113,7 +113,8 @@ const createPersonalBankAtmCard = async (payload) => {
  */
 const updatePersonalBankAtmCard = async (userId, bankAtmCardId, payload) => {
   return await ApiClient.put(
-    `/api/personal/account/${userId}/user/${bankAtmCardId}/bank-atm-card`
+    `/api/personal/account/${userId}/user/${bankAtmCardId}/bank-atm-card`,
+    payload
   )
 }
 

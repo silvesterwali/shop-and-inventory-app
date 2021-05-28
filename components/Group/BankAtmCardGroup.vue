@@ -7,7 +7,7 @@
       boilerplate
     ></v-skeleton-loader>
     <v-card v-else>
-      <v-card-title>Family Member </v-card-title>
+      <v-card-title>Account bank </v-card-title>
 
       <v-card-text>
         <v-row>
@@ -20,29 +20,29 @@
             :order="!$vuetify.breakpoint.mobile ? 'last' : ''"
           >
             <v-sheet class="mt-3">
-              Add some infomartion about your family. it just optioal only
+              Add some infomartion about your atm card. it just optioal only
             </v-sheet>
           </v-col>
           <v-col md="8" lg="8" sm="8" xs="12">
-            <v-list v-if="families.length > 0">
-              <family-item
-                v-for="(family, index) in families"
+            <v-list v-if="accounts.length > 0">
+              <bank-atm-card-item
+                v-for="(bankAtmCard, index) in accounts"
                 :key="index"
-                :family="family"
+                :bank-atm-card="bankAtmCard"
                 :reload-status.sync="reloadStatus"
                 v-bind="$props"
               />
             </v-list>
             <v-divider class="mb-2" />
 
-            <family
+            <bank-card-atm-form
               v-if="addForm"
               v-bind="$props"
               :reload-status.sync="reloadStatus"
             />
 
             <div v-else class="d-flex flex-row">
-              <p>You can adding and update family member</p>
+              <p>You can adding and update bank account</p>
               <v-spacer />
               <v-btn small color="primary" @click.prevent="addForm = true"
                 >Add More</v-btn
@@ -56,14 +56,15 @@
 </template>
 
 <script>
-import Family from '@/components/Forms/Family.vue'
-import FamilyItem from '@/components/Item/FamilyItem.vue'
-import { getFamilies } from '@/services/personal.js'
+import BankAtmCardItem from '@/components/Item/BankAtmCardItem.vue'
+import { getPersonalBankAtmCard } from '@/services/personal.js'
+import BankCardAtmForm from '~/components/Forms/BankAtmCardForm.vue'
+
 export default {
-  name: 'FamilyGroup',
+  name: 'BankAtmCardGroup01',
   components: {
-    Family,
-    FamilyItem,
+    BankCardAtmForm,
+    BankAtmCardItem,
   },
   props: {
     userId: {
@@ -74,7 +75,7 @@ export default {
   data() {
     return {
       reloadStatus: false, // to reload fomily data from api
-      families: [],
+      accounts: [],
       addForm: false,
     }
   },
@@ -84,9 +85,9 @@ export default {
     if (this.userId === false) {
       return
     }
-    const { data } = await getFamilies(this.userId)
+    const { data } = await getPersonalBankAtmCard(this.userId)
     if (data) {
-      this.families = data
+      this.accounts = data
     }
   },
   watch: {
