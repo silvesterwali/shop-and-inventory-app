@@ -15,5 +15,6 @@ router.use('/auth', passwordChange)
 router.use('/auth/personal', profile)
 router.use('/personal/family', family)
 router.use('/personal/account', require('./bankAtmCard'))
+router.use('/users', require('./users'))
 
 module.exports = router
