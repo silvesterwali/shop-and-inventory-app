@@ -8,6 +8,7 @@
       app
       dense
       tile
+      :elevation="1"
     >
       <v-list>
         <v-list-item

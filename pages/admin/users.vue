@@ -1,13 +1,7 @@
 <template>
   <index-base-page>
     <template #content>
-      <v-card>
-        <v-card-title>Users Management</v-card-title>
-        <v-card-subtitle>Contain list of user</v-card-subtitle>
-        <v-card-text>
-          <user-table />
-        </v-card-text>
-      </v-card>
+      <user-table />
     </template>
   </index-base-page>
 </template>

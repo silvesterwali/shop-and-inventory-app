@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const db = require('../db').db
 /**
  * getUser
@@ -27,27 +28,27 @@ exports.getUsers = async (req, res) => {
 
   const query = {} // to apply if client send another parameter
 
-  result.totalRows = await db.collections('users').find(query).countDocuments()
-
-  if (endIndex < result.totalRows) {
-    result.next = {
-      page: page + 1,
-      limit,
-    }
-  }
-  if (startIndex > 0) {
-    result.previous = {
-      page: page - 1,
-      limit,
-    }
-  }
-
   try {
+    result.totalRows = await db.collection('users').find(query).count()
+
+    if (endIndex < result.totalRows) {
+      result.next = {
+        page: page + 1,
+        limit,
+      }
+    }
+    if (startIndex > 0) {
+      result.previous = {
+        page: page - 1,
+        limit,
+      }
+    }
     result.data = await db
       .collection('users')
-      .find(query)
+      .find(query, { projection: { password: 0 } })
       .limit(limit)
       .skip(startIndex)
+      .toArray()
 
     // response
     return res.json(result)

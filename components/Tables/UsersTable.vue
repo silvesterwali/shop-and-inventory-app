@@ -1,94 +1,82 @@
 <template>
   <div>
-    <v-data-table
-      v-model="selected"
-      dense
-      :items="todos"
-      :headers="headers"
-      item-key="id"
-      show-select
-    >
-      <template #body="{ items }">
-        <tbody>
-          <tr
-            v-for="item in items"
-            :key="item.id"
-            :search="search"
-            @mouseover="selectItem(item)"
-            @mouseleave="unSelectItem()"
-          >
-            <td>
-              <v-checkbox
-                v-model="selected"
-                multiple
-                :value="item"
-                style="margin: 0px; padding: 0px"
-                hide-details
-              />
-            </td>
-            <td width="5%">
-              <v-icon :color="item.completed ? 'warning' : ''"
-                >mdi-star-outline</v-icon
-              >
-            </td>
-            <td>
-              <span v-if="item === selectedItem">
-                {{ sliceText(item.title) }}
-              </span>
-              <span v-else>
-                {{ item.title }}
-              </span>
-            </td>
-            <td>
-              <div
-                v-if="item === selectedItem"
-                style="z-index: 1000"
-                class="f-flex flex-row"
-              >
-                <v-btn-toggle group dense tile>
-                  <v-btn small icon class="rounded-circle pa-2">
-                    <v-icon>mdi-eye-outline</v-icon>
-                  </v-btn>
-                  <v-btn small icon class="rounded-circle pa-2">
-                    <v-icon>mdi-pencil-outline</v-icon>
-                  </v-btn>
-                  <v-btn small icon class="rounded-circle pa-2">
-                    <v-icon>mdi-delete-outline</v-icon>
-                  </v-btn>
-                </v-btn-toggle>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+    <index-card-page>
+      <template #card-title>Users Management</template>
+      <template #card-subtitle>Contain list of user </template>
+      <template #card-text>
+        <v-data-table
+          v-model="selected"
+          dense
+          :items="users.data"
+          :headers="headers"
+          item-key="id"
+          :page.sync="page"
+          show-select
+          :items-per-page="limit"
+          hide-default-footer
+        >
+        </v-data-table>
       </template>
-    </v-data-table>
+      <template #card-action>
+        <v-spacer></v-spacer>
+        <v-pagination
+          v-model="page"
+          class="my-4"
+          :length="users.totalRows"
+        ></v-pagination>
+        <v-spacer />
+      </template>
+    </index-card-page>
   </div>
 </template>
 
 <script>
+import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import { getUsers } from '@/services/users.js'
 export default {
+  components: {
+    IndexCardPage,
+  },
   data: () => ({
-    todos: [],
+    users: [],
     selected: [],
     selectedItem: false,
     search: '',
+    limit: 50,
+    page: 1,
     headers: [
-      { text: 'Bintang', value: 'completed', sort: false },
+      { text: 'Email', value: 'email', sort: true },
       {
-        text: 'title',
-        value: 'title',
+        text: 'Rules',
+        value: 'rules',
       },
       {
-        text: '',
+        text: 'Verified Email',
+        value: 'verifiedEmail',
+      },
+      {
+        text: 'Join Date',
+        value: 'created_at',
+      },
+      {
+        text: 'Actions',
         value: 'actions',
       },
     ],
   }),
   async fetch() {
-    const { data } = await this.$axios.get(
-      'https://jsonplaceholder.typicode.com/todos'
-    )
-    this.todos = data
+    const { data } = await getUsers(this.limit, this.page)
+    this.users = data
+  },
+  watch: {
+    immediate: true,
+    handler(valeu, nowValue) {
+      if (valeu !== nowValue) {
+        if (process.client) {
+          this.$fetch()
+        }
+      }
+    },
   },
   methods: {
     deleteItem(item) {
