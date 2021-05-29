@@ -6,6 +6,8 @@
       :clipped="clipped"
       fixed
       app
+      dense
+      tile
     >
       <v-list>
         <v-list-item
@@ -87,7 +89,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'Prima Rasa Group',
     }
   },
 }
