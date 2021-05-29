@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <v-row>
+      <v-col lg="12" md="12" sm="12"></v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
