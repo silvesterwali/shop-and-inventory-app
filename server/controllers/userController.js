@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
 /**
  * getUser
@@ -57,5 +58,28 @@ exports.getUsers = async (req, res) => {
     console.log(err)
 
     return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
+
+/**
+ * userDetails
+ *
+ * - get detail information about user and personal data
+ * @param {express.Request} req
+ * @param {express.Response} res
+ **/
+exports.userDetails = async (req, res) => {
+  const userId = new ObjectId(req.params.userId)
+  try {
+    const user = await db
+      .collection('users')
+      .findOne({ _id: userId }, { projection: { password: 0 } })
+
+    // after find user object the select personal data to
+    user.personal = await db.collection('personal').findOne({ userId })
+    return res.json(user)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Errors' })
   }
 }

@@ -7,6 +7,7 @@
         <v-data-table
           v-model="selected"
           dense
+          :loading="$fetchState.pending"
           :items="users.data"
           :headers="headers"
           item-key="id"
@@ -15,6 +16,21 @@
           :items-per-page="limit"
           hide-default-footer
         >
+          <template #[`item.actions`]="{ item }">
+            <v-menu bottom left>
+              <template #activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list dense>
+                <v-list-item dense :to="`/admin/users/details/${item._id}`">
+                  <v-list-item-title>Details</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
         </v-data-table>
       </template>
       <template #card-action>

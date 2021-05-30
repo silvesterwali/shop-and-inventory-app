@@ -4,11 +4,12 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-title>{{ bankAtmCard.cardNumber }}</v-list-item-title>
+          <v-divider />
           <v-list-item-subtitle
             >{{ bankAtmCard.provider }}
           </v-list-item-subtitle>
         </v-list-item-content>
-        <v-list-item-action>
+        <v-list-item-action v-if="action">
           <div class="d-flex flex-row">
             <v-icon
               title="Edit data"
@@ -82,6 +83,10 @@ export default {
     reloadStatus: {
       type: Boolean,
       default: false,
+    },
+    action: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

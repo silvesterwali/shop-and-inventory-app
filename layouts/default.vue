@@ -81,10 +81,11 @@ export default {
           title: 'Welcome',
           to: '/',
         },
+
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: 'mdi-apps',
+          title: 'Admin/Users',
+          to: '/admin/users',
         },
       ],
       miniVariant: false,

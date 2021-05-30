@@ -7,5 +7,6 @@ const userController = require('../controllers/userController')
 router.use(auth)
 
 router.get('/', userController.getUsers)
+router.get('/:userId/user', userController.userDetails)
 
 module.exports = router
