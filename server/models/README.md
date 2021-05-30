@@ -72,6 +72,7 @@ below are the basic pre design of inventory system
   {
     _id:ObjectID,
     name:String,
+    serial:String,
     wholeSale:Number,
     category:Array // apply product category
     retailPrice:Number,
