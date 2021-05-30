@@ -2,17 +2,147 @@
 
 this directory is contain all model for database
 
-## personal structure
+## User Schema Design
 
-```json
+basic design of user schema
+
+```js
+  {
+    _id:ObjectId
+    email:String,
+    password:String,
+    rules:Array // user will apply the role ,
+    password:String,
+    verifiedEmail:Boolean,
+    created_at:String
+  }
+
+```
+
+
+### Rules property
+
+Rules is define for authorization purpose. every user will have Rules and permission when they access the every endpoint
+
+- _Super Admin_ the user with all ability access the main system
+- _Admin_ with access the system with have limit from _Super Admin_
+
+- _Sales Outlet_ sales role
+- _costumer_ - level of user who will get access as costumer only
+
+
+## Personal Structure
+
+below is the personal structure of document
+
+```js
 {
-  userId, fullName,  phone,  alternatePhone, address, alternatePhone,
-  families[
+  userId:ObjectID, // foreign key of user document
+  fullName:String,  
+  phone:String,  
+  alternatePhone:String, 
+  address:String, 
+  alternateAddress:String,
+  // define families refer to user
+  families:[
       {
-        fullName,
-        phoneNumber,
-        statusFamily
+        _id:ObjectID,
+        fullName:String,
+        phoneNumber:String,
+        statusFamily:String
+    }
+  ],
+  // bank account of user 
+  bankAtmCards:[
+    {
+      _id:ObjectID,
+      provider:String,
+      cardNumber:String
     }
   ]
 }
 ```
+## inventory schema design
+
+below are the basic pre design of inventory system
+
+### product schema
+
+```js
+  {
+    _id:ObjectID,
+    name:String,
+    wholeSale:Number,
+    category:Array // apply product category
+    retailPrice:Number,
+    description:String, // product description
+    stockQty:Number // define stock of product
+    createdAt:Date 
+    updatedAt:Date
+  }
+
+```
+
+### product category
+
+this optional for product schema
+
+```js
+{
+  _id:ObjectID,
+  name:String,
+  createdAt:Date,
+  updateAt:Date
+}
+
+```
+### ref payment method
+
+```js
+  {
+    _id:ObjectId,
+    method_name:String,
+    description:String
+  }
+
+```
+
+
+
+
+
+### Sales Transaction
+
+document to store sales transaction ***(SELLING)***
+
+```js
+  {
+    _id:ObjectId,
+    serialNumber:String, // apply serial for every transaction
+    customerId:ObjectId, // user with role as costumer maybe not
+    salesOutletId:ObjectId, // user with role sales
+    transactionDateTime:Date,
+    productsInTransaction:[
+      {
+        _id:ObjectID,
+        productId:ObjectId, // product document
+        Qty:Number, 
+        isCancel:Boolean
+        description:String,
+      }
+    ],
+    payments:[
+      {
+        _id:ObjectId,
+        paymentMethodId:ObjectId,
+        paymentAmount:Number,
+        createdAt:Date
+      }
+    ],
+    isValidTransaction:Boolean // if true that's mean product stock will be reduce
+  }
+
+```
+
+
+
