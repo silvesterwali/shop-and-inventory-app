@@ -52,6 +52,15 @@
         <nuxt />
       </v-container>
     </v-main>
+    <v-snackbar
+      :timeout="1500"
+      :value="snackbar"
+      :color="snackbarMessage.color ? snackbarMessage.color : 'success'"
+      right
+      top
+    >
+      {{ snackbarMessage.text }}
+    </v-snackbar>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
         <v-list-item @click.native="right = !right">
@@ -69,6 +78,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -92,7 +102,38 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Prima Rasa Group',
+      snackbar: false,
     }
+  },
+  computed: {
+    ...mapState(['message']),
+    snackbarMessage() {
+      if (this.message === null) {
+        return {
+          text: 'default message',
+          color: 'success',
+        }
+      }
+      return this.message
+    },
+  },
+  watch: {
+    message: {
+      immediate: true,
+      handler(value, newValue) {
+        if (value !== newValue) {
+          this.snackbar = true
+        }
+      },
+    },
+    snackbar: {
+      immediate: true,
+      handler(value) {
+        if (value === false) {
+          this.$store.commit(['SET_MESSAGE'], null)
+        }
+      },
+    },
   },
 }
 </script>
