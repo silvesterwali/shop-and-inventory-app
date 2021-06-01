@@ -22,7 +22,7 @@ exports.getProducts = async (req, res) => {
    *
    *
    */
-  const limit = req.params.limit ? parseInt(req.params.limit) : 50
+  const limit = req.params.limit ? parseInt(req.params.limit) : 5
   const page = req.params.page ? parseInt(req.params.page) : 1
 
   const startIndex = (page - 1) * limit
@@ -36,7 +36,7 @@ exports.getProducts = async (req, res) => {
 
     if (endIndex < result.totalRows) {
       result.next = {
-        page: page + 1,
+        page: page - 1,
         limit,
       }
     }
@@ -72,22 +72,32 @@ exports.getProducts = async (req, res) => {
  *
  */
 exports.createProduct = async (req, res) => {
-  const { name, serial, category, retailPrice, description, stockQty } =
-    req.body
+  const {
+    name,
+    serial,
+    category,
+    wholeSale,
+    retailPrice,
+    description,
+    stockQty,
+  } = req.body
 
   try {
     await db.collection('products').insertOne({
       name,
       serial,
       category,
-      retailPrice,
+      wholeSale: parseFloat(wholeSale),
+      retailPrice: parseFloat(retailPrice),
       description,
-      stockQty,
+      stockQty: parseFloat(stockQty),
       createdBy: new ObjectID(req.user._id),
       createdAt: new Date(),
     })
     return res.json({ message: 'Success to add new product resource' })
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
 }
@@ -120,22 +130,28 @@ exports.getProduct = async (req, res) => {
  * @param {express.Response} res
  */
 exports.updateProduct = async (req, res) => {
-  const { name, serial, category, retailPrice, description } = req.body
+  const { name, serial, category, wholeSale, retailPrice, description } =
+    req.body
   try {
     await db.collection('products').updateOne(
       { _id: new ObjectID(req.params.productId) },
       {
-        name,
-        serial,
-        category,
-        retailPrice,
-        description,
-        updatedBy: new ObjectID(req.user._id),
-        updatedAt: new Date(),
+        $set: {
+          name,
+          serial,
+          category,
+          wholeSale: parseFloat(wholeSale),
+          retailPrice: parseFloat(retailPrice),
+          description,
+          updatedBy: new ObjectID(req.user._id),
+          updatedAt: new Date(),
+        },
       }
     )
     return res.json({ message: 'Success to update product resource' })
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

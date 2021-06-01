@@ -5,6 +5,17 @@
       <template #content>
         <index-card-page>
           <template #card-title>Create new product</template>
+          <template #card-subtitle>
+            <div>
+              <v-btn
+                small
+                class="mt-n5 float-right"
+                color="primary"
+                to="/inventory/product"
+                >Back</v-btn
+              >
+            </div>
+          </template>
           <template #card-text>
             <product-from redirect-url="/inventory/product" />
           </template>

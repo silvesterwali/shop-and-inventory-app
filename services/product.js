@@ -14,7 +14,7 @@ import ApiClient from './apiClient.js'
  * @param {Number} page
  */
 export const getProducts = async (limit, page) => {
-  return await ApiClient.get(`/api/products?limit=${limit}&page=${page}`)
+  return await ApiClient.get(`/api/product?limit=${limit}&page=${page}`)
 }
 
 /**
@@ -24,7 +24,7 @@ export const getProducts = async (limit, page) => {
  * @param {Object} payload
  */
 export const createProduct = async (payload) => {
-  return await ApiClient.post(`/api/products`, payload)
+  return await ApiClient.post(`/api/product`, payload)
 }
 
 /**
@@ -34,7 +34,7 @@ export const createProduct = async (payload) => {
  * @param {String} productId
  */
 export const getProduct = async (productId) => {
-  return await ApiClient.get(`/api/products/${productId}`)
+  return await ApiClient.get(`/api/product/${productId}`)
 }
 
 /**
@@ -45,7 +45,7 @@ export const getProduct = async (productId) => {
  * @param {Object} payload
  */
 export const updateProduct = async (productId, payload) => {
-  return await ApiClient.put(`/api/products/${productId}`, payload)
+  return await ApiClient.put(`/api/product/${productId}`, payload)
 }
 
 /**
@@ -55,5 +55,5 @@ export const updateProduct = async (productId, payload) => {
  * @param {String} productId
  */
 export const deleteProduct = async (productId) => {
-  return await ApiClient.delete(`/api/products/${productId}`)
+  return await ApiClient.delete(`/api/product/${productId}`)
 }

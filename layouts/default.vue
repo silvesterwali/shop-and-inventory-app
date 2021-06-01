@@ -53,8 +53,8 @@
       </v-container>
     </v-main>
     <v-snackbar
+      v-model="snackbar"
       :timeout="1500"
-      :value="snackbar"
       :color="snackbarMessage.color ? snackbarMessage.color : 'success'"
       right
       top
@@ -97,6 +97,11 @@ export default {
           title: 'Admin/Users',
           to: '/admin/users',
         },
+        {
+          icon: 'mdi-apps',
+          title: 'inventory/product',
+          to: '/inventory/product',
+        },
       ],
       miniVariant: false,
       right: true,
@@ -120,8 +125,8 @@ export default {
   watch: {
     message: {
       immediate: true,
-      handler(value, newValue) {
-        if (value !== newValue) {
+      handler(value) {
+        if (value !== null) {
           this.snackbar = true
         }
       },
@@ -130,7 +135,7 @@ export default {
       immediate: true,
       handler(value) {
         if (value === false) {
-          this.$store.commit(['SET_MESSAGE'], null)
+          this.$store.commit('SET_MESSAGE', null)
         }
       },
     },

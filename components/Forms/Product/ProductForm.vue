@@ -14,6 +14,7 @@
         </v-col>
         <v-col lg="6" md="6" sm="6">
           <v-text-field
+            v-model="dataForm.serial"
             label="Serial"
             :rules="[
               (v) => !!v || 'Product serial is required',
@@ -25,6 +26,7 @@
           <v-select
             v-model="dataForm.category"
             label="Product category"
+            multiple
             :items="categories"
             :rules="[
               (v) => !!v || 'Category is required',
@@ -36,6 +38,7 @@
           <v-text-field
             v-model="dataForm.wholeSale"
             label="Wholesale"
+            type="number"
             :rules="[
               (v) => !!v || 'Wholesale is required',
               errorKey('wholeSale'),
@@ -44,13 +47,16 @@
         </v-col>
         <v-col lg="6" md="6" sm="6">
           <v-text-field
+            v-model="dataForm.retailPrice"
             label="Retail Price"
+            type="number"
             :rules="[
               (v) => !!v || 'Retail price is required',
               errorKey('retailPrice'),
             ]"
           ></v-text-field>
         </v-col>
+
         <v-col v-if="canAddStockQty" lg="6" md="6" sm="6">
           <v-text-field
             v-model="dataForm.stockQty"
@@ -61,9 +67,21 @@
             ]"
           ></v-text-field>
         </v-col>
+        <v-col lg="12" md="12" sm="12">
+          <v-textarea
+            v-model="dataForm.description"
+            rows="2"
+            label="Description"
+            :rules="[
+              (v) => !!v || 'Description is required',
+              errorKey('description'),
+            ]"
+          ></v-textarea>
+        </v-col>
+
         <v-col lg="12" sm="12" md="12">
           <v-spacer />
-          <v-btn type="submit" color="primary">{{
+          <v-btn type="submit" class="float-right" color="primary">{{
             dataForm._id == null ? 'Submit' : 'Update'
           }}</v-btn>
         </v-col>
@@ -99,6 +117,7 @@ export default {
         category: [],
         wholeSale: 0,
         retailPrice: 0,
+        description: null,
         stockQty: 0,
       },
       errors: null,
@@ -127,7 +146,7 @@ export default {
   },
   methods: {
     validateForm() {
-      if (!this.$$refs.form.validate()) return false
+      if (!this.$refs.form.validate()) return false
       if (this.dataForm._id === null) {
         this.createResource()
       } else {
