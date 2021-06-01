@@ -48,7 +48,7 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getUsers } from '@/services/users.js'
+import { getProducts } from '@/services/product.js'
 export default {
   components: {
     IndexCardPage,
@@ -61,17 +61,25 @@ export default {
     limit: 50,
     page: 1,
     headers: [
-      { text: 'Email', value: 'email', sort: true },
+      { text: 'Serial', value: 'serial', sort: true },
       {
-        text: 'Rules',
-        value: 'rules',
+        text: 'Name',
+        value: 'name',
       },
       {
-        text: 'Verified Email',
-        value: 'verifiedEmail',
+        text: 'Wholesale',
+        value: 'wholeSale',
       },
       {
-        text: 'Join Date',
+        text: 'Retail Price',
+        value: 'retailPrice',
+      },
+      {
+        text: 'Stock Qty',
+        value: 'stockQty',
+      },
+      {
+        text: 'description',
         value: 'created_at',
       },
       {
@@ -81,7 +89,7 @@ export default {
     ],
   }),
   async fetch() {
-    const { data } = await getUsers(this.limit, this.page)
+    const { data } = await getProducts(this.limit, this.page)
     this.users = data
   },
   watch: {
