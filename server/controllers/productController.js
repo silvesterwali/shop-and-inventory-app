@@ -22,7 +22,7 @@ exports.getProducts = async (req, res) => {
    *
    *
    */
-  const limit = req.params.limit ? parseInt(req.params.limit) : 5
+  const limit = req.params.limit ? parseInt(req.params.limit) : 50
   const page = req.params.page ? parseInt(req.params.page) : 1
 
   const startIndex = (page - 1) * limit

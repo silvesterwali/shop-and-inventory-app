@@ -98,7 +98,7 @@ export default {
     selectedItem: null,
     dialogDelete: false,
     search: '',
-    limit: 5,
+    limit: 50,
     page: 1,
     loading: false,
     headers: [
@@ -135,11 +135,16 @@ export default {
   },
   computed: {
     totalPage() {
+      if (this.products.length === 0) {
+        return 1
+      }
+
       const currentPage = Math.ceil(this.products.totalRows / this.limit)
       if (currentPage <= 0) {
         return 1
       }
-      return currentPage
+
+      return isNaN(currentPage) ? 1 : currentPage
     },
   },
   watch: {
