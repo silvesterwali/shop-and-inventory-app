@@ -12,19 +12,37 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
+          v-for="(list, index) in listWithNoGroup"
+          :key="index"
+          :to="list.url"
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon> {{ list.icon }}</v-icon>
           </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
+          <v-list-item-title>{{ list.title }}</v-list-item-title>
         </v-list-item>
+        <v-list-group
+          v-for="item in listGroup"
+          :key="item.title"
+          :prepend-icon="item.icon"
+        >
+          <template #activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="child in item.child"
+            :key="child.title"
+            :to="child.url"
+            exact
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="child.title"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app dense elevate-on-scroll tile>
@@ -62,7 +80,7 @@
       {{ snackbarMessage.text }}
     </v-snackbar>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
+      <v-list dense>
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
             <v-icon light> mdi-repeat </v-icon>
@@ -89,18 +107,28 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/',
+          url: '/',
         },
 
         {
           icon: 'mdi-apps',
-          title: 'Admin/Users',
-          to: '/admin/users',
+          title: 'Admin',
+          child: [
+            {
+              title: 'User',
+              url: '/admin/users',
+            },
+          ],
         },
         {
           icon: 'mdi-apps',
-          title: 'inventory/product',
-          to: '/inventory/product',
+          title: 'inventory',
+          child: [
+            {
+              title: 'Product',
+              url: '/inventory/product',
+            },
+          ],
         },
       ],
       miniVariant: false,
@@ -121,7 +149,16 @@ export default {
       }
       return this.message
     },
+    listGroup() {
+      const items = this.items
+      return items.filter((e) => e.child && e.child.length > 0)
+    },
+    listWithNoGroup() {
+      const items = this.items
+      return items.filter((e) => e.url !== undefined)
+    },
   },
+
   watch: {
     message: {
       immediate: true,
