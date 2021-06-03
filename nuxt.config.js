@@ -38,7 +38,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
-  devModules: ['@nuxtjs/eslint-module'],
+
   auth: {
     strategies: {
       local: {
