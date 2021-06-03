@@ -87,7 +87,11 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env
+      ? 'https://primarasa-group-prototype.herokuapp.com/'
+      : `http://localhost:${process.env.PORT || 3000}/`,
+  },
   loaders: {
     vue: {
       prettify: false,
