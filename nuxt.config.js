@@ -87,9 +87,7 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL: `http://localhost:${process.env.PORT || 3000}/`,
-  },
+  axios: {},
   loaders: {
     vue: {
       prettify: false,
