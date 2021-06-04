@@ -123,6 +123,7 @@ document to store sales transaction ***(SELLING)***
     customerId:ObjectId, // user with role as costumer maybe not
     salesOutletId:ObjectId, // user with role sales
     transactionDateTime:Date,
+    status:Number,
     productsInTransaction:[
       {
         _id:ObjectID,
@@ -146,4 +147,33 @@ document to store sales transaction ***(SELLING)***
 ```
 
 
+### transaction in stock in product
 
+```js
+  {
+    _id:ObjectId,
+    serialNumber:String, // apply serial for every transaction
+    customerId:ObjectId, // user with role as costumer maybe not
+    :ObjectId, // user with role sales
+    transactionDateTime:Date,
+    productsInTransaction:[
+      {
+        _id:ObjectID,
+        productId:ObjectId, // product document
+        Qty:Number, 
+        isCancel:Boolean
+        description:String,
+      }
+    ],
+    payments:[
+      {
+        _id:ObjectId,
+        paymentMethodId:ObjectId,
+        paymentAmount:Number,
+        createdAt:Date
+      }
+    ],
+    isValidTransaction:Boolean // if true that's mean product stock will be reduce
+  }
+
+```
