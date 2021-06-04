@@ -1,6 +1,13 @@
 <template>
   <div>
     <index-base-page>
+      <template #info>
+        <v-card class="mb-1">
+          <v-card-text>
+            {{ pageDescription }}
+          </v-card-text>
+        </v-card>
+      </template>
       <template #content>
         <product-table />
       </template>
@@ -16,6 +23,12 @@ export default {
     IndexBasePage,
     ProductTable,
   },
+  data() {
+    return {
+      pageDescription:
+        'All product is listed on this page. create, update and delete them form this page',
+    }
+  },
   head() {
     return {
       title: 'List of product',
@@ -23,7 +36,7 @@ export default {
         {
           uid: 'description',
           name: 'description',
-          content: 'List of product',
+          content: this.pageDescription,
         },
       ],
     }

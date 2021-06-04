@@ -125,6 +125,14 @@ export default {
               title: 'Product',
               url: '/inventory/product',
             },
+            {
+              title: 'Stock In',
+              url: '/inventory/stock-in',
+            },
+            {
+              title: 'Stock Out',
+              url: '/inventory/stock-out',
+            },
           ],
         },
       ],

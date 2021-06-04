@@ -1,7 +1,11 @@
 <template>
   <div>
     <index-base-page>
-      <template #info></template>
+      <template #info>
+        <v-card>
+          <v-card-text>{{ pageDescription }}</v-card-text>
+        </v-card>
+      </template>
       <template #content>
         <index-card-page>
           <template #card-title>Edit product</template>
@@ -45,6 +49,11 @@ export default {
       product: data,
     }
   },
+  data() {
+    return {
+      pageDescription: 'page for update specific product resoruce',
+    }
+  },
   head() {
     return {
       title: 'update product',
@@ -52,7 +61,7 @@ export default {
         {
           uid: 'description',
           name: 'description',
-          content: 'update product resoruce',
+          content: this.pageDescription,
         },
       ],
     }

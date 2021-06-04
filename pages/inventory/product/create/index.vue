@@ -1,7 +1,13 @@
 <template>
   <div>
     <index-base-page>
-      <template #info></template>
+      <template #info>
+        <v-card>
+          <v-card-text>
+            {{ pageDescription }}
+          </v-card-text>
+        </v-card>
+      </template>
       <template #content>
         <index-card-page>
           <template #card-title>Create new product</template>
@@ -35,6 +41,11 @@ export default {
     IndexCardPage,
     ProductFrom,
   },
+  data() {
+    return {
+      pageDescription: 'page for create new product resouce',
+    }
+  },
   head() {
     return {
       title: 'create product',
@@ -42,7 +53,7 @@ export default {
         {
           uid: 'description',
           name: 'description',
-          content: 'Add new product resoruce',
+          content: this.pageDescription,
         },
       ],
     }
