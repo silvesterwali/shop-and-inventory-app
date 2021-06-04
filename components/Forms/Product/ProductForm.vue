@@ -26,12 +26,23 @@
           <v-select
             v-model="dataForm.category"
             label="Product category"
+            dense
             multiple
             :items="categories"
             :rules="[
               (v) => !!v || 'Category is required',
               errorKey('category'),
             ]"
+          ></v-select>
+        </v-col>
+        <v-col lg="6" md="6" sm="6">
+          <v-select
+            v-model="dataForm.unit"
+            label="Unit Product"
+            dense
+            multiple
+            :items="units"
+            :rules="[(v) => !!v || 'Unit Product', errorKey('unit')]"
           ></v-select>
         </v-col>
         <v-col lg="6" md="6" sm="6">
@@ -115,6 +126,7 @@ export default {
         name: null,
         serial: null,
         category: [],
+        unit: [],
         wholeSale: 0,
         retailPrice: 0,
         description: null,
@@ -122,6 +134,7 @@ export default {
       },
       errors: null,
       categories: ['Food', 'Drinks'],
+      units: ['KG', 'GRAM', 'ROLL', 'SCS'],
     }
   },
   computed: {

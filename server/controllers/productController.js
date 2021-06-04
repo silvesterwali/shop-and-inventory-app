@@ -76,24 +76,32 @@ exports.createProduct = async (req, res) => {
     name,
     serial,
     category,
+    unit,
     wholeSale,
     retailPrice,
     description,
     stockQty,
   } = req.body
-
+  // eslint-disable-next-line no-console
+  console.log(unit)
   try {
-    await db.collection('products').insertOne({
-      name,
-      serial,
-      category,
-      wholeSale: parseFloat(wholeSale),
-      retailPrice: parseFloat(retailPrice),
-      description,
-      stockQty: parseFloat(stockQty),
-      createdBy: new ObjectID(req.user._id),
-      createdAt: new Date(),
-    })
+    await db.collection('products').insertOne(
+      {
+        name,
+        serial,
+        category,
+        unit,
+        wholeSale: parseFloat(wholeSale),
+        retailPrice: parseFloat(retailPrice),
+        description,
+        stockQty: parseFloat(stockQty),
+        createdBy: new ObjectID(req.user._id),
+        createdAt: new Date(),
+      },
+
+      false,
+      true
+    )
     return res.json({ message: 'Success to add new product resource' })
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -130,7 +138,7 @@ exports.getProduct = async (req, res) => {
  * @param {express.Response} res
  */
 exports.updateProduct = async (req, res) => {
-  const { name, serial, category, wholeSale, retailPrice, description } =
+  const { name, serial, category, unit, wholeSale, retailPrice, description } =
     req.body
   try {
     await db.collection('products').updateOne(
@@ -140,13 +148,16 @@ exports.updateProduct = async (req, res) => {
           name,
           serial,
           category,
+          unit,
           wholeSale: parseFloat(wholeSale),
           retailPrice: parseFloat(retailPrice),
           description,
           updatedBy: new ObjectID(req.user._id),
           updatedAt: new Date(),
         },
-      }
+      },
+      false,
+      true
     )
     return res.json({ message: 'Success to update product resource' })
   } catch (err) {
