@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       pageTitle: 'Base Page App',
-      pageDecription:
+      pageDescription:
         'this page is under develop, please provide some feedback to improve it for better documentation',
     }
   },

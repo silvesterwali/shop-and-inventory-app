@@ -17,18 +17,21 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
+
 export default {
   components: {
+    // define your component here
     IndexBasePage,
   },
   data() {
     return {
-      pageTitle: 'Base Page App',
-      pageDecription:
+      pageTitle: `Page-index`,
+      pageDescription:
         'this page is under develop, please provide some feedback to improve it for better documentation',
     }
   },
   head() {
+    // this property for meta tag
     return {
       title: this.pageTitle,
       meta: [
