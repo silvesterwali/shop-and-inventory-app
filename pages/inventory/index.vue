@@ -10,6 +10,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <supplier-table />
       </template>
     </index-base-page>
   </div>
@@ -17,11 +18,12 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import SupplierTable from '@/components/Tables/Supplier/SupplierTable.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    SupplierTable,
   },
   data() {
     return {
