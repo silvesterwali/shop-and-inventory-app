@@ -42,7 +42,10 @@
             dense
             multiple
             :items="units"
-            :rules="[(v) => !!v || 'Unit Product', errorKey('unit')]"
+            :rules="[
+              (v) => !!v || 'Unit Product is required',
+              errorKey('unit'),
+            ]"
           ></v-select>
         </v-col>
         <v-col lg="6" md="6" sm="6">

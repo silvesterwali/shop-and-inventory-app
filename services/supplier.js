@@ -10,7 +10,7 @@ import ApiClient from './apiClient.js'
 
 // endpoint for api endpoint
 
-const url = `/api/supplier`
+const url = `api/supplier`
 
 /**
  * getResources

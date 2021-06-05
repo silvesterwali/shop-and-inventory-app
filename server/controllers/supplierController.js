@@ -20,7 +20,7 @@ const db = require('../db').db
  **/
 exports.index = async (req, res) => {
   try {
-    const suppliers = await db.collection('suppliers').find()
+    const suppliers = await db.collection('suppliers').find({}).toArray()
     return res.json(suppliers)
   } catch (err) {
     console.log(err)

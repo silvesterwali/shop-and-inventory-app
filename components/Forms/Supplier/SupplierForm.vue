@@ -32,8 +32,16 @@
             label="Address"
             rows="2"
             dense
-            :rules="((v) => !!v || 'Address is required', errorKey('address'))"
+            :rules="[
+              ((v) => !!v || 'Address is required', errorKey('address')),
+            ]"
           ></v-textarea>
+        </v-col>
+        <v-col lg="12" sm="12" md="12">
+          <v-spacer />
+          <v-btn type="submit" class="float-right" color="primary">{{
+            dataForm._id == null ? 'Submit' : 'Update'
+          }}</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -112,7 +120,7 @@ export default {
           this.dataForm._id,
           this.dataForm
         )
-        this.SET_MESSAGE({ text: data.messaeg, color: 'success' })
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.go(-1)
       } catch (err) {
         this.errors = err.response.data
