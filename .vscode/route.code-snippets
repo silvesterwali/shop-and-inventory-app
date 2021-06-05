@@ -1,0 +1,33 @@
+{
+	"Basic route":{
+		"scope": "javascript",
+		"prefix": "base-route",
+		"description": "implement express route",
+		"body": [
+			"/**",
+			"*=============================================",
+			"* - @copyright ${CURRENT_YEAR}",
+			"*",
+			"* router",
+			"*",
+			"*",
+			"*",
+			"*",
+			"*",
+			"**/",
+			"",
+			"",
+			"const express=require('express')",
+			"const router=express.Router()",
+			"",
+			"router.get('/','.../your controller')",
+			"router.post('/','.../your controller')",
+			"router.get('/:id','.../your controller')",
+			"router.put('/:id','.../your controller')",
+			"router.delete('/:id','.../your controller')",
+			"",
+			"",
+			"module.exports=router"
+		]
+	}
+}
