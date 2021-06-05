@@ -18,4 +18,5 @@ router.use('/personal/family', family)
 router.use('/personal/account', require('./bankAtmCard'))
 router.use('/users', require('./users'))
 router.use('/product', require('./product'))
+router.use('/incoming-stock', require('./incoming-stock-main'))
 module.exports = router
