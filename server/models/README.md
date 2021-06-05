@@ -177,3 +177,16 @@ document to store sales transaction ***(SELLING)***
   }
 
 ```
+
+
+### supplier
+
+```js
+  {
+    name:String,
+    address:String,
+    phone:string,
+    email:string,
+    isActive:Boolean
+  }
+```
