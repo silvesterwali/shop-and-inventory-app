@@ -1,8 +1,12 @@
+/* eslint-disable no-console */
 /**
  * @copyright 2021
  *
  *
  **/
+
+const ObjectId = require('mongodb').ObjectID
+const db = require('../db').db
 
 /**
  *=====================================
@@ -14,7 +18,15 @@
  * @param {express.Response} res
  * @async
  **/
-exports.index = (req, res) => {}
+exports.index = async (req, res) => {
+  try {
+    const suppliers = await db.collection('suppliers').find()
+    return res.json(suppliers)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
@@ -26,7 +38,23 @@ exports.index = (req, res) => {}
  * @param {express.Response} res
  * @async
  **/
-exports.store = (req, res) => {}
+exports.store = async (req, res) => {
+  const { name, phone, email, address } = req.body
+  try {
+    await db.collection('suppliers').insertOne({
+      name,
+      phone,
+      email,
+      address,
+      isActive: true,
+      createdAt: new Date(),
+    })
+    return res.json({ message: 'Success create supplier' })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
@@ -38,7 +66,17 @@ exports.store = (req, res) => {}
  * @param {express.Response} res
  * @async
  **/
-exports.show = (req, res) => {}
+exports.show = async (req, res) => {
+  try {
+    const supplier = await db
+      .collection('suppliers')
+      .findOne({ _id: new ObjectId(req.params.id) })
+    return res.json(supplier)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
@@ -51,7 +89,28 @@ exports.show = (req, res) => {}
  * @param {express.Response} res
  * @async
  **/
-exports.update = (req, res) => {}
+exports.update = async (req, res) => {
+  const { name, phone, email, address } = req.body
+
+  try {
+    await db.collection('suppliers').updateOne(
+      { _id: new ObjectId(req.params.id) },
+      {
+        $set: {
+          name,
+          phone,
+          email,
+          address,
+          updatedAt: new Date(),
+        },
+      }
+    )
+    return res.json({ message: 'Success update supplier' })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
@@ -63,4 +122,14 @@ exports.update = (req, res) => {}
  * @param {express.Response} res
  * @async
  **/
-exports.destroy = (req, res) => {}
+exports.destroy = async (req, res) => {
+  try {
+    await db
+      .collection('suppliers')
+      .deleteOne({ _id: new ObjectId(req.params.id) })
+    return res.json({ message: 'Success delete supplier' })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Serve Error' })
+  }
+}
