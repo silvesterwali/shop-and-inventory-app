@@ -2,7 +2,7 @@
   <div>
     <v-form ref="form" @submit.prevent="validateForm">
       <v-row>
-        <v-col lg="6" md="6" sm="6">
+        <v-col lg="12" md="12" sm="12">
           <v-text-field
             v-model="dataForm.name"
             :rules="[(v) => !!v || 'Name is required', errorKey('name')]"
@@ -10,7 +10,7 @@
             dense
           ></v-text-field>
         </v-col>
-        <v-col lg="6" md="6" sm="6">
+        <v-col lg="12" md="12" sm="12">
           <v-text-field
             v-model="dataForm.phone"
             label="Phone"
@@ -18,7 +18,7 @@
             :rules="[(v) => !!v || 'phone is required', errorKey('phone')]"
           ></v-text-field>
         </v-col>
-        <v-col lg="6" md="6" sm="6">
+        <v-col lg="12" md="12" sm="12">
           <v-text-field
             v-model="dataForm.email"
             label="Email"
@@ -26,7 +26,7 @@
             :rules="[(v) => !!v || 'Email is Required', errorKey('email')]"
           ></v-text-field>
         </v-col>
-        <v-col lg="6" md="6" sm="6">
+        <v-col lg="12" md="12" sm="12">
           <v-textarea
             v-model="dataForm.address"
             label="Address"

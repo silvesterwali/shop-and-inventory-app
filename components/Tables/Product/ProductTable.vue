@@ -16,6 +16,7 @@
         </div>
       </template>
       <template #card-text>
+        <v-divider class="mb-2" />
         <v-data-table
           v-model="selected"
           dense

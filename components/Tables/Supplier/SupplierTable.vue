@@ -16,7 +16,12 @@
       </template>
       <template #card-text>
         <!-- listed  component for page on this slot section -->
-        <v-data-table :headers="headers" :items="suppliers" dense>
+        <v-data-table
+          :headers="headers"
+          :items="suppliers"
+          :loading="$fetchState.pending"
+          dense
+        >
           <template #[`item.actions`]="{ item }">
             <v-menu bottom left>
               <template #activator="{ on, attrs }">

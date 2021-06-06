@@ -23,6 +23,7 @@
             </div>
           </template>
           <template #card-text>
+            <v-divider class="mb-2" />
             <product-from redirect-url="/inventory/product" />
           </template>
         </index-card-page>

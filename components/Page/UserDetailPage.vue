@@ -164,6 +164,10 @@ export default {
       return this.user.personal
     },
     families() {
+      if (!this.personal) {
+        return null
+      }
+
       if (!this.user || !this.user.personal.families) {
         return null
       }
@@ -171,6 +175,9 @@ export default {
       return this.user.personal.families
     },
     banks() {
+      if (!this.personal) {
+        return null
+      }
       if (!this.user || !this.user.personal.bankAtmCards) {
         return null
       }
