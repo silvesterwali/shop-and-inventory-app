@@ -10,6 +10,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <header-stock-in />
       </template>
     </index-base-page>
   </div>
@@ -17,11 +18,12 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import HeaderStockIn from '@/components/Forms/StockIn/HeaderStockIn.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    HeaderStockIn,
   },
   data() {
     return {
