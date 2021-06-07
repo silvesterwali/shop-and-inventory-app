@@ -1,0 +1,39 @@
+{
+	"Base Component":{
+		"scope": "vue",
+		"prefix": "base-card-page",
+		"description": "This snipper for create basic page component content of the page",
+		"body": [
+			"<template>",
+			"  <div>",
+			"   ",
+			"       <template #card-title>Example Title</template>",
+			"       <template #card-subtitle>",
+			"         <div>",
+			"             <span>Example suptitle</span>",
+			"             <v-btn color=\"primary\" small class=\"mt-n5 float-right\" to='/'>Go To Somewhere</v-btn>",
+			"         </div>",
+			"       </template>",
+			"       <template #card-text>",
+			"         <!-- listed  component for page on this slot section -->",
+			"       </template>",
+			"   ",
+			"  </div>",
+			"</template>",
+			"",
+			"<script>",
+			"export default {",
+			"  components:{",
+			"       // register component here",
+			"  },",
+			" data(){",
+			"    return {",
+			"     }",
+			"  }",
+			"}",
+			"</script>",
+			"",
+			"<style lang=\"scss\" scoped></style>"
+		]
+	}
+}// }
