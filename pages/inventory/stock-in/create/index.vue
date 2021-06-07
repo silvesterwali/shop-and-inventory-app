@@ -10,7 +10,25 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <header-stock-in />
+        <index-card-page>
+          <template #card-title>Stock Masuk</template>
+          <template #card-subtitle
+            >List Stock Masuk
+            <div>
+              <v-btn
+                small
+                class="mt-n10 float-right"
+                color="primary"
+                to="/inventory/stock-in"
+                >Back</v-btn
+              >
+            </div>
+          </template>
+          <template #card-text>
+            <v-divider />
+            <header-stock-in-form />
+          </template>
+        </index-card-page>
       </template>
     </index-base-page>
   </div>
@@ -18,18 +36,19 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import HeaderStockIn from '@/components/Forms/StockIn/HeaderStockIn.vue'
+import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import HeaderStockInForm from '~/components/Forms/StockIn/HeaderStockInForm.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
-    HeaderStockIn,
+    HeaderStockInForm,
+    IndexCardPage,
   },
   data() {
     return {
       pageTitle: `Page-index`,
-      pageDescription:
-        'this page is under develop, please provide some feedback to improve it for better documentation',
+      pageDescription: 'Management Stok masuk barang dan bahan baku perusahaan',
     }
   },
   head() {
