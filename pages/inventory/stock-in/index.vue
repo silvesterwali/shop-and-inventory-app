@@ -1,47 +1,25 @@
 <template>
   <div>
-    <index-base-page>
-      <template #info>
-        <v-card>
-          <v-card-text>
-            {{ pageDescription }}
-          </v-card-text>
-        </v-card>
+    <index-card-page>
+      <template #card-title>Page Examplate</template>
+      <template #card-subtitle>
+        <!-- card subtitle -->
       </template>
-      <template #content>
-        <!-- page page will be here -->
-      </template>
-    </index-base-page>
+      <template #card-text> <!-- card-text --></template>
+      <template #card-action><!-- card-action --></template>
+    </index-card-page>
   </div>
 </template>
 
 <script>
-import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 export default {
   components: {
-    // define your component here
-    IndexBasePage,
+    // register component here
+    IndexCardPage,
   },
   data() {
-    return {
-      pageTitle: `Page-index`,
-      pageDescription:
-        'this page is under develop, please provide some feedback to improve it for better documentation',
-    }
-  },
-  head() {
-    // this property for meta tag
-    return {
-      title: this.pageTitle,
-      meta: [
-        {
-          uid: 'description',
-          name: 'description',
-          content: this.pageDescription,
-        },
-      ],
-    }
+    return {}
   },
 }
 </script>
