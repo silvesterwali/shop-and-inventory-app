@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-form ref="formHeader">
+    <v-form ref="formHeader" @submit.prevent="validateForm">
       <v-row class="mt-3">
         <v-col
           v-if="dataForm.serialNumber !== null"
@@ -13,10 +13,11 @@
         </v-col>
         <v-col sm="6" md="6" lg="6">
           <v-select
-            v-model="dataForm.suplier"
+            v-model="dataForm.supplier"
             dense
             label="Suplier"
             :items="supliers"
+            :rules="[errorKey('suplier')]"
             item-text="name"
             item-value="_id"
             placeholder="Supplier"
@@ -36,6 +37,7 @@
                 label="Transaction Date"
                 prepend-icon="mdi-calendar"
                 readonly
+                :rules="[errorKey('transactionDate')]"
                 dense
                 v-bind="attrs"
                 v-on="on"
@@ -50,6 +52,7 @@
         <v-col cols="12" sm="12" md="12">
           <v-textarea
             v-model="dataForm.description"
+            :rules="[errorKey('description')]"
             class="Description/Note (Optional)"
             rows="2"
           ></v-textarea>
@@ -58,7 +61,7 @@
           <p>
             mohon mengisi header sebelum mengisi detail product pada transaksi
           </p>
-          <v-btn color="primary" class="float-right">{{
+          <v-btn type="submit" color="primary" class="float-right">{{
             dataForm._id == null ? 'Submit' : 'Update'
           }}</v-btn>
         </v-col>
@@ -69,23 +72,64 @@
 
 <script>
 import { getSupplierResources } from '@/services/supplier.js'
+import {
+  createIncomingStockResource,
+  updateIncomingStockResource,
+} from '@/services/IncomingStock.js'
+import setMessage from '@/mixins/setMessage.js'
+import errorKey from '@/mixins/errorKey.js'
 export default {
+  mixins: [setMessage, errorKey],
   data() {
     return {
       dataForm: {
         _id: null,
         serialNumber: null,
         description: null,
-        suplier: null,
+        supplier: null,
         transactionDate: new Date().toISOString().substr(0, 10),
       },
       supliers: [],
       datePicker: false,
+      errors: null,
     }
   },
   async fetch() {
     const { data } = await getSupplierResources()
     this.supliers = data
+  },
+  methods: {
+    validateForm() {
+      this.errors = null
+      if (!this.$refs.formHeader.validate()) return false
+
+      if (this.dataForm._id === null) {
+        this.sendCreateNewResource()
+      } else {
+        this.sendUpdateResource()
+      }
+    },
+    async sendCreateNewResource() {
+      try {
+        const { data } = await createIncomingStockResource(this.dataForm)
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+        this.$router.push(`/inventory/stock-in/details/${data.data._id}`)
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
+    async sendUpdateResource() {
+      try {
+        const { data } = await updateIncomingStockResource(
+          this.dataForm._id,
+          this.dataForm
+        )
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+        this.$router.push(`/inventory/stock-in/details/${data.data._id}`)
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
   },
 }
 </script>

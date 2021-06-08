@@ -1,35 +1,15 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>List Stok Masuk</template>
-      <template #card-subtitle>
-        <!-- card subtitle -->
-        <div>
-          <span>Seluruh stock masuk</span>
-          <v-btn
-            color="primary"
-            small
-            class="mt-n5 float-right"
-            to="/inventory/stock-in/create"
-            >Stock Masuk Baru</v-btn
-          >
-        </div>
-      </template>
-      <template #card-text>
-        <!-- card-text -->
-        <v-divider />
-      </template>
-      <template #card-action><!-- card-action --></template>
-    </index-card-page>
+    <stock-in-table />
   </div>
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import StockInTable from '@/components/Tables/StockIn/StockInTable.vue'
 export default {
   components: {
     // register component here
-    IndexCardPage,
+    StockInTable,
   },
   data() {
     return {}
