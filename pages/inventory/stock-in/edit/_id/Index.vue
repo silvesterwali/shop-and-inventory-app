@@ -26,7 +26,7 @@
           </template>
           <template #card-text>
             <v-divider />
-            <header-stock-in-form />
+            <header-stock-in-form :stock-in="stockIn" />
           </template>
         </index-card-page>
       </template>
@@ -37,6 +37,7 @@
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import { getIncomingStockResource } from '@/services/IncomingStock.js'
 import HeaderStockInForm from '~/components/Forms/StockIn/HeaderStockInForm.vue'
 export default {
   components: {
@@ -45,9 +46,15 @@ export default {
     HeaderStockInForm,
     IndexCardPage,
   },
+  async asyncData({ params }) {
+    const { data } = await getIncomingStockResource(params.id)
+    return {
+      stockIn: data,
+    }
+  },
   data() {
     return {
-      pageTitle: `Page-index`,
+      pageTitle: `Edit Stock In header`,
       pageDescription: 'Management Stok masuk barang dan bahan baku perusahaan',
     }
   },

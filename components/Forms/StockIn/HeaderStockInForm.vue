@@ -80,6 +80,12 @@ import setMessage from '@/mixins/setMessage.js'
 import errorKey from '@/mixins/errorKey.js'
 export default {
   mixins: [setMessage, errorKey],
+  props: {
+    stockIn: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       dataForm: {
@@ -97,6 +103,16 @@ export default {
   async fetch() {
     const { data } = await getSupplierResources()
     this.supliers = data
+  },
+  watch: {
+    stockIn: {
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.dataForm = value
+        }
+      },
+    },
   },
   methods: {
     validateForm() {

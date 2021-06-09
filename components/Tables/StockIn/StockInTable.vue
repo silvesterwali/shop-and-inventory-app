@@ -38,7 +38,7 @@
               </template>
 
               <v-list dense>
-                <v-list-item dense :to="`/inventory/product/edit/${item._id}`">
+                <v-list-item dense :to="`/inventory/stock-in/edit/${item._id}`">
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item>
                 <v-list-item dense @click="deleteItemConfirm(item)">
