@@ -6,6 +6,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <stock-in-detail-table />
       </template>
     </index-base-page>
   </div>
@@ -15,11 +16,13 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import { getIncomingStockResource } from '@/services/IncomingStock.js'
 import StockInHeaderItem from '@/components/Item/StockInHeaderItem.vue'
+import StockInDetailTable from '@/components/Tables/StockIn/StockInDetailTable.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
     StockInHeaderItem,
+    StockInDetailTable,
   },
   async asyncData({ params }) {
     const { data } = await getIncomingStockResource(params.stock_header_id)
