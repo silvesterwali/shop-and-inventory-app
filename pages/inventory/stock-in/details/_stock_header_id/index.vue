@@ -6,7 +6,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <stock-in-detail-table />
+        <stock-in-detail-table :stock-header="stock" />
       </template>
     </index-base-page>
   </div>

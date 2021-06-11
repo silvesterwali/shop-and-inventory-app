@@ -129,6 +129,7 @@ exports.store = async (req, res) => {
       status: 0, // recent create
       createdBy: new ObjectID(req.user._id),
       createdAt: new Date(),
+      productsInTransactions: [],
     })
 
     return res.json({
@@ -202,6 +203,7 @@ exports.show = async (req, res) => {
             'createdBy.updated_at': 0,
             'supplier.createdAt': 0,
             'supplier.updatedAt': 0,
+            productsInTransactions: 0,
           },
         },
       ])

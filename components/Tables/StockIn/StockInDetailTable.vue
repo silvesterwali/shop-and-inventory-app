@@ -7,7 +7,12 @@
         <div>
           <span>List Of Item </span>
 
-          <v-btn color="primary" small class="mt-n5 float-right" to="/"
+          <v-btn
+            v-if="!openDialog"
+            color="primary"
+            small
+            class="mt-n5 float-right"
+            @click.prevent="openDialog = true"
             >Add Item</v-btn
           >
           <v-btn
@@ -22,7 +27,7 @@
       <template #card-text>
         <!-- card-text -->
 
-        <v-simple-table dark>
+        <v-simple-table>
           <template #default>
             <thead>
               <tr>
@@ -49,15 +54,19 @@
       </template>
       <template #card-action><!-- card-action --></template>
     </index-card-page>
+    <product-modal :open-dialog.sync="openDialog" />
   </div>
 </template>
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import { getIncomingStockDetailResources } from '@/services/IncomingStockDetail.js'
+import ProductModal from '@/components/Modal/StockIn/ProductModal.vue'
 export default {
   components: {
     // register component here
     IndexCardPage,
+    ProductModal,
   },
   props: {
     stockHeader: {
@@ -68,7 +77,23 @@ export default {
   data() {
     return {
       items: [],
+      openDialog: false,
     }
+  },
+  async fetch() {
+    const { data } = await getIncomingStockDetailResources(this.stockHeader._id)
+    this.items = data
+  },
+  watch: {
+    openDialog: {
+      immediate: true,
+      handler(value) {
+        // wathc the open dialog when it diabled load again the resource
+        if (process.client && value === false) {
+          this.$fetch()
+        }
+      },
+    },
   },
 }
 </script>

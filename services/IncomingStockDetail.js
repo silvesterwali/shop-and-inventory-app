@@ -10,31 +10,32 @@ import ApiClient from './apiClient.js'
 
 // endpoint for api endpoint
 
-const url = `/api/incoming-stock-detail`
+const url = `api/incoming-stock-detail`
 
 /**
- * getResources
+ * getIncomingStockDetailResources
  *
  * - endpoint to get all IncomingStockDetail resource
- * @param {Number} limit - limit resource to retrieve from backend
- * @param {Number} page - current page index for pagination
+ * @param {String} StockInId  - stock header _id 
+ 
  * @async
  *
  */
-export const getIncomingStockDetailResources = async (limit, page) => {
-  return await ApiClient.get(`/${url}?limit=${limit}&page=${page}`)
+export const getIncomingStockDetailResources = async (StockInId) => {
+  return await ApiClient.get(`/${url}/${StockInId}/main`)
 }
 
 /**
  * createResource
  *
  * - endpoint to create new IncomingStockDetail resource
+ * @param {String} StockInId - stock main _id
  * @param {Object} payload - data object for resource
  * @async
  *
  */
-export const createIncomingStockDetailResource = async (payload) => {
-  return await ApiClient.post(`/${url}`, payload)
+export const createIncomingStockDetailResource = async (StockInId, payload) => {
+  return await ApiClient.post(`/${url}/${StockInId}/main`, payload)
 }
 
 /**
@@ -53,23 +54,29 @@ export const getIncomingStockDetailResource = async (id) => {
  * updateResource
  *
  * - endpoint to update specific IncomingStockDetail resource
+ * @param {String} StockInId - stock header _id
  * @param {String} id - id of data resource
  * @param {Object} payload - data object for resource
  * @async
  *
  */
-export const updateIncomingStockDetailResource = async (id, payload) => {
-  return await ApiClient.put(`/${url}/${id}`, payload)
+export const updateIncomingStockDetailResource = async (
+  StockInId,
+  id,
+  payload
+) => {
+  return await ApiClient.put(`/${url}/${StockInId}/main/${id}/detail`, payload)
 }
 
 /**
  * deleteResource
  *
  * - endpoint to delete specific IncomingStockDetail resource
+ * @param {String} StockInId - stock header _id
  * @param {String} id
  * @async
  *
  */
-export const deleteIncomingStockDetailResource = async (id) => {
-  return await ApiClient.delete(`/${url}/${id}`)
+export const deleteIncomingStockDetailResource = async (StockInId, id) => {
+  return await ApiClient.delete(`/${url}/${StockInId}/main/${id}/details`)
 }
