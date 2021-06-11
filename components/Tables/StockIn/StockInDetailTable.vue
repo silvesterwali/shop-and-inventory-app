@@ -19,7 +19,34 @@
           >
         </div>
       </template>
-      <template #card-text> <!-- card-text --></template>
+      <template #card-text>
+        <!-- card-text -->
+
+        <v-simple-table dark>
+          <template #default>
+            <thead>
+              <tr>
+                <th class="text-left">Product</th>
+                <th class="text-left">Qty</th>
+                <th class="text-left">Unit</th>
+                <th class="text-left">Price</th>
+                <th class="text-left">Discount</th>
+                <th class="text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items" :key="item.name">
+                <td>{{ item.productId }}</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ item.unit }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.discount }}</td>
+                <td>{{ item.description }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </template>
       <template #card-action><!-- card-action --></template>
     </index-card-page>
   </div>
@@ -32,8 +59,16 @@ export default {
     // register component here
     IndexCardPage,
   },
+  props: {
+    stockHeader: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
-    return {}
+    return {
+      items: [],
+    }
   },
 }
 </script>
