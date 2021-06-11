@@ -155,8 +155,58 @@ exports.store = async (req, res) => {
 exports.show = async (req, res) => {
   const _id = new ObjectID(req.params.id)
   try {
-    const IncomingStock = await db.collection('IncomingStocks').findOne({ _id })
-    return res.json(IncomingStock)
+    const IncomingStock = await db
+      .collection('IncomingStocks')
+      .aggregate([
+        {
+          $match: {
+            _id,
+          },
+        },
+        {
+          $lookup: {
+            from: 'suppliers',
+            localField: 'supplierId',
+            foreignField: '_id',
+            as: 'supplier',
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy',
+          },
+        },
+        {
+          // convert array of supplier to object if exist
+          $unwind: {
+            path: '$supplier',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          // convert array of createBy to object if exists
+          $unwind: {
+            path: '$createdBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          // exclude some field  from return result to client
+          $project: {
+            'createdBy.password': 0,
+            'createdBy.verifiedEmail': 0,
+            'createdBy.created_at': 0,
+            'createdBy.updated_at': 0,
+            'supplier.createdAt': 0,
+            'supplier.updatedAt': 0,
+          },
+        },
+      ])
+      .toArray()
+    return res.json(IncomingStock[0])
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err)
