@@ -49,7 +49,7 @@ exports.index = async (req, res) => {
         {
           $lookup: {
             from: 'suppliers',
-            localField: 'supplier',
+            localField: 'supplierId',
             foreignField: '_id',
             as: 'supplier',
           },
@@ -116,14 +116,15 @@ exports.index = async (req, res) => {
  * @async
  **/
 exports.store = async (req, res) => {
-  const { description, supplier, transactionDate } = req.body
-  const supplierId = req.body.supplier !== null ? new ObjectID(supplier) : null
+  const { description, supplierId, transactionDate } = req.body
+  const supplierID =
+    req.body.supplier !== null ? new ObjectID(supplierId) : null
   try {
     const result = await db.collection('IncomingStocks').insertOne({
       _id: new ObjectID(),
       serialNumber: await StockNumber.stockInNumber(),
       transactionDate,
-      supplier: supplierId,
+      supplierId: supplierID,
       description,
       status: 0, // recent create
       createdBy: new ObjectID(req.user._id),
@@ -175,8 +176,8 @@ exports.show = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { description, supplier, transactionDate } = req.body
-  const supplierId = req.body.supplier ? new ObjectID(supplier) : null
+  const { description, supplierId, transactionDate } = req.body
+  const supplierID = req.body.supplier ? new ObjectID(supplierId) : null
   try {
     const IncomingStock = await db.collection('IncomingStocks').updateOne(
       {
@@ -185,7 +186,7 @@ exports.update = async (req, res) => {
       {
         $set: {
           transactionDate,
-          supplier: supplierId,
+          supplierId: supplierID,
           description,
           updatedBy: new ObjectID(req.user._id),
           updatedAt: new Date(),

@@ -13,11 +13,11 @@
         </v-col>
         <v-col sm="6" md="6" lg="6">
           <v-select
-            v-model="dataForm.supplier"
+            v-model="dataForm.supplierId"
             dense
             label="Suplier"
             :items="supliers"
-            :rules="[errorKey('suplier')]"
+            :rules="[errorKey('suplierId')]"
             item-text="name"
             item-value="_id"
             placeholder="Supplier"
@@ -92,7 +92,7 @@ export default {
         _id: null,
         serialNumber: null,
         description: null,
-        supplier: null,
+        supplierId: null,
         transactionDate: new Date().toISOString().substr(0, 10),
       },
       supliers: [],
