@@ -37,6 +37,7 @@
                 <th class="text-left">Price</th>
                 <th class="text-left">Discount</th>
                 <th class="text-left">Description</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -47,6 +48,22 @@
                 <td>{{ item.price }}</td>
                 <td>{{ item.discount }}</td>
                 <td>{{ item.description }}</td>
+                <td>
+                  <div class="d-flex flex-row">
+                    <v-btn
+                      color="primary"
+                      fab
+                      small
+                      title="edit item"
+                      @click.prevent="editItem(item)"
+                    >
+                      <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn color="error" fab small title="delete item">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </template>
@@ -54,7 +71,13 @@
       </template>
       <template #card-action><!-- card-action --></template>
     </index-card-page>
-    <product-modal v-bind="$props" :open-dialog.sync="openDialog" />
+    <template v-if="openDialog">
+      <product-modal
+        v-bind="$props"
+        :open-dialog.sync="openDialog"
+        :item-stock="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
@@ -78,9 +101,11 @@ export default {
     return {
       items: [],
       openDialog: false,
+      selectedItem: null, // selected item show up on product model. can used for edit the stock in item
     }
   },
   async fetch() {
+    this.selectedItem = null
     const { data } = await getIncomingStockDetailResources(this.stockHeader._id)
     this.items = data
   },
@@ -93,6 +118,12 @@ export default {
           this.$fetch()
         }
       },
+    },
+  },
+  methods: {
+    editItem(item) {
+      this.selectedItem = item
+      this.openDialog = true
     },
   },
 }
