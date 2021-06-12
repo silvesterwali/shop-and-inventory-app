@@ -25,6 +25,7 @@
         </div>
       </template>
       <template #card-text>
+        <v-divider />
         <!-- card-text -->
 
         <v-simple-table>
@@ -50,18 +51,19 @@
                 <td>{{ item.description }}</td>
                 <td>
                   <div class="d-flex flex-row">
-                    <v-btn
-                      color="primary"
-                      fab
+                    <v-icon
                       small
-                      title="edit item"
+                      color="primary"
                       @click.prevent="editItem(item)"
+                      >mdi-pencil</v-icon
                     >
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-btn color="error" fab small title="delete item">
-                      <v-icon>mdi-delete</v-icon>
-                    </v-btn>
+
+                    <v-icon
+                      small
+                      color="error"
+                      @click.prevent="deleteItem(item)"
+                      >mdi-delete</v-icon
+                    >
                   </div>
                 </td>
               </tr>
@@ -78,6 +80,13 @@
         :item-stock="selectedItem"
       />
     </template>
+    <template v-if="dialogDelete">
+      <delete-stock-in-modal
+        v-bind="$props"
+        :dialog-delete.sync="dialogDelete"
+        :item-stock="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
@@ -85,11 +94,13 @@
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getIncomingStockDetailResources } from '@/services/IncomingStockDetail.js'
 import ProductModal from '@/components/Modal/StockIn/ProductModal.vue'
+import DeleteStockInModal from '@/components/Modal/StockIn/DeleteStockInModal.vue'
 export default {
   components: {
     // register component here
     IndexCardPage,
     ProductModal,
+    DeleteStockInModal,
   },
   props: {
     stockHeader: {
@@ -101,6 +112,7 @@ export default {
     return {
       items: [],
       openDialog: false,
+      dialogDelete: false,
       selectedItem: null, // selected item show up on product model. can used for edit the stock in item
     }
   },
@@ -119,11 +131,26 @@ export default {
         }
       },
     },
+    dialogDelete: {
+      immediate: true,
+      // wathc the event from delete dialog
+      handler(value) {
+        if (process.client && value === false) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
+    // method to file edit dialog
     editItem(item) {
       this.selectedItem = item
       this.openDialog = true
+    },
+    // method to file the delete dialog comfirmation
+    deleteItem(item) {
+      this.selectedItem = item
+      this.dialogDelete = true
     },
   },
 }

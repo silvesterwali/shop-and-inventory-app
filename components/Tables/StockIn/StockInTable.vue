@@ -41,6 +41,12 @@
                 <v-list-item dense :to="`/inventory/stock-in/edit/${item._id}`">
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item>
+                <v-list-item
+                  dense
+                  :to="`/inventory/stock-in/details/${item._id}`"
+                >
+                  <v-list-item-title>Detail</v-list-item-title>
+                </v-list-item>
                 <v-list-item dense @click="deleteItemConfirm(item)">
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>

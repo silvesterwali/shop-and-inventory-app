@@ -153,5 +153,9 @@ exports.destroy = async (req, res) => {
         },
       }
     )
-  } catch (err) {}
+    return res.json({ message: 'Success remove ite' })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).message({ message: 'Internal Server Error' })
+  }
 }

@@ -177,7 +177,7 @@ export default {
       const productUnit = this.productList.find(
         (el) => el._id === this.dataForm.productId
       )
-      return productUnit.unit
+      return productUnit ? productUnit.unit : []
     },
   },
   watch: {

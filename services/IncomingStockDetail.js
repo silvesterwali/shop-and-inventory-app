@@ -78,5 +78,5 @@ export const updateIncomingStockDetailResource = async (
  *
  */
 export const deleteIncomingStockDetailResource = async (StockInId, id) => {
-  return await ApiClient.delete(`/${url}/${StockInId}/main/${id}/details`)
+  return await ApiClient.delete(`/${url}/${StockInId}/main/${id}/detail`)
 }
