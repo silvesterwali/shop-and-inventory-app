@@ -19,10 +19,13 @@ const db = require('../db').db
  **/
 exports.index = async (req, res) => {
   const StockInId = req.params.StockInId
+    ? new ObjectID(req.params.StockInId)
+    : null
   try {
     const stock = await db
       .collection('IncomingStocks')
       .findOne({ _id: StockInId })
+
     const productsInTransactions = stock ? stock.productsInTransactions : []
     return res.json(productsInTransactions)
   } catch (err) {

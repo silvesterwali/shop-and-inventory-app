@@ -54,7 +54,7 @@
       </template>
       <template #card-action><!-- card-action --></template>
     </index-card-page>
-    <product-modal :open-dialog.sync="openDialog" />
+    <product-modal v-bind="$props" :open-dialog.sync="openDialog" />
   </div>
 </template>
 

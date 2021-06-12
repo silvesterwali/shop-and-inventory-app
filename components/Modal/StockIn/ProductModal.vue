@@ -33,13 +33,14 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
-                  <v-text-field
+                  <v-select
                     v-model="dataForm.unit"
+                    :items="units"
                     label="Unit"
-                    :rules="[(v) => !!v || 'unit is required']"
                     dense
+                    :rules="[(v) => !!v || 'unit is required']"
                     required
-                  ></v-text-field>
+                  ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
@@ -60,6 +61,7 @@
                     dense
                     :rules="[(v) => !!v || 'discount is required']"
                     type="number"
+                    step="any"
                     required
                   ></v-text-field>
                 </v-col>
@@ -94,11 +96,22 @@
 </template>
 <script>
 import { getProductListResources } from '@/services/productList.js'
+import {
+  createIncomingStockDetailResource,
+  updateIncomingStockDetailResource,
+} from '@/services/IncomingStockDetail.js'
+import errorKey from '@/mixins/errorKey.js'
+import setMessage from '@/mixins/setMessage'
 export default {
+  mixins: [errorKey, setMessage],
   props: {
     openDialog: {
       type: Boolean,
       default: false,
+    },
+    stockHeader: {
+      type: Object,
+      default: null,
     },
   },
   data() {
@@ -114,6 +127,7 @@ export default {
         description: null,
       },
       productList: [], // list product
+      errors: null,
     }
   },
   async fetch() {
@@ -131,7 +145,7 @@ export default {
       },
     },
     loading() {
-      return this.$fetchState
+      return this.$fetchState.pending
     },
     /**
      * units
@@ -161,8 +175,53 @@ export default {
     },
     // method will validate the form before sended the data to backend
     validateForm() {
+      this.errors = null
       if (!this.$refs.form.validate()) {
         return false
+      }
+      if (this.dataForm._id === null) {
+        this.sendNewResource()
+      } else {
+        this.sendUpdateResource()
+      }
+    },
+    async sendNewResource() {
+      try {
+        const { data } = await createIncomingStockDetailResource(
+          this.stockHeader._id,
+          this.dataForm
+        )
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+        this.resetForm()
+        this.dialog = false
+      } catch (err) {
+        this.errors = err.response.data
+      }
+    },
+    async sendUpdateResource() {
+      try {
+        const { data } = await updateIncomingStockDetailResource(
+          this.stockHeader._id,
+          this.dataForm._id,
+          this.dataForm
+        )
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+        this.resetForm()
+        this.dialog = false
+      } catch (err) {
+        this.errors = err
+      }
+    },
+    resetForm() {
+      this.$refs.form.reset()
+      this.dataForm = {
+        _id: null,
+        productId: null,
+        qty: 0,
+        unit: null,
+        price: 0,
+        discount: 0,
+        description: null,
       }
     },
   },
