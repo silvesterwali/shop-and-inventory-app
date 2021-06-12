@@ -16,8 +16,7 @@ const url = `product-list`
  * getProductListResources
  *
  * - endpoint to get all productList resource
- * @param {Number} limit - limit resource to retrieve from backend
- * @param {Number} page - current page index for pagination
+ * - endpoint will display product list without pagination
  * @async
  *
  */
