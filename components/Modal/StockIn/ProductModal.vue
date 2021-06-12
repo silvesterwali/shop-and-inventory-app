@@ -17,7 +17,10 @@
                     item-value="_id"
                     item-text="name"
                     dense
-                    :rules="[(v) => !!v || 'product is required']"
+                    :rules="[
+                      (v) => !!v || 'product is required',
+                      errorKey('productId'),
+                    ]"
                     required
                     @input="setUnitToNull"
                   ></v-select>
@@ -28,7 +31,7 @@
                     dense
                     label="qty"
                     type="number"
-                    :rules="[(v) => !!v || 'qty  is required']"
+                    :rules="[(v) => !!v || 'qty  is required', errorKey('qty')]"
                     step="any"
                   ></v-text-field>
                 </v-col>
@@ -38,7 +41,10 @@
                     :items="units"
                     label="Unit"
                     dense
-                    :rules="[(v) => !!v || 'unit is required']"
+                    :rules="[
+                      (v) => !!v || 'unit is required',
+                      errorKey('unit'),
+                    ]"
                     required
                   ></v-select>
                 </v-col>
@@ -47,7 +53,10 @@
                     v-model="dataForm.price"
                     type="number"
                     step="any"
-                    :rules="[(v) => !!v || 'price is required']"
+                    :rules="[
+                      (v) => !!v || 'price is required',
+                      errorKey('price'),
+                    ]"
                     label="price"
                     dense
                     required
@@ -59,7 +68,10 @@
                     v-model="dataForm.discount"
                     label="discount"
                     dense
-                    :rules="[(v) => !!v || 'discount is required']"
+                    :rules="[
+                      (v) => !!v || 'discount is required',
+                      errorKey('discount'),
+                    ]"
                     type="number"
                     step="any"
                     required
@@ -69,6 +81,7 @@
                   <v-textarea
                     v-model="dataForm.description"
                     dense
+                    :rules="[errorKey('description')]"
                     label="description"
                     rows="2"
                   ></v-textarea>
@@ -110,6 +123,10 @@ export default {
       default: false,
     },
     stockHeader: {
+      type: Object,
+      default: null,
+    },
+    itemStock: {
       type: Object,
       default: null,
     },
@@ -163,6 +180,17 @@ export default {
       return productUnit.unit
     },
   },
+  watch: {
+    itemStock: {
+      // wathc the itemStock props . if there passsing data then property dataForm should be update
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.dataForm = value
+        }
+      },
+    },
+  },
   methods: {
     /**
      * setUnitToNull
@@ -185,6 +213,12 @@ export default {
         this.sendUpdateResource()
       }
     },
+    /**
+     * sendNewResource
+     *
+     * - method to responsible send new item stock in resource
+     * @async
+     */
     async sendNewResource() {
       try {
         const { data } = await createIncomingStockDetailResource(
@@ -198,6 +232,12 @@ export default {
         this.errors = err.response.data
       }
     },
+    /**
+     * sendUpdateResource
+     *
+     * - method for responsible send update resource for create item stock in
+     * @async
+     */
     async sendUpdateResource() {
       try {
         const { data } = await updateIncomingStockDetailResource(
