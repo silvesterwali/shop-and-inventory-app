@@ -19,6 +19,7 @@ router.use('/personal/account', require('./bankAtmCard'))
 router.use('/users', require('./users'))
 router.use('/supplier', require('./supplier'))
 router.use('/product', require('./product'))
+router.use('/product-list', require('./productList'))
 router.use('/incoming-stock', require('./incoming-stock-main'))
 router.use('/incoming-stock-detail', require('./incoming-stock-detail'))
 module.exports = router
