@@ -37,6 +37,7 @@
                 <th class="text-left">Unit</th>
                 <th class="text-left">Price</th>
                 <th class="text-left">Discount</th>
+                <th class="text-left">Total</th>
                 <th class="text-left">Description</th>
                 <th class="text-center">Action</th>
               </tr>
@@ -48,6 +49,7 @@
                 <td>{{ item.unit }}</td>
                 <td>{{ item.price }}</td>
                 <td>{{ item.discount }}</td>
+                <td>{{ item.total }}</td>
                 <td>{{ item.description }}</td>
                 <td>
                   <div class="d-flex flex-row">

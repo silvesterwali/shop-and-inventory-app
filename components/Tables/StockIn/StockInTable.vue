@@ -29,6 +29,9 @@
           :items-per-page="limit"
           hide-default-footer
         >
+          <template #[`item.status`]="{ item }">
+            <stock-in-chip :status="item.status" />
+          </template>
           <template #[`item.actions`]="{ item }">
             <v-menu bottom left>
               <template #activator="{ on, attrs }">
@@ -93,6 +96,7 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import {
   getIncomingStockResources,
   deleteIncomingStockResource,
@@ -101,6 +105,7 @@ import setMessage from '@/mixins/setMessage.js'
 export default {
   components: {
     IndexCardPage,
+    StockInChip,
   },
   mixins: [setMessage],
   data: () => ({
