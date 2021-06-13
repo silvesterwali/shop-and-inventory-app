@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * @copyright 2021
  * - this controller is just responsible to  increase in the total stock of goods
@@ -56,7 +57,11 @@ exports.update = async (req, res) => {
         },
       }
     )
+    res.json({
+      message: 'Success adding stock',
+    })
   } catch (err) {
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

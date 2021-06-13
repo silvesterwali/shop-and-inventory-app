@@ -22,4 +22,5 @@ router.use('/product', require('./product'))
 router.use('/product-list', require('./productList'))
 router.use('/incoming-stock', require('./incoming-stock-main'))
 router.use('/incoming-stock-detail', require('./incoming-stock-detail'))
+router.use('/stock', require('./stock'))
 module.exports = router
