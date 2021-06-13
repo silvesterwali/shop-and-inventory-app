@@ -7,6 +7,7 @@
 
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
+const { countDiscount } = require('../utilities/discountUtils.js')
 /**
  *=====================================
  * index
@@ -142,10 +143,11 @@ exports.store = async (req, res) => {
           productsInTransactions: {
             _id: new ObjectID(),
             productId: productObjectID,
-            qty,
+            qty: parseInt(qty),
             unit,
-            price,
-            discount,
+            price: parseFloat(price),
+            discount: parseFloat(discount),
+            total: countDiscount(price, qty, discount),
             description,
             isCancel: false,
             createdAt: new Date(),
@@ -196,10 +198,11 @@ exports.update = async (req, res) => {
         // update the current selected object form array product in transaction
         $set: {
           'productsInTransactions.$.productId': productObjectID,
-          'productsInTransactions.$.qty': qty,
+          'productsInTransactions.$.qty': parseInt(qty),
           'productsInTransactions.$.unit': unit,
-          'productsInTransactions.$.price': price,
-          'productsInTransactions.$.discount': discount,
+          'productsInTransactions.$.price': parseFloat(price),
+          'productsInTransactions.$.discount': parseFloat(discount),
+          'productsInTransactions.$.total': countDiscount(price, qty, discount),
           'productsInTransactions.$.description': description,
           'productsInTransactions.$.updatedAt': new Date(),
         },
