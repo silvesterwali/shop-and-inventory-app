@@ -37,6 +37,7 @@ exports.index = async (req, res) => {
             // unwind the productsInTransaction field from array to object
             $unwind: {
               path: '$productsInTransactions',
+              preserveNullAndEmptyArrays: true,
             },
           },
           {
@@ -109,7 +110,8 @@ exports.index = async (req, res) => {
       )
       .toArray()
 
-    const productsInTransactions = stock ? stock[0].productsInTransactions : []
+    const productsInTransactions =
+      stock.length > 0 ? stock[0].productsInTransactions : []
     return res.json(productsInTransactions)
   } catch (err) {
     console.log(err)

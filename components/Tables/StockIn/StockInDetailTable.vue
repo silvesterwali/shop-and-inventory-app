@@ -27,7 +27,7 @@
       <template #card-text>
         <v-divider />
         <!-- card-text -->
-
+        <v-progress-linear indeterminate height="6" :active="loading" />
         <v-simple-table>
           <template #default>
             <thead>
@@ -43,7 +43,7 @@
             </thead>
             <tbody>
               <tr v-for="item in items" :key="item.name">
-                <td>{{ item.productId }}</td>
+                <td>{{ item.product.name }}</td>
                 <td>{{ item.qty }}</td>
                 <td>{{ item.unit }}</td>
                 <td>{{ item.price }}</td>
@@ -120,6 +120,11 @@ export default {
     this.selectedItem = null
     const { data } = await getIncomingStockDetailResources(this.stockHeader._id)
     this.items = data
+  },
+  computed: {
+    loading() {
+      return this.$fetchState.pending
+    },
   },
   watch: {
     openDialog: {
