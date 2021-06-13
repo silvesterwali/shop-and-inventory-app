@@ -38,7 +38,7 @@ exports.index = async (req, res) => {
             // unwind the productsInTransaction field from array to object
             $unwind: {
               path: '$productsInTransactions',
-              preserveNullAndEmptyArrays: true,
+              preserveNullAndEmptyArrays: false,
             },
           },
           {

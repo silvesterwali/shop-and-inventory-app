@@ -28,6 +28,7 @@
         <v-divider />
         <!-- card-text -->
         <v-progress-linear indeterminate height="6" :active="loading" />
+
         <v-simple-table>
           <template #default>
             <thead>
@@ -42,8 +43,9 @@
                 <th class="text-center">Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr v-for="item in items" :key="item.name">
+
+            <tbody v-if="items.length > 0">
+              <tr v-for="(item, index) in items" :key="index">
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.qty }}</td>
                 <td>{{ item.unit }}</td>

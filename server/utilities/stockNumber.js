@@ -26,9 +26,14 @@ exports.stockInNumber = async () => {
       },
       {
         $project: {
-          last_serial: {
-            $max: '$last_index',
+          lastGreat: {
+            $max: { $toInt: '$last_index' },
           },
+        },
+      },
+      {
+        $sort: {
+          lastGreat: -1,
         },
       },
       {
@@ -38,7 +43,7 @@ exports.stockInNumber = async () => {
     .toArray()
 
   const lastCountStockIn =
-    valueOfNumber.length > 0 ? parseInt(valueOfNumber[0].last_serial) : 0
+    valueOfNumber.length > 0 ? parseInt(valueOfNumber[0].lastGreat) : 0
   const newNumber = lastCountStockIn + 1
   const strLength = newNumber.toString().length
   let _stringFormat = ''
