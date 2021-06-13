@@ -21,6 +21,18 @@ const registrationRules = () => {
         }
         return true
       }),
+    body('username')
+      .not()
+      .isEmpty()
+      .custom(async (value) => {
+        const username = await db
+          .collection('users')
+          .findOne({ username: value })
+        if (username) {
+          throw new Error('username already in use')
+        }
+        return true
+      }),
     body('password').isLength({ min: 8, max: 20 }),
     // @see https://express-validator.github.io/docs/custom-validators-sanitizers.html#example-checking-if-password-confirmation-matches-password
     body('passwordConfirmation').custom((value, { req }) => {

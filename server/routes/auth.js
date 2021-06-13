@@ -21,12 +21,12 @@ router.post(
   registrationRules(),
   validate,
   async (req, res) => {
-    const { password, email } = req.body
+    const { username, password, email } = req.body
     try {
       const user = await db.collection('users').insertOne({
+        username,
         email,
         password: await passwordHash(password),
-
         rules: ['costumer'],
         verifiedEmail: false,
         created_at: new Date(),

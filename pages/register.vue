@@ -16,6 +16,15 @@
                 </div>
                 <div>
                   <v-text-field
+                    v-model.trim="credential.username"
+                    label="Username"
+                    placeholder="username"
+                    :rules="[
+                      (v) => !!v || 'username is required',
+                      errorKey('username'),
+                    ]"
+                  ></v-text-field>
+                  <v-text-field
                     v-model.trim="credential.email"
                     label="Email"
                     placeholder="Email"
@@ -86,6 +95,7 @@ export default {
   data() {
     return {
       credential: {
+        username: null,
         email: null,
         password: null,
         passwordConfirmation: null,
