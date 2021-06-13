@@ -24,9 +24,92 @@ exports.index = async (req, res) => {
   try {
     const stock = await db
       .collection('IncomingStocks')
-      .findOne({ _id: StockInId })
+      .aggregate(
+        // this code below is pipeline for aggregate
+        [
+          {
+            // first find the document match with _id
+            $match: {
+              _id: StockInId,
+            },
+          },
+          {
+            // unwind the productsInTransaction field from array to object
+            $unwind: {
+              path: '$productsInTransactions',
+            },
+          },
+          {
+            // join the product collection according the productId In productsInTransaction object field
+            $lookup: {
+              from: 'products',
+              localField: 'productsInTransactions.productId',
+              foreignField: '_id',
+              as: 'productsInTransactions.product',
+            },
+          },
+          {
+            // adding new field to Object in productsInTransactions array
+            $addFields: {
+              'productsInTransactions.product': {
+                $ifNull: [
+                  {
+                    // prevent if productId does not exits in productsInTransaction Array Object field
+                    $arrayElemAt: ['$productsInTransactions.product', 0],
+                  },
+                  [],
+                ],
+              },
+            },
+          },
+          {
+            // group the all document to get the root order as like before add field
+            $group: {
+              _id: '$_id',
+              serialNumber: {
+                $first: '$serialNumber',
+              },
+              transactionDate: {
+                $first: '$transactionDate',
+              },
+              supplierId: {
+                $first: '$supplierId',
+              },
+              description: {
+                $first: '$description',
+              },
+              status: {
+                $first: '$status',
+              },
+              createdBy: {
+                $first: '$createdBy',
+              },
+              createdAt: {
+                $first: '$createdAt',
+              },
+              // this will pull the productsInTransactions to array format from object
+              productsInTransactions: {
+                $push: '$productsInTransactions',
+              },
+            },
+          },
+          {
+            // exclude some field before return to client
+            $project: {
+              'productsInTransactions.product.updatedAt': 0,
+              'productsInTransactions.product.updatedBy': 0,
+              'productsInTransactions.product.createdAt': 0,
+              'productsInTransactions.product.createdBy': 0,
+              'productsInTransactions.product.category': 0,
+              'productsInTransactions.product.unit': 0,
+              'productsInTransactions.product.stockQty': 0,
+            },
+          },
+        ]
+      )
+      .toArray()
 
-    const productsInTransactions = stock ? stock.productsInTransactions : []
+    const productsInTransactions = stock ? stock[0].productsInTransactions : []
     return res.json(productsInTransactions)
   } catch (err) {
     console.log(err)
@@ -153,7 +236,7 @@ exports.destroy = async (req, res) => {
         },
       }
     )
-    return res.json({ message: 'Success remove ite' })
+    return res.json({ message: 'Success remove item' })
   } catch (err) {
     console.log(err)
     return res.status(500).message({ message: 'Internal Server Error' })
