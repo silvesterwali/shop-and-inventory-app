@@ -7,6 +7,7 @@
 
 const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
+const { incrementStockProduct } = require('../utilities/stok.js')
 
 /**
  *=====================================
@@ -43,5 +44,19 @@ exports.update = async (req, res) => {
         message: 'There no item product in transaction list. Operation failed',
       })
     }
-  } catch (err) {}
+    productsInTransactions.forEach(async (el) => {
+      await incrementStockProduct(el.productId, el.qty)
+    })
+
+    await db.collection('IncomingStocks').updateMany(
+      { _id: new ObjectId(req.params.id) },
+      {
+        $set: {
+          status: 1,
+        },
+      }
+    )
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
 }
