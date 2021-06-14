@@ -75,7 +75,15 @@
           </template>
         </v-simple-table>
       </template>
-      <template #card-action><!-- card-action --></template>
+      <template #card-action
+        ><!-- card-action -->
+        <v-spacer />
+        <template v-if="items.length > 0 && stockHeader.status == 0">
+          <v-btn color="success" outlined @click.prevent="dialogApprove = true"
+            >Approve</v-btn
+          >
+        </template>
+      </template>
     </index-card-page>
     <template v-if="openDialog">
       <product-modal
@@ -91,6 +99,12 @@
         :item-stock="selectedItem"
       />
     </template>
+    <template v-if="dialogApprove">
+      <approve-stock-in-modal
+        :dialog-approve.sync="dialogApprove"
+        :incoming-stock="stockHeader"
+      />
+    </template>
   </div>
 </template>
 
@@ -99,12 +113,14 @@ import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getIncomingStockDetailResources } from '@/services/IncomingStockDetail.js'
 import ProductModal from '@/components/Modal/StockIn/ProductModal.vue'
 import DeleteStockInModal from '@/components/Modal/StockIn/DeleteStockInModal.vue'
+import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
 export default {
   components: {
     // register component here
     IndexCardPage,
     ProductModal,
     DeleteStockInModal,
+    ApproveStockInModal,
   },
   props: {
     stockHeader: {
@@ -117,6 +133,7 @@ export default {
       items: [],
       openDialog: false,
       dialogDelete: false,
+      dialogApprove: false,
       selectedItem: null, // selected item show up on product model. can used for edit the stock in item
     }
   },
@@ -143,6 +160,14 @@ export default {
     dialogDelete: {
       immediate: true,
       // wathc the event from delete dialog
+      handler(value) {
+        if (process.client && value === false) {
+          this.$fetch()
+        }
+      },
+    },
+    dialogApprove: {
+      immediate: true,
       handler(value) {
         if (process.client && value === false) {
           this.$fetch()

@@ -1,11 +1,6 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="400">
-      <template #activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Open Dialog
-        </v-btn>
-      </template>
       <v-card :loading="loading">
         <v-card-title class="text-h5">
           Are sure want delete this item ?
