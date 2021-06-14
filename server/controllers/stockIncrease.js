@@ -4,11 +4,12 @@
  * - this controller is just responsible to  increase in the total stock of goods
  * - this will work with incoming stock
  * - will change the status to 1 (status effect the qty stock of product)
+ * - this controller is still evaluate
  **/
 
 const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
-const { incrementStockProduct } = require('../utilities/stok.js')
+const { incrementStockProduct } = require('../utilities/stock.js')
 
 /**
  *=====================================
