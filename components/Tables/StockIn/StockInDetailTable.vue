@@ -6,15 +6,17 @@
         <!-- card subtitle -->
         <div>
           <span>List Of Item </span>
+          <template v-if="stockHeader.status == 0">
+            <v-btn
+              v-if="!openDialog"
+              color="primary"
+              small
+              class="mt-n5 float-right"
+              @click.prevent="openDialog = true"
+              >Add Item</v-btn
+            >
+          </template>
 
-          <v-btn
-            v-if="!openDialog"
-            color="primary"
-            small
-            class="mt-n5 float-right"
-            @click.prevent="openDialog = true"
-            >Add Item</v-btn
-          >
           <v-btn
             color="error"
             small
@@ -40,7 +42,9 @@
                 <th class="text-left">Discount</th>
                 <th class="text-left">Total</th>
                 <th class="text-left">Description</th>
-                <th class="text-center">Action</th>
+                <th v-if="stockHeader.status == 0" class="text-center">
+                  Action
+                </th>
               </tr>
             </thead>
 
@@ -53,7 +57,7 @@
                 <td>{{ item.discount }}</td>
                 <td>{{ item.total }}</td>
                 <td>{{ item.description }}</td>
-                <td>
+                <td v-if="stockHeader.status == 0">
                   <div class="d-flex flex-row">
                     <v-icon
                       small

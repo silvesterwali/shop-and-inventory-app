@@ -46,6 +46,13 @@ exports.update = async (req, res) => {
         message: 'There no item product in transaction list. Operation failed',
       })
     }
+
+    if (stock.status !== 0) {
+      return res.json(422).json({
+        message: 'This action is not correct section for current item',
+      })
+    }
+
     productsInTransactions.forEach(async (el) => {
       await incrementStockProduct(el.productId, el.qty)
     })

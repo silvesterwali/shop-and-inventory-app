@@ -14,10 +14,8 @@ exports.incrementStockProduct = async (productId, qty) => {
     await db.collection('products').updateOne(
       { _id: new ObjectID(productId) },
       {
-        $set: {
-          $inc: {
-            stockQty: parseFloat(qty),
-          },
+        $inc: {
+          stockQty: parseFloat(qty),
         },
       }
     )
