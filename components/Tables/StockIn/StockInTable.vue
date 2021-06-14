@@ -41,7 +41,11 @@
               </template>
 
               <v-list dense>
-                <v-list-item dense :to="`/inventory/stock-in/edit/${item._id}`">
+                <v-list-item
+                  v-if="canModify(item)"
+                  dense
+                  :to="`/inventory/stock-in/edit/${item._id}`"
+                >
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item>
                 <v-list-item
@@ -50,10 +54,18 @@
                 >
                   <v-list-item-title>Detail</v-list-item-title>
                 </v-list-item>
-                <v-list-item dense @click="approveSection(item)">
+                <v-list-item
+                  v-if="item.status === 0"
+                  dense
+                  @click="approveSection(item)"
+                >
                   <v-list-item-title>Approve</v-list-item-title>
                 </v-list-item>
-                <v-list-item dense @click="deleteItemConfirm(item)">
+                <v-list-item
+                  v-if="canModify(item)"
+                  dense
+                  @click="deleteItemConfirm(item)"
+                >
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -217,6 +229,13 @@ export default {
         this.loading = false
         this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
       }
+    },
+    canModify(item) {
+      const cannotModifyArray = [1, 2]
+      if (cannotModifyArray.includes(item.status)) {
+        return false
+      }
+      return true
     },
   },
 }
