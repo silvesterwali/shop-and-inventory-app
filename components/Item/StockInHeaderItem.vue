@@ -2,6 +2,9 @@
   <div>
     <v-card>
       <v-card-title>{{ stockHeader.serialNumber }}</v-card-title>
+      <v-card-subtitle>
+        <stock-in-chip :status="stockHeader.status" />
+      </v-card-subtitle>
       <v-card-text class="pa-1">
         <v-list>
           <v-list-item two-line>
@@ -47,8 +50,12 @@
 </template>
 
 <script>
+import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 export default {
   name: 'StockInHeaderItem',
+  components: {
+    StockInChip,
+  },
   props: {
     stockHeader: {
       type: Object,
