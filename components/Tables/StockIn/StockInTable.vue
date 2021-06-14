@@ -50,6 +50,9 @@
                 >
                   <v-list-item-title>Detail</v-list-item-title>
                 </v-list-item>
+                <v-list-item dense @click="approveSection(item)">
+                  <v-list-item-title>Approve</v-list-item-title>
+                </v-list-item>
                 <v-list-item dense @click="deleteItemConfirm(item)">
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
@@ -91,12 +94,19 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <template v-if="dialogApprove">
+      <approve-stock-in-modal
+        :dialog-approve.sync="dialogApprove"
+        :incoming-stock="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
+import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
 import {
   getIncomingStockResources,
   deleteIncomingStockResource,
@@ -106,6 +116,7 @@ export default {
   components: {
     IndexCardPage,
     StockInChip,
+    ApproveStockInModal,
   },
   mixins: [setMessage],
   data: () => ({
@@ -113,6 +124,7 @@ export default {
     selected: [],
     selectedItem: null,
     dialogDelete: false,
+    dialogApprove: false,
     search: '',
     limit: 50,
     page: 1,
@@ -179,6 +191,16 @@ export default {
     deleteItemConfirm(item) {
       this.selectedItem = item
       this.dialogDelete = true
+    },
+    /**
+     * approveSection
+     *
+     * - method to show the approve modal
+     *
+     */
+    approveSection(item) {
+      this.selectedItem = item
+      this.dialogApprove = true
     },
     async sendDelete() {
       try {

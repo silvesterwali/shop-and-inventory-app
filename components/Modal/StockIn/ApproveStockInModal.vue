@@ -69,7 +69,7 @@ export default {
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
       } catch (err) {
-        this.SET_MESSAGE({ text: err.response.data, color: 'error' })
+        this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
       } finally {
         this.loading = false
         this.dialog = false

@@ -48,7 +48,7 @@ exports.update = async (req, res) => {
     }
 
     if (stock.status !== 0) {
-      return res.json(422).json({
+      return res.status(422).json({
         message: 'This action is not correct section for current item',
       })
     }
