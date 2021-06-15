@@ -84,10 +84,6 @@ exports.update = async (req, res) => {
     }
     await run()
 
-    // eslint-disable-next-line no-console
-    console.log(validStock.length)
-    // eslint-disable-next-line no-console
-    console.log(validCount.length)
     /**
      * if when canceled the the transaction and stock qty is less the the qty of transaction
      * and in this condition should manually by admin IT

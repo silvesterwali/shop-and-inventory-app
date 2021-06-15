@@ -23,7 +23,7 @@ export default {
       } else if (status === 2) {
         return {
           text: 'Cancel',
-          color: 'errro',
+          color: 'error',
         }
       }
       return {
