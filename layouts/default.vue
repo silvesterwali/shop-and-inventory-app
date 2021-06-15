@@ -69,7 +69,7 @@
     </v-main>
     <v-snackbar
       v-model="snackbar"
-      :timeout="1500"
+      :timeout="3500"
       :color="snackbarMessage.color ? snackbarMessage.color : 'success'"
       right
       top

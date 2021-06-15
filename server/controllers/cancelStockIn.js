@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * @copyright 2021
  * guideline
@@ -71,34 +72,47 @@ exports.update = async (req, res) => {
 
     // validCount for store temp data
     const validCount = []
+    const run = async () => {
+      for (const item of validStock) {
+        const product = await findProduct(item.productId)
 
-    validStock.forEach(async (el) => {
-      const product = await findProduct(el.productId)
-      if (product.stockQty >= el.qty) {
-        validCount.push(1)
+        if (parseFloat(product.stockQty) >= parseFloat(item.qty)) {
+          validCount.push({ id: item.qty })
+        }
       }
-    })
+      return true
+    }
+    await run()
+
+    // eslint-disable-next-line no-console
+    console.log(validStock.length)
+    // eslint-disable-next-line no-console
+    console.log(validCount.length)
     /**
      * if when canceled the the transaction and stock qty is less the the qty of transaction
      * and in this condition should manually by admin IT
      */
-    if (validStock.length !== validCount) {
+    if (validStock.length !== validCount.length) {
       return res.status(422).json({
         message:
           'Some product qty in this current transaction is more then current stock qty. please do it manually with IT SUPPORT',
       })
     }
 
-    validStock.forEach(async (el) => {
-      /**
-       * by passing negative value of qty that mean . we force mongodb `$inc` to reduce the quantity
-       *
-       */
-      await stockUtils.incrementStockProduct(
-        el.productId,
-        Math.abs(el.qty) * -1
-      )
-    })
+    const runLoop = async () => {
+      for (const item of validStock) {
+        /**
+         * by passing negative value of qty that mean . we force mongodb `$inc` to reduce the quantity
+         *
+         */
+        await stockUtils.incrementStockProduct(
+          item.productId,
+          Math.abs(item.qty) * -1
+        )
+      }
+      return true
+    }
+    await runLoop()
 
     // finally we cancel the status of transaction
     await stockUtils.cancelIncomingStock(
@@ -109,6 +123,8 @@ exports.update = async (req, res) => {
 
     return res.json({ message: 'success cancel item stock' })
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
 }

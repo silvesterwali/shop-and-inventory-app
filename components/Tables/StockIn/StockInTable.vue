@@ -62,6 +62,13 @@
                   <v-list-item-title>Approve</v-list-item-title>
                 </v-list-item>
                 <v-list-item
+                  v-if="item.status !== 2"
+                  dense
+                  @click="cancelStock(item)"
+                >
+                  <v-list-item-title>Cancel</v-list-item-title>
+                </v-list-item>
+                <v-list-item
                   v-if="canModify(item)"
                   dense
                   @click="deleteItemConfirm(item)"
@@ -112,6 +119,12 @@
         :incoming-stock="selectedItem"
       />
     </template>
+    <template v-if="dialogCancel">
+      <cancellation-stock-in-modal
+        :dialog-cancel.sync="dialogCancel"
+        :incoming-stock="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
@@ -119,6 +132,7 @@
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
+import CancellationStockInModal from '@/components/Modal/StockIn/CancellationStockInModal.vue'
 import {
   getIncomingStockResources,
   deleteIncomingStockResource,
@@ -129,6 +143,7 @@ export default {
     IndexCardPage,
     StockInChip,
     ApproveStockInModal,
+    CancellationStockInModal,
   },
   mixins: [setMessage],
   data: () => ({
@@ -137,6 +152,7 @@ export default {
     selectedItem: null,
     dialogDelete: false,
     dialogApprove: false,
+    dialogCancel: false,
     search: '',
     limit: 50,
     page: 1,
@@ -198,6 +214,14 @@ export default {
         }
       },
     },
+    dialogCancel: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
     deleteItemConfirm(item) {
@@ -213,6 +237,10 @@ export default {
     approveSection(item) {
       this.selectedItem = item
       this.dialogApprove = true
+    },
+    cancelStock(item) {
+      this.selectedItem = item
+      this.dialogCancel = true
     },
     async sendDelete() {
       try {
