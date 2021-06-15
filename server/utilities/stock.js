@@ -24,3 +24,33 @@ exports.incrementStockProduct = async (productId, qty) => {
     throw new Error(err)
   }
 }
+/**
+ *cancelIncomingStock
+ *
+ *
+ * - this method will responsible update and set specific incoming stock  to cancelled status
+ * @param {String} incomingStockId
+ * @param {string} cancelNote
+ * @param {Object} user - current login login
+ *
+ */
+exports.cancelIncomingStock = async (incomingStockId, cancelNote, user) => {
+  try {
+    await db.collection('IncomingStocks').updateOne(
+      {
+        _id: new ObjectID(incomingStockId),
+      },
+      {
+        $set: {
+          status: 2, // cancel status
+          cancelBy: new ObjectID(user._id),
+          cancelNote,
+          cancelAt: new Date(),
+        },
+      }
+    )
+    return true
+  } catch (err) {
+    throw new Error(err)
+  }
+}
