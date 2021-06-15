@@ -100,6 +100,13 @@ exports.update = async (req, res) => {
       )
     })
 
+    // finally we cancel the status of transaction
+    await stockUtils.cancelIncomingStock(
+      req.params.id,
+      req.body.cancelNote,
+      req.user
+    )
+
     return res.json({ message: 'success cancel item stock' })
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' })
