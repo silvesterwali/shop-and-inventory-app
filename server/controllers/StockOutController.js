@@ -19,7 +19,98 @@ const stockNumber = require('../utilities/stockNumber.js')
  * @param {express.Response} res
  * @async
  **/
-exports.index = async (req, res) => {}
+exports.index = async (req, res) => {
+  const limit = req.params.limit ? parseInt(req.params.limit) : 50
+  const page = req.params.page ? parseInt(req.params.page) : 1
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
+
+  const result = {}
+  const query = {}
+  try {
+    // count all document with same parameter before load to client
+    result.totalRows = await db
+      .collection('stockOutTransactions')
+      .find(query)
+      .count()
+    if (endIndex < result.totalRows) {
+      result.next = {
+        page: page - 1,
+        limit,
+      }
+    }
+    // apply the previous
+    if (startIndex > 0) {
+      result.previous = {
+        page: page + 1,
+        limit,
+      }
+    }
+    // take document with aggregation
+    result.data = await db
+      .collection('stockOutTransactions')
+      .aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy',
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'updatedBy',
+            foreignField: '_id',
+            as: 'updatedBy',
+          },
+        },
+        {
+          // convert array of supplier to object if exist
+          $unwind: {
+            path: '$updatedBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          // convert array of createBy to object if exists
+          $unwind: {
+            path: '$createdBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          // exclude some field  from return result to client
+          $project: {
+            'createdBy.password': 0,
+            'createdBy.verifiedEmail': 0,
+            'createdBy.created_at': 0,
+            'createdBy.updated_at': 0,
+            'updatedBy.password': 0,
+            'updatedBy.verifiedEmail': 0,
+            'updatedBy.created_at': 0,
+            'updatedBy.updated_at': 0,
+            productsInTransactions: 0,
+          },
+        },
+        {
+          // take limit for every query
+          $limit: limit,
+        },
+        {
+          // skip the index of document
+          $skip: startIndex,
+        },
+      ])
+      .toArray()
+    return res.json(result)
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
