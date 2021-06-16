@@ -22,9 +22,7 @@ const auth = async (req, res, next) => {
     }
     next()
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error)
-    return res.status(400).send('Access is not Authorization')
+    return res.status(401).send('Access is not Authorization')
   }
 }
 
