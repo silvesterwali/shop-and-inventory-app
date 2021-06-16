@@ -10,6 +10,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <head-stock-out-form :stock-out="stockOut" />
       </template>
     </index-base-page>
   </div>
@@ -17,17 +18,26 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
+import HeadStockOutForm from '@/components/Forms/StockOut/HeadStockOutForm.vue'
+import { getStockOutTransactionResource } from '@/services/StockOutTransaction.js'
 
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    HeadStockOutForm,
+  },
+  async asyncData({ params }) {
+    const { data } = await getStockOutTransactionResource(params.stock_id)
+    return {
+      stockOut: data,
+    }
   },
   data() {
     return {
-      pageTitle: `Page-index`,
+      pageTitle: `Stock Out Edit`,
       pageDescription:
-        'this page is under develop, please provide some feedback to improve it for better documentation',
+        'Perubahan transaksi pengeluaran stock baru. pastikan data yang akan diinput sudah benar',
     }
   },
   head() {

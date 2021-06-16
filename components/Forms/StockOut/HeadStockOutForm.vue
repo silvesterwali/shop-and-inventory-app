@@ -80,7 +80,7 @@ import errorKey from '@/mixins/errorKey.js'
 export default {
   mixins: [setMessage, errorKey],
   props: {
-    stockIn: {
+    stockOut: {
       type: Object,
       default: null,
     },
@@ -100,7 +100,7 @@ export default {
     }
   },
   watch: {
-    stockIn: {
+    stockOut: {
       immediate: true,
       handler(value) {
         if (value !== null) {
