@@ -6,7 +6,11 @@
         <!-- card subtitle -->
         <div>
           <span>Management Stock Out</span>
-          <v-btn color="primary" small class="mt-n5 float-right" to="/"
+          <v-btn
+            color="primary"
+            small
+            class="mt-n5 float-right"
+            :to="`/inventory/stock-out/create`"
             >New Stock Out</v-btn
           >
         </div>

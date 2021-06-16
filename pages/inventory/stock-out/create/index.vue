@@ -25,9 +25,9 @@ export default {
   },
   data() {
     return {
-      pageTitle: `Page-index`,
+      pageTitle: `Stock Out`,
       pageDescription:
-        'this page is under develop, please provide some feedback to improve it for better documentation',
+        'Penambahn transaksi pengeluaran stock baru. pastikan data yang akan diinput sudah benar',
     }
   },
   head() {
