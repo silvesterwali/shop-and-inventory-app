@@ -1,44 +1,31 @@
 <template>
   <div>
-    <index-base-page>
-      <template #info>
-        <v-card>
-          <v-card-text>
-            {{ pageDescription }}
-          </v-card-text>
-        </v-card>
-      </template>
-      <template #content>
-        <!-- page page will be here -->
-      </template>
-    </index-base-page>
+    <stock-out-table />
   </div>
 </template>
 
 <script>
-import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import StockOutTable from '@/components/Tables/StockOut/StockOutTable.vue'
 export default {
   components: {
-    // define your component here
-    IndexBasePage,
+    StockOutTable,
   },
   data() {
     return {
-      pageTitle: `Page-index`,
-      pageDescription:
-        'this page is under develop, please provide some feedback to improve it for better documentation',
+      pageProperty: {
+        title: 'Stock out',
+        decription: 'page to manage stock out in inventory',
+      },
     }
   },
   head() {
-    // this property for meta tag
     return {
-      title: this.pageTitle,
+      title: this.pageProperty.title,
       meta: [
         {
           uid: 'description',
           name: 'description',
-          content: this.pageDescription,
+          content: this.pageProperty.decription,
         },
       ],
     }
