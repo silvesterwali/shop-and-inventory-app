@@ -66,7 +66,66 @@ exports.store = async (req, res) => {
  * @param {express.Response} res
  * @async
  **/
-exports.show = (req, res) => {}
+exports.show = async (req, res) => {
+  const _id = new ObjectID(req.params.id)
+  try {
+    const stockOutTransactions = await db
+      .collection('stockOutTransactions')
+      .aggregate([
+        {
+          $match: {
+            _id,
+          },
+        },
+        {
+          // join the user collection as createdBy
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy',
+          },
+        },
+        {
+          // join the user collection as updatedBy
+          $lookup: {
+            from: 'users',
+            localField: 'updatedBy',
+            foreignField: '_id',
+            as: 'updatedBy',
+          },
+        },
+        {
+          // using unwind to take the object outside the array of user collection
+          $unwind: {
+            path: '$createdBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $unwind: {
+            path: '$updatedBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            'createdBy.password': 0,
+            'createdBy.verifiedEmail': 0,
+            'createdBy.created_at': 0,
+            'createdBy.updated_at': 0,
+            'updatedBy.password': 0,
+            'updatedBy.verifiedEmail': 0,
+            'updatedBy.created_at': 0,
+            'updatedBy.updated_at': 0,
+            productsInTransactions: 0,
+          },
+        },
+      ])
+      .toArray()
+    return res.json(stockOutTransactions[0])
+  } catch (err) {}
+}
 
 /**
  *=====================================
@@ -118,4 +177,14 @@ exports.update = async (req, res) => {
  * @param {express.Response} res
  * @async
  **/
-exports.destroy = (req, res) => {}
+exports.destroy = async (req, res) => {
+  try {
+    await db.collection('stockOutTransactions').deleteOne({
+      _id: new ObjectID(req.params.id),
+    })
+    return res.json({ message: 'Success remove current stock out transaction' })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
