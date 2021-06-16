@@ -78,8 +78,7 @@
 
 <script>
 export default {
-  auth: 'guest',
-  name: 'Register',
+  name: 'Login',
   layout: 'guest',
   data() {
     return {

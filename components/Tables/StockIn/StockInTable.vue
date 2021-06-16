@@ -167,10 +167,7 @@ export default {
         text: 'Create By',
         value: 'createdBy.email',
       },
-      {
-        text: 'Update By',
-        value: 'updatedBy.email',
-      },
+
       {
         text: 'Supplier',
         value: 'supplier.name',
@@ -178,10 +175,6 @@ export default {
       {
         text: 'Status',
         value: 'status',
-      },
-      {
-        text: 'Description',
-        value: 'description',
       },
       {
         text: 'Actions',

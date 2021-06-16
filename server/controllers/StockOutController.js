@@ -233,7 +233,7 @@ exports.update = async (req, res) => {
   const { type, description, transactionDate } = req.body
 
   try {
-    const result = await db.collection('stockOutTransactions').updateOne(
+    await db.collection('stockOutTransactions').updateOne(
       {
         _id: new ObjectID(req.params.id),
       },
@@ -242,7 +242,6 @@ exports.update = async (req, res) => {
           transactionDate,
           description,
           type, // to define the type of stock out transaction [production ,return]
-          status: 0, // user pending,
           updatedBy: new ObjectID(req.user._id),
           updatedAt: new Date(),
         },
@@ -250,7 +249,6 @@ exports.update = async (req, res) => {
     )
     return res.json({
       message: 'Success update current stock out transaction',
-      result: result.ops[0],
     })
   } catch (err) {
     console.log(err)

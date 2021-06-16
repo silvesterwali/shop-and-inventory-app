@@ -1,7 +1,7 @@
 <template>
   <div>
     <index-card-page>
-      <template #card-title>Stok Masuk</template>
+      <template #card-title>Stok Out</template>
       <template #card-subtitle>
         <div>
           <span> Management Stock Out </span>
@@ -167,10 +167,7 @@ export default {
         text: 'Create By',
         value: 'createdBy.email',
       },
-      {
-        text: 'Create By',
-        value: 'createdBy.email',
-      },
+
       {
         text: 'Type',
         value: 'type',
@@ -180,10 +177,7 @@ export default {
         text: 'Status',
         value: 'status',
       },
-      {
-        text: 'Description',
-        value: 'description',
-      },
+
       {
         text: 'Actions',
         value: 'actions',

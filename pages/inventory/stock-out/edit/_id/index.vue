@@ -28,7 +28,7 @@ export default {
     HeadStockOutForm,
   },
   async asyncData({ params }) {
-    const { data } = await getStockOutTransactionResource(params.stock_id)
+    const { data } = await getStockOutTransactionResource(params.id)
     return {
       stockOut: data,
     }
