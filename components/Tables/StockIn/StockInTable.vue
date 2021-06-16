@@ -168,12 +168,20 @@ export default {
         value: 'createdBy.email',
       },
       {
+        text: 'Update By',
+        value: 'updatedBy.email',
+      },
+      {
         text: 'Supplier',
         value: 'supplier.name',
       },
       {
         text: 'Status',
         value: 'status',
+      },
+      {
+        text: 'Description',
+        value: 'description',
       },
       {
         text: 'Actions',
