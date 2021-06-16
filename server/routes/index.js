@@ -24,4 +24,5 @@ router.use('/incoming-stock', require('./incoming-stock-main'))
 router.use('/incoming-stock-detail', require('./incoming-stock-detail'))
 router.use('/stock', require('./stock'))
 router.use('/incoming-stock-cancellation', require('./cancelStock'))
+router.use('/stock-out-transaction', require('./stockOutTransaction'))
 module.exports = router
