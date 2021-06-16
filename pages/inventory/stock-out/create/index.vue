@@ -10,6 +10,7 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <head-stock-out-form />
       </template>
     </index-base-page>
   </div>
@@ -17,11 +18,13 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
+import HeadStockOutForm from '@/components/Forms/StockOut/HeadStockOutForm.vue'
 
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    HeadStockOutForm,
   },
   data() {
     return {
