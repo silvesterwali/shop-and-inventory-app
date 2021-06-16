@@ -12,7 +12,24 @@ export default {
     StockInTable,
   },
   data() {
-    return {}
+    return {
+      pageProperty: {
+        title: 'Stock',
+        description: 'This page is listed all stock in ',
+      },
+    }
+  },
+  head() {
+    return {
+      title: this.pageProperty.title,
+      meta: [
+        {
+          uid: 'description',
+          name: 'description',
+          content: this.pageProperty.description,
+        },
+      ],
+    }
   },
 }
 </script>
