@@ -13,11 +13,11 @@
         </v-col>
         <v-col sm="6" md="6" lg="6">
           <v-select
-            v-model="dataForm.supplierId"
+            v-model="dataForm.type"
             dense
-            label="Suplier"
-            :items="supliers"
-            :rules="[errorKey('suplierId')]"
+            label="Type"
+            :items="typesTransaction"
+            :rules="[errorKey('type')]"
             item-text="name"
             item-value="_id"
             placeholder="Supplier"
@@ -71,11 +71,10 @@
 </template>
 
 <script>
-import { getSupplierResources } from '@/services/supplier.js'
 import {
-  createIncomingStockResource,
-  updateIncomingStockResource,
-} from '@/services/IncomingStock.js'
+  createStockOutTransactionResource,
+  updateStockOutTransactionResource,
+} from '@/services/StockOutTransaction.js'
 import setMessage from '@/mixins/setMessage.js'
 import errorKey from '@/mixins/errorKey.js'
 export default {
@@ -92,17 +91,13 @@ export default {
         _id: null,
         serialNumber: null,
         description: null,
-        supplierId: null,
+        type: null,
         transactionDate: new Date().toISOString().substr(0, 10),
       },
-      supliers: [],
+      typesTransaction: ['Production', 'Retun'],
       datePicker: false,
       errors: null,
     }
-  },
-  async fetch() {
-    const { data } = await getSupplierResources()
-    this.supliers = data
   },
   watch: {
     stockIn: {
@@ -127,7 +122,7 @@ export default {
     },
     async sendCreateNewResource() {
       try {
-        const { data } = await createIncomingStockResource(this.dataForm)
+        const { data } = await createStockOutTransactionResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.push(`/inventory/stock-in/details/${data.data._id}`)
       } catch (err) {
@@ -136,7 +131,7 @@ export default {
     },
     async sendUpdateResource() {
       try {
-        const { data } = await updateIncomingStockResource(
+        const { data } = await updateStockOutTransactionResource(
           this.dataForm._id,
           this.dataForm
         )
