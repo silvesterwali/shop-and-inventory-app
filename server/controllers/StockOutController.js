@@ -139,7 +139,7 @@ exports.store = async (req, res) => {
     })
     return res.json({
       message: 'Success create new stock out transaction',
-      result: result.ops[0],
+      data: result.ops[0],
     })
   } catch (err) {
     console.log(err)
@@ -233,22 +233,28 @@ exports.update = async (req, res) => {
   const { type, description, transactionDate } = req.body
 
   try {
-    await db.collection('stockOutTransactions').updateOne(
-      {
-        _id: new ObjectID(req.params.id),
-      },
-      {
-        $set: {
-          transactionDate,
-          description,
-          type, // to define the type of stock out transaction [production ,return]
-          updatedBy: new ObjectID(req.user._id),
-          updatedAt: new Date(),
+    const stockOut = await db
+      .collection('stockOutTransactions')
+      .findOneAndUpdate(
+        {
+          _id: new ObjectID(req.params.id),
         },
-      }
-    )
+        {
+          $set: {
+            transactionDate,
+            description,
+            type, // to define the type of stock out transaction [production ,return]
+            updatedBy: new ObjectID(req.user._id),
+            updatedAt: new Date(),
+          },
+        },
+        {
+          upsert: true,
+        }
+      )
     return res.json({
       message: 'Success update current stock out transaction',
+      data: stockOut.value,
     })
   } catch (err) {
     console.log(err)

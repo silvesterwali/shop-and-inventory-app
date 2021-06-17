@@ -231,23 +231,28 @@ exports.update = async (req, res) => {
   const { description, supplierId, transactionDate } = req.body
   const supplierID = req.body.supplier ? new ObjectID(supplierId) : null
   try {
-    const IncomingStock = await db.collection('IncomingStocks').updateOne(
-      {
-        _id: new ObjectID(req.params.id),
-      },
-      {
-        $set: {
-          transactionDate,
-          supplierId: supplierID,
-          description,
-          updatedBy: new ObjectID(req.user._id),
-          updatedAt: new Date(),
+    const IncomingStock = await db
+      .collection('IncomingStocks')
+      .findOneAndUpdate(
+        {
+          _id: new ObjectID(req.params.id),
         },
-      }
-    )
+        {
+          $set: {
+            transactionDate,
+            supplierId: supplierID,
+            description,
+            updatedBy: new ObjectID(req.user._id),
+            updatedAt: new Date(),
+          },
+        },
+        {
+          upsert: true,
+        }
+      )
     return res.json({
       message: 'Success To Update Stock',
-      data: IncomingStock,
+      data: IncomingStock.value,
     })
   } catch (err) {
     // eslint-disable-next-line no-console

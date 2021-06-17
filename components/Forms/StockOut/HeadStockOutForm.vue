@@ -124,7 +124,7 @@ export default {
       try {
         const { data } = await createStockOutTransactionResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.$router.push(`/inventory/stock-in/details/${data.data._id}`)
+        this.$router.push(`/inventory/stock-out/details/${data.data._id}`)
       } catch (err) {
         this.errors = err.response.data
       }
@@ -136,7 +136,7 @@ export default {
           this.dataForm
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.$router.push(`/inventory/stock-in/details/${data.data._id}`)
+        this.$router.push(`/inventory/stock-out/details/${data.data._id}`)
       } catch (err) {
         this.errors = err.response.data
       }
