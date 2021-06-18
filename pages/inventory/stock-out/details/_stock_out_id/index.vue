@@ -1,31 +1,47 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Page Examplate</template>
-      <template #card-subtitle>
-        <!-- card subtitle -->
-        <div>
-          <span>Example suptitle</span>
-          <v-btn color="primary" small class="mt-n5 float-right" to="/"
-            >Go To Somewhere</v-btn
-          >
-        </div>
+    <index-base-page>
+      <template #info>
+        <v-card>
+          <v-card-text>
+            {{ pageDescription }}
+          </v-card-text>
+        </v-card>
       </template>
-      <template #card-text> <!-- card-text --></template>
-      <template #card-action><!-- card-action --></template>
-    </index-card-page>
+      <template #content>
+        <!-- page page will be here -->
+      </template>
+    </index-base-page>
   </div>
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
+
 export default {
   components: {
-    // register component here
-    IndexCardPage,
+    // define your component here
+    IndexBasePage,
   },
   data() {
-    return {}
+    return {
+      pageTitle: `Page-index`,
+      pageDescription:
+        'this page is under develop, please provide some feedback to improve it for better documentation',
+    }
+  },
+  head() {
+    // this property for meta tag
+    return {
+      title: this.pageTitle,
+      meta: [
+        {
+          uid: 'description',
+          name: 'description',
+          content: this.pageDescription,
+        },
+      ],
+    }
   },
 }
 </script>
