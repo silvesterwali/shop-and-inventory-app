@@ -143,7 +143,7 @@ const validate = (req, res, next) => {
    * return every error on one root object
    *
    */
-  const simpleValidate = validationResult().withDefaults({
+  const simpleValidate = validationResult.withDefaults({
     format: (err) => err.msg,
   })
 
