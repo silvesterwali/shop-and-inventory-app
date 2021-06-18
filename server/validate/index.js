@@ -117,8 +117,20 @@ const personalValidate = () => {
  */
 const bankAtmCardRules = () => {
   return [
-    body('provider').not().isEmpty().isString().trim(),
-    body('cardNumber').not().isEmpty().isString().trim(),
+    body('provider')
+      .not()
+      .isEmpty()
+      .withMessage('provider is required')
+      .isString()
+      .withMessage('provide must be string')
+      .trim(),
+    body('cardNumber')
+      .not()
+      .isEmpty()
+      .withMessage('card number is required')
+      .isString()
+      .withMessage('card number should be string')
+      .trim(),
   ]
 }
 
@@ -127,19 +139,17 @@ const bankAtmCardRules = () => {
  *
  */
 const validate = (req, res, next) => {
-  const errors = validationResult(req)
+  const simpleValidate = validationResult().withDefaults({
+    format: (err) => err.msg,
+  })
+
+  const errors = simpleValidate(req)
 
   if (errors.isEmpty()) {
     return next()
   }
 
-  const extractedErrors = []
-
-  // looping all errors  by object key or parameter according passing rules
-
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
-
-  return res.status(422).json(extractedErrors)
+  return res.status(422).json(errors.mapped())
 }
 
 module.exports = {
