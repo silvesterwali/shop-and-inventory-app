@@ -6,7 +6,7 @@
         <!-- card subtitle -->
         <div>
           <span>List Of Item </span>
-          <template v-if="stockHeader.status == 0">
+          <template v-if="stockHeOutader.status == 0">
             <v-btn
               v-if="!openDialog"
               color="primary"
@@ -42,7 +42,7 @@
                 <th class="text-left">Discount</th>
                 <th class="text-left">Total</th>
                 <th class="text-left">Description</th>
-                <th v-if="stockHeader.status == 0" class="text-center">
+                <th v-if="stockHeOutader.status == 0" class="text-center">
                   Action
                 </th>
               </tr>
@@ -57,7 +57,7 @@
                 <td>{{ item.discount }}</td>
                 <td>{{ item.total }}</td>
                 <td>{{ item.description }}</td>
-                <td v-if="stockHeader.status == 0">
+                <td v-if="stockHeOutader.status == 0">
                   <div class="d-flex flex-row">
                     <v-icon
                       small
@@ -82,7 +82,7 @@
       <template #card-action
         ><!-- card-action -->
         <v-spacer />
-        <template v-if="items.length > 0 && stockHeader.status == 0">
+        <template v-if="items.length > 0 && stockHeOutader.status == 0">
           <v-btn color="success" outlined @click.prevent="dialogApprove = true"
             >Approve</v-btn
           >
@@ -106,7 +106,7 @@
     <template v-if="dialogApprove">
       <approve-stock-in-modal
         :dialog-approve.sync="dialogApprove"
-        :incoming-stock="stockHeader"
+        :incoming-stock="stockHeOutader"
       />
     </template>
   </div>
@@ -127,7 +127,7 @@ export default {
     ApproveStockInModal,
   },
   props: {
-    stockHeader: {
+    stockHeOutader: {
       type: Object,
       default: null,
     },
@@ -143,7 +143,9 @@ export default {
   },
   async fetch() {
     this.selectedItem = null
-    const { data } = await getIncomingStockDetailResources(this.stockHeader._id)
+    const { data } = await getIncomingStockDetailResources(
+      this.stockHeOutader._id
+    )
     this.items = data
   },
   computed: {
