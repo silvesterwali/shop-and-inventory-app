@@ -29,7 +29,7 @@ export default {
   async asyncData({ params }) {
     const { data } = await getStockOutTransactionResource(params.stock_out_id)
     return {
-      StockOutHeader: data,
+      stockOutHeader: data,
     }
   },
   data() {

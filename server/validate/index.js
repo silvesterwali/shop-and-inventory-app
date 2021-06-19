@@ -50,7 +50,7 @@ const registrationRules = () => {
  **/
 const loginRules = () => {
   return [
-    body('email').isEmail().normalizeEmail(),
+    body('email').isEmail().withMessage('email is not valid').normalizeEmail(),
     body('password').isLength({ min: 8, max: 20 }),
   ]
 }

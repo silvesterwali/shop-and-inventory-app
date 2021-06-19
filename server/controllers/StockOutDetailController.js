@@ -19,7 +19,7 @@ const { countDiscount } = require('../utilities/discountUtils')
  * @async
  **/
 exports.index = async (req, res) => {
-  const StockOutId = new ObjectID(req.params.StockOutId)
+  const StockOutId = new ObjectID(req.params.stockOutId)
   // find the match parameter
   const matchPipeline = {
     $match: {
@@ -43,6 +43,18 @@ exports.index = async (req, res) => {
     },
   }
 
+  const addFieldsProduct = {
+    $addFields: {
+      'productsInTransactions.product': {
+        $ifNull: [
+          {
+            $arrayElemAt: ['$productsInTransactions.product', 0],
+          },
+          [],
+        ],
+      },
+    },
+  }
   const groupDocuments = {
     $group: {
       _id: '$_id',
@@ -65,31 +77,21 @@ exports.index = async (req, res) => {
         $first: '$createdAt',
       },
       productsInTransactions: {
-        $push: '$productInTransactions',
-      },
-    },
-  }
-
-  const addFieldsProduct = {
-    $addFields: {
-      'productsInTransactions.product': {
-        $ifNull: [
-          {
-            $arrayElemAt: ['$productsInTransactions.product', 0],
-          },
-          [],
-        ],
+        $push: '$productsInTransactions',
       },
     },
   }
 
   const unsetProductField = {
-    $unset: [
-      'productsInTransactions.product.updatedBy',
-      'productsInTransactions.product.updatedAt',
-      'productsInTransactions.product.createdAt',
-      'productsInTransactions.product.createdBy',
-    ],
+    $project: {
+      'productsInTransactions.product.updatedAt': 0,
+      'productsInTransactions.product.updatedBy': 0,
+      'productsInTransactions.product.createdAt': 0,
+      'productsInTransactions.product.createdBy': 0,
+      'productsInTransactions.product.category': 0,
+      'productsInTransactions.product.unit': 0,
+      'productsInTransactions.product.stockQty': 0,
+    },
   }
   try {
     const stockOut = await db
@@ -103,7 +105,10 @@ exports.index = async (req, res) => {
         unsetProductField,
       ])
       .toArray()
-    return res.json(stockOut)
+    console.log(stockOut.productsInTransactions)
+    const productsInTransaction =
+      stockOut.length > 0 ? stockOut[0].productsInTransactions : []
+    return res.json(productsInTransaction)
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' })
   }
@@ -120,7 +125,7 @@ exports.index = async (req, res) => {
  * @async
  **/
 exports.store = async (req, res) => {
-  const { productId, qty, unit, price, discount, description } = req.boy
+  const { productId, qty, unit, price, discount, description } = req.body
   const productObjectID = new ObjectID(productId)
   try {
     await db.collection('stockOutTransactions').findOneAndUpdate(
@@ -161,7 +166,7 @@ exports.store = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { productId, qty, unit, price, discount, description } = req.boy
+  const { productId, qty, unit, price, discount, description } = req.body
   const productObjectID = new ObjectID(productId)
   try {
     await db.collection('stockOutTransactions').updateOne(

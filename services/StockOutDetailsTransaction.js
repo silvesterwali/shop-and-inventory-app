@@ -53,7 +53,7 @@ export const updateStockOutDetailsTransactionResource = async (
   id,
   payload
 ) => {
-  return await ApiClient.put(`/${url}/${stockOutId}/detail${id}`, payload)
+  return await ApiClient.put(`/${url}/${stockOutId}/detail/${id}`, payload)
 }
 
 /**

@@ -110,9 +110,9 @@
 <script>
 import { getProductListResources } from '@/services/productList.js'
 import {
-  createIncomingStockDetailResource,
-  updateIncomingStockDetailResource,
-} from '@/services/IncomingStockDetail.js'
+  createStockOutDetailsTransactionResource,
+  updateStockOutDetailsTransactionResource,
+} from '@/services/StockOutDetailsTransaction.js'
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage'
 export default {
@@ -221,7 +221,7 @@ export default {
      */
     async sendNewResource() {
       try {
-        const { data } = await createIncomingStockDetailResource(
+        const { data } = await createStockOutDetailsTransactionResource(
           this.stockOutHeader._id,
           this.dataForm
         )
@@ -240,7 +240,7 @@ export default {
      */
     async sendUpdateResource() {
       try {
-        const { data } = await updateIncomingStockDetailResource(
+        const { data } = await updateStockOutDetailsTransactionResource(
           this.stockOutHeader._id,
           this.dataForm._id,
           this.dataForm
