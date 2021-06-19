@@ -10,6 +10,8 @@
 
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
+const { findProduct } = require('../utilities/product.js')
+const stockUtils = require('../utilities/stock.js')
 
 /**
  *=====================================
@@ -63,5 +65,62 @@ exports.update = async (req, res) => {
       }
       this[el.productId].qty += el.qty // this increase the product qty in groupProductInTransaction
     }, Object.create({}))
-  } catch (error) {}
+
+    const validStock = [] // temp for store the product
+
+    const runCheckProduct = async () => {
+      for (const item of groupProductInTransaction) {
+        const product = await findProduct(item.productId)
+
+        if (parseFloat(product.stockOut) >= parseFloat(item.qty)) {
+          validStock.push({ id: item.qty })
+        }
+      }
+    }
+    await runCheckProduct()
+
+    // do checking if product in transaction is meet the requirement
+    if (validStock.length !== groupProductInTransaction.length) {
+      return res.status(422).json({
+        message:
+          'Some product qty in this current transaction is more then current stock qty.',
+      })
+    }
+    /**
+     * runReduceStockProduct
+     *
+     * - this method will running to reduce the qty stock according the group of products is transaction
+     */
+    const runReduceStockProduct = async () => {
+      for (const item of groupProductInTransaction) {
+        await stockUtils.incrementStockProduct(
+          item.productId,
+          Math.abs(item.qty) * -1
+        )
+      }
+    }
+
+    await runReduceStockProduct()
+    /**
+     * determine if all those process above running as we expected
+     * and finally update the status of the current transactions
+     */
+    await db.collection('stockOutTransactions').findOneAndUpdate(
+      {
+        _id,
+      },
+      {
+        $set: {
+          status: 1,
+          approvedBy: new ObjectID(req.user._id),
+          approvedAt: new Date(),
+        },
+      }
+    )
+    return res.json({ message: 'Success to approve the transaction' })
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
 }
