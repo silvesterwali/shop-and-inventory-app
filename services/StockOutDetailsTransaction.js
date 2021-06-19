@@ -10,19 +10,18 @@ import ApiClient from './apiClient.js'
 
 // endpoint for api endpoint
 
-const url = `StockOutDetailsTransaction`
+const url = `api/stock-out-transaction-detail`
 
 /**
  * getStockOutDetailsTransactionResources
  *
  * - endpoint to get all StockOutDetailsTransaction resource
- * @param {Number} limit - limit resource to retrieve from backend
- * @param {Number} page - current page index for pagination
+ * @param {String} stockOutId - stock out id
  * @async
  *
  */
-export const getStockOutDetailsTransactionResources = async (limit, page) => {
-  return await ApiClient.get(`/${url}?limit=${limit}&page=${page}`)
+export const getStockOutDetailsTransactionResources = async (stockOutId) => {
+  return await ApiClient.get(`/${url}/${stockOutId}`)
 }
 
 /**
@@ -33,20 +32,11 @@ export const getStockOutDetailsTransactionResources = async (limit, page) => {
  * @async
  *
  */
-export const createStockOutDetailsTransactionResource = async (payload) => {
-  return await ApiClient.post(`/${url}`, payload)
-}
-
-/**
- * getStockOutDetailsTransactionResource
- *
- * - endpoint to take specific StockOutDetailsTransaction resource
- * @param {String} id
- * @async
- *
- */
-export const getStockOutDetailsTransactionResource = async (id) => {
-  return await ApiClient.get(`/${url}/${id}`)
+export const createStockOutDetailsTransactionResource = async (
+  stockOutId,
+  payload
+) => {
+  return await ApiClient.post(`/${url}/${stockOutId}`, payload)
 }
 
 /**
@@ -58,8 +48,12 @@ export const getStockOutDetailsTransactionResource = async (id) => {
  * @async
  *
  */
-export const updateStockOutDetailsTransactionResource = async (id, payload) => {
-  return await ApiClient.put(`/${url}/${id}`, payload)
+export const updateStockOutDetailsTransactionResource = async (
+  stockOutId,
+  id,
+  payload
+) => {
+  return await ApiClient.put(`/${url}/${stockOutId}/detail${id}`, payload)
 }
 
 /**
@@ -70,6 +64,9 @@ export const updateStockOutDetailsTransactionResource = async (id, payload) => {
  * @async
  *
  */
-export const deleteStockOutDetailsTransactionResource = async (id) => {
-  return await ApiClient.delete(`/${url}/${id}`)
+export const deleteStockOutDetailsTransactionResource = async (
+  stockOutId,
+  id
+) => {
+  return await ApiClient.delete(`/${url}/${stockOutId}/detail/${id}`)
 }

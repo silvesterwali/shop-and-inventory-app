@@ -17,13 +17,13 @@ const StockOutDetailTransactionController = require('../controllers/StockOutDeta
 
 router.use(auth)
 router.get('/:stockOutId', StockOutDetailTransactionController.index)
-router.post('/:StockOutId/', StockOutDetailTransactionController.store)
+router.post('/:stockOutId/', StockOutDetailTransactionController.store)
 router.put(
-  '/:StockOutId/detail/:id',
+  '/:stockOutId/detail/:id',
   StockOutDetailTransactionController.update
 )
 router.delete(
-  '/:StockOutId/detail/:id',
+  '/:stockOutId/detail/:id',
   StockOutDetailTransactionController.destroy
 )
 
