@@ -29,4 +29,8 @@ router.use(
   '/stock-out-transaction-detail',
   require('./StockOutDetailTransaction')
 )
+router.use(
+  '/stock-out-transaction-approve',
+  require('./StockOutTransactionApprove')
+)
 module.exports = router
