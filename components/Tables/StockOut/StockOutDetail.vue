@@ -97,7 +97,7 @@
       />
     </template>
     <template v-if="dialogDelete">
-      <delete-stock-in-modal
+      <delete-stock-out-modal
         v-bind="$props"
         :dialog-delete.sync="dialogDelete"
         :item-stock="selectedItem"
@@ -116,14 +116,14 @@
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getStockOutDetailsTransactionResources } from '@/services/StockOutDetailsTransaction.js'
 import ProductModal from '@/components/Modal/StockOut/StockOutProductModal.vue'
-import DeleteStockInModal from '@/components/Modal/StockIn/DeleteStockInModal.vue'
+import DeleteStockOutModal from '@/components/Modal/StockOut/DeleteStockOutDetailModal.vue'
 import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
 export default {
   components: {
     // register component here
     IndexCardPage,
     ProductModal,
-    DeleteStockInModal,
+    DeleteStockOutModal,
     ApproveStockInModal,
   },
   props: {

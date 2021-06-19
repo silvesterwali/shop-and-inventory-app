@@ -105,7 +105,6 @@ exports.index = async (req, res) => {
         unsetProductField,
       ])
       .toArray()
-    console.log(stockOut.productsInTransactions)
     const productsInTransaction =
       stockOut.length > 0 ? stockOut[0].productsInTransactions : []
     return res.json(productsInTransaction)
@@ -208,10 +207,10 @@ exports.destroy = async (req, res) => {
   const StockOutId = new ObjectID(req.params.stockOutId)
   const transactionId = new ObjectID(req.params.id)
   try {
-    await db.collection('stockOutTransactions').findOne(
+    await db.collection('stockOutTransactions').updateOne(
       {
         _id: StockOutId,
-        'productsInTransaction._id': transactionId,
+        'productsInTransactions._id': transactionId,
       },
       {
         $pull: {
