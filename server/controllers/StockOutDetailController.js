@@ -18,7 +18,96 @@ const { countDiscount } = require('../utilities/discountUtils')
  * @param {express.Response} res
  * @async
  **/
-exports.index = (req, res) => {}
+exports.index = async (req, res) => {
+  const StockOutId = new ObjectID(req.params.StockOutId)
+  // find the match parameter
+  const matchPipeline = {
+    $match: {
+      _id: StockOutId,
+    },
+  }
+  // unwind the product in transaction to object to make easy to lookup the from products collection
+  const unwindProductsInTransactions = {
+    $unwind: {
+      path: '$productsInTransactions',
+      preserveNullAndEmptyArrays: false,
+    },
+  }
+
+  const lookUpProducts = {
+    $lookup: {
+      from: 'products',
+      localField: 'productsInTransactions.productId',
+      foreignField: '_id',
+      as: 'productsInTransactions.product',
+    },
+  }
+
+  const groupDocuments = {
+    $group: {
+      _id: '$_id',
+      serialNumber: {
+        $first: '$serialNumber',
+      },
+      transactionDate: {
+        $first: '$transactionDate',
+      },
+      description: {
+        $first: '$description',
+      },
+      status: {
+        $first: '$status',
+      },
+      createdBy: {
+        $first: '$createdBy',
+      },
+      createAt: {
+        $first: '$createdAt',
+      },
+      productsInTransactions: {
+        $push: '$productInTransactions',
+      },
+    },
+  }
+
+  const addFieldsProduct = {
+    $addFields: {
+      'productsInTransactions.product': {
+        $ifNull: [
+          {
+            $arrayElemAt: ['$productsInTransactions.product', 0],
+          },
+          [],
+        ],
+      },
+    },
+  }
+
+  const unsetProductField = {
+    $unset: [
+      'productsInTransactions.product.updatedBy',
+      'productsInTransactions.product.updatedAt',
+      'productsInTransactions.product.createdAt',
+      'productsInTransactions.product.createdBy',
+    ],
+  }
+  try {
+    const stockOut = await db
+      .collection('stockOutTransactions')
+      .aggregate([
+        matchPipeline,
+        unwindProductsInTransactions,
+        lookUpProducts,
+        addFieldsProduct,
+        groupDocuments,
+        unsetProductField,
+      ])
+      .toArray()
+    return res.json(stockOut)
+  } catch (err) {
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
+}
 
 /**
  *=====================================
