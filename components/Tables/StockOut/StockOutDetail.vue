@@ -114,7 +114,7 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getIncomingStockDetailResources } from '@/services/IncomingStockDetail.js'
+import { getStockOutDetailsTransactionResources } from '@/services/StockOutDetailsTransaction.js'
 import ProductModal from '@/components/Modal/StockIn/ProductModal.vue'
 import DeleteStockInModal from '@/components/Modal/StockIn/DeleteStockInModal.vue'
 import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
@@ -143,7 +143,7 @@ export default {
   },
   async fetch() {
     this.selectedItem = null
-    const { data } = await getIncomingStockDetailResources(
+    const { data } = await getStockOutDetailsTransactionResources(
       this.stockHeOutader._id
     )
     this.items = data
