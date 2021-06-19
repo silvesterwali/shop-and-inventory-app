@@ -34,6 +34,7 @@ exports.index = async (req, res) => {
     },
   }
 
+  // make the array of productsInTransactions
   const lookUpProducts = {
     $lookup: {
       from: 'products',
@@ -43,6 +44,7 @@ exports.index = async (req, res) => {
     },
   }
 
+  // adding new field on productInTransaction
   const addFieldsProduct = {
     $addFields: {
       'productsInTransactions.product': {
@@ -55,6 +57,8 @@ exports.index = async (req, res) => {
       },
     },
   }
+  // after all the field find match product for every transaction
+  // then group them again to return the the array like before unwind
   const groupDocuments = {
     $group: {
       _id: '$_id',
@@ -81,7 +85,10 @@ exports.index = async (req, res) => {
       },
     },
   }
-
+  /**
+   * some fields is not need to return to client.
+   * then we can exclude the as we want
+   */
   const unsetProductField = {
     $project: {
       'productsInTransactions.product.updatedAt': 0,
