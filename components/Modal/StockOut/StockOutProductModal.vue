@@ -122,7 +122,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    stockHeader: {
+    stockOutHeader: {
       type: Object,
       default: null,
     },
@@ -222,7 +222,7 @@ export default {
     async sendNewResource() {
       try {
         const { data } = await createIncomingStockDetailResource(
-          this.stockHeader._id,
+          this.stockOutHeader._id,
           this.dataForm
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
@@ -241,7 +241,7 @@ export default {
     async sendUpdateResource() {
       try {
         const { data } = await updateIncomingStockDetailResource(
-          this.stockHeader._id,
+          this.stockOutHeader._id,
           this.dataForm._id,
           this.dataForm
         )

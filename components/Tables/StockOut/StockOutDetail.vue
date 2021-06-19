@@ -6,7 +6,7 @@
         <!-- card subtitle -->
         <div>
           <span>List Of Item </span>
-          <template v-if="stockHeOutader.status == 0">
+          <template v-if="stockOutHeader.status == 0">
             <v-btn
               v-if="!openDialog"
               color="primary"
@@ -42,7 +42,7 @@
                 <th class="text-left">Discount</th>
                 <th class="text-left">Total</th>
                 <th class="text-left">Description</th>
-                <th v-if="stockHeOutader.status == 0" class="text-center">
+                <th v-if="stockOutHeader.status == 0" class="text-center">
                   Action
                 </th>
               </tr>
@@ -57,7 +57,7 @@
                 <td>{{ item.discount }}</td>
                 <td>{{ item.total }}</td>
                 <td>{{ item.description }}</td>
-                <td v-if="stockHeOutader.status == 0">
+                <td v-if="stockOutHeader.status == 0">
                   <div class="d-flex flex-row">
                     <v-icon
                       small
@@ -82,7 +82,7 @@
       <template #card-action
         ><!-- card-action -->
         <v-spacer />
-        <template v-if="items.length > 0 && stockHeOutader.status == 0">
+        <template v-if="items.length > 0 && stockOutHeader.status == 0">
           <v-btn color="success" outlined @click.prevent="dialogApprove = true"
             >Approve</v-btn
           >
@@ -106,7 +106,7 @@
     <template v-if="dialogApprove">
       <approve-stock-in-modal
         :dialog-approve.sync="dialogApprove"
-        :incoming-stock="stockHeOutader"
+        :incoming-stock="stockOutHeader"
       />
     </template>
   </div>
@@ -115,7 +115,7 @@
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getStockOutDetailsTransactionResources } from '@/services/StockOutDetailsTransaction.js'
-import ProductModal from '@/components/Modal/StockIn/ProductModal.vue'
+import ProductModal from '@/components/Modal/StockOut/StockOutProductModal.vue'
 import DeleteStockInModal from '@/components/Modal/StockIn/DeleteStockInModal.vue'
 import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
 export default {
@@ -127,7 +127,7 @@ export default {
     ApproveStockInModal,
   },
   props: {
-    stockHeOutader: {
+    stockOutHeader: {
       type: Object,
       default: null,
     },
@@ -144,7 +144,7 @@ export default {
   async fetch() {
     this.selectedItem = null
     const { data } = await getStockOutDetailsTransactionResources(
-      this.stockHeOutader._id
+      this.stockOutHeader._id
     )
     this.items = data
   },
