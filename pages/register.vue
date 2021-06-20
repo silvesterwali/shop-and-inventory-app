@@ -120,6 +120,7 @@ export default {
       try {
         await this.$axios.post('api/auth/register', this.credential)
         await this.$auth.loginWith('local', { data: this.credential })
+        this.$router.push('/')
       } catch (err) {
         this.errors = err.response.data
       } finally {

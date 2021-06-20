@@ -106,6 +106,7 @@ export default {
     async login() {
       try {
         await this.$auth.loginWith('local', { data: this.credential })
+        this.$router.push('/')
       } catch (err) {
         this.errors = err.response.data
       } finally {
