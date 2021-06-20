@@ -88,9 +88,11 @@
 </template>
 
 <script>
+import errorKey from '@/mixins/errorKey.js'
 export default {
   auth: 'guest',
   name: 'Register',
+  mixins: [errorKey],
   layout: 'guest',
   data() {
     return {
@@ -123,17 +125,6 @@ export default {
       } finally {
         this.loading = false
       }
-    },
-    errorKey(key) {
-      if (this.errors === null) {
-        return true
-      }
-      const errors = this.errors
-      if (Array.isArray(errors)) {
-        const err = errors.filter((e) => e[key])
-        return err.length > 0 ? err[0][key] : true
-      }
-      return true
     },
   },
 }
