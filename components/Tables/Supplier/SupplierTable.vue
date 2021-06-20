@@ -71,12 +71,12 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import errorKey from '@/mixins/errorKey.js'
+import setMessage from '@/mixins/setMessage.js'
 import {
   getSupplierResources,
   deleteSupplierResource,
-} from '@/services/supplier.js'
-import errorKey from '@/mixins/errorKey.js'
-import setMessage from '@/mixins/setMessage.js'
+} from '~/services/Supplier.js'
 export default {
   components: {
     // register component here

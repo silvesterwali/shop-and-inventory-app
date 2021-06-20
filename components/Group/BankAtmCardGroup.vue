@@ -57,7 +57,7 @@
 
 <script>
 import BankAtmCardItem from '@/components/Item/BankAtmCardItem.vue'
-import { getPersonalBankAtmCard } from '@/services/personal.js'
+import { getPersonalBankAtmCard } from '~/services/Personal.js'
 import BankCardAtmForm from '~/components/Forms/BankAtmCardForm.vue'
 
 export default {

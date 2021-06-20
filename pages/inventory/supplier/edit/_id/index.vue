@@ -37,7 +37,7 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import SupplierForm from '@/components/Forms/Supplier/SupplierForm.vue'
-import { getSupplierResource } from '@/services/supplier.js'
+import { getSupplierResource } from '~/services/Supplier.js'
 export default {
   components: {
     // define your component here

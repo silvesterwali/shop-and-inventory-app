@@ -64,7 +64,7 @@
 
 <script>
 import Family from '@/components/Forms/Family.vue'
-import { deleteFamily } from '@/services/personal.js'
+import { deleteFamily } from '~/services/Personal.js'
 export default {
   name: 'FamilyItem',
   components: {

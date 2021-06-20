@@ -66,7 +66,7 @@
 
 <script>
 import errorKey from '@/mixins/errorKey.js'
-import { authUpdatePassword } from '@/services/password.js'
+import { authUpdatePassword } from '~/services/Password.js'
 export default {
   name: 'ChangePassword',
   mixins: [errorKey],

@@ -48,7 +48,7 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getUsers } from '@/services/users.js'
+import { getUsers } from '~/services/Users.js'
 export default {
   components: {
     IndexCardPage,

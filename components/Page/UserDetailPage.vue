@@ -130,7 +130,7 @@
 import CardPage from '@/components/CardPage/IndexCardPage.vue'
 import FamilyItem from '@/components/Item/FamilyItem.vue'
 import BankAtmCardItem from '@/components/Item/BankAtmCardItem.vue'
-import { getUserDetail } from '@/services/users.js'
+import { getUserDetail } from '~/services/Users.js'
 export default {
   components: {
     CardPage,

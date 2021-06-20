@@ -98,7 +98,7 @@ import {
   getUserProfile,
   createUserProfile,
   updateUserProfile,
-} from '~/services/personal.js'
+} from '~/services/Personal.js'
 export default {
   name: 'ProfileForm',
   mixins: [errorKey],

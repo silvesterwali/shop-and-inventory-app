@@ -58,7 +58,7 @@
 <script>
 import Family from '@/components/Forms/Family.vue'
 import FamilyItem from '@/components/Item/FamilyItem.vue'
-import { getFamilies } from '@/services/personal.js'
+import { getFamilies } from '~/services/Personal.js'
 export default {
   name: 'FamilyGroup',
   components: {

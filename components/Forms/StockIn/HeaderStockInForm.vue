@@ -71,9 +71,9 @@
 </template>
 
 <script>
-import { getSupplierResources } from '@/services/supplier.js'
 import setMessage from '@/mixins/setMessage.js'
 import errorKey from '@/mixins/errorKey.js'
+import { getSupplierResources } from '~/services/Supplier.js'
 import {
   createIncomingStockResource,
   updateIncomingStockResource,

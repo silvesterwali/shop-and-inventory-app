@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { deletePersonalBankAtmCard } from '@/services/personal.js'
+import { deletePersonalBankAtmCard } from '~/services/Personal.js'
 import BankAtmCard from '~/components/Forms/BankAtmCardForm.vue'
 export default {
   name: 'BankAtmCardItem',

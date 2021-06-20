@@ -36,7 +36,7 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import ProductFrom from '@/components/Forms/Product/ProductForm.vue'
-import { getProduct } from '@/services/product.js'
+import { getProduct } from '~/services/Product.js'
 export default {
   components: {
     IndexBasePage,

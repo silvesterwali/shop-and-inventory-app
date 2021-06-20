@@ -47,7 +47,7 @@ import errorKey from '@/mixins/errorKey'
 import {
   createPersonalBankAtmCard,
   updatePersonalBankAtmCard,
-} from '@/services/personal'
+} from '~/services/Personal'
 export default {
   mixins: [errorKey],
   props: {

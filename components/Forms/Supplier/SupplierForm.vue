@@ -54,7 +54,7 @@ import setMessage from '@/mixins/setMessage.js'
 import {
   createSupplierResource,
   updateSupplierResource,
-} from '@/services/supplier.js'
+} from '~/services/Supplier.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {

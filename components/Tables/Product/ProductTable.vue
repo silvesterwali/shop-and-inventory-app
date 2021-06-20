@@ -86,8 +86,8 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getProducts, deleteProduct } from '@/services/product.js'
 import setMessage from '@/mixins/setMessage.js'
+import { getProducts, deleteProduct } from '~/services/Product.js'
 export default {
   components: {
     IndexCardPage,

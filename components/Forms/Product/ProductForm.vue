@@ -105,9 +105,9 @@
 </template>
 
 <script>
-import { createProduct, updateProduct } from '@/services/product.js'
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
+import { createProduct, updateProduct } from '~/services/Product.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {

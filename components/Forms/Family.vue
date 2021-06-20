@@ -52,7 +52,7 @@
 
 <script>
 import errorKey from '@/mixins/errorKey'
-import { createFamily, updateFamily } from '@/services/personal'
+import { createFamily, updateFamily } from '~/services/Personal'
 export default {
   mixins: [errorKey],
   props: {
