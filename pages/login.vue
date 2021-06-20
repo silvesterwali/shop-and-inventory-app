@@ -4,7 +4,7 @@
       <v-row no-gutters justify="center" align="center" class="my-10">
         <v-col cols="12" md="5" lg="5" class="my-5">
           <v-form ref="formRegister" @submit.prevent="validate">
-            <v-card min-height="400px" elevation="1" :loading="loading">
+            <v-card min-height="400px" elevation="1" tile :loading="loading">
               <v-card-text>
                 <div class="mt-n10 mb-4">
                   <v-img
