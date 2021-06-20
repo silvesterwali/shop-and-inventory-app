@@ -18,3 +18,25 @@ exports.findProduct = async (productId) => {
     throw new Error(err)
   }
 }
+/**
+ * productGroup
+ *
+ * - will group all product according `productId` then sum all the `qty` with same `productId`
+ *
+ * @param {Array} productArray
+ *
+ */
+exports.productGroup = (productArray) => {
+  if (!Array.isArray(productArray)) {
+    return []
+  }
+  const products = []
+  productArray.forEach(function (el) {
+    if (!this[el.productId] && !this[el.qty]) {
+      this[el.productId] = { productId: el.productId, qty: el.qty }
+      productArray.push(this[el.productId])
+    }
+    this[el.productId].qty += el.qty
+  }, Object.create({}))
+  return products
+}
