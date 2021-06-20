@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
+const { totalPages } = require('../utilities/totalPagesUtils')
 /**
  * getUser
  *
@@ -31,7 +32,7 @@ exports.getUsers = async (req, res) => {
 
   try {
     result.totalRows = await db.collection('users').find(query).count()
-
+    result.totalPages = totalPages(result.totalRows, limit)
     if (endIndex < result.totalRows) {
       result.next = {
         page: page + 1,
