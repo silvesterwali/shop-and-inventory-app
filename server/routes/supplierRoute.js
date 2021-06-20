@@ -13,7 +13,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
-const supplierController = require('../controllers/supplierController')
+const supplierController = require('../controllers/SupplierController')
 router.use(auth)
 router.get('/', supplierController.index)
 router.post('/', supplierController.store)

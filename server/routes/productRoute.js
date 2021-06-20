@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const product = require('../controllers/productController')
+const product = require('../controllers/ProductController')
 router.use(require('../middleware/auth'))
 router.get('/', product.getProducts)
 router.post('/', product.createProduct)

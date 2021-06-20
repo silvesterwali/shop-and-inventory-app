@@ -8,7 +8,7 @@ const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
 const router = express.Router()
 const auth = require('../middleware/auth')
-const { passwordHash } = require('../utilities/passwordHash')
+const { passwordHash } = require('../utilities/passwordHashUtils')
 const { passwordChangeRules, validate } = require('../validate/index')
 
 /**

@@ -12,7 +12,9 @@
 
 const express = require('express')
 const router = express.Router()
-const stockIncrease = require('../controllers/stockIncrease')
-router.put('/:id/stock-increase', stockIncrease.update)
+const auth = require('../middleware/auth')
+const productListController = require('../controllers/ProductListController')
+router.use(auth)
+router.get('/', productListController.index)
 
 module.exports = router

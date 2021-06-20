@@ -13,8 +13,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
-const productListController = require('../controllers/productListController')
+const cancelStockIn = require('../controllers/StockInTransactionCancelController')
 router.use(auth)
-router.get('/', productListController.index)
-
+router.put('/:id/stock', cancelStockIn.update)
 module.exports = router

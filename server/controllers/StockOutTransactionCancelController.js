@@ -8,8 +8,8 @@
 
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
-const stockUtils = require('../utilities/stock.js')
-const { productGroup } = require('../utilities/product.js')
+const stockUtils = require('../utilities/stockUtils.js')
+const { productGroup } = require('../utilities/productUtils.js')
 
 /**
  *=====================================

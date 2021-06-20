@@ -2,10 +2,10 @@ const express = require('express')
 
 const bycrypt = require('bcryptjs')
 const db = require('../db').db
-const { generateToken } = require('../utilities/auth')
-const { passwordHash } = require('../utilities/passwordHash')
+const { generateToken } = require('../utilities/authUtils')
+const { passwordHash } = require('../utilities/passwordHashUtils')
 const { loginRules, registrationRules, validate } = require('../validate')
-const { saveUseragent } = require('../utilities/useragent')
+const { saveUseragent } = require('../utilities/useragentUtils')
 const auth = require('../middleware/auth')
 const guest = require('../middleware/guest')
 const gate = require('../middleware/gate')

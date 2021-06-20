@@ -6,35 +6,38 @@ router.get('/', async (req, res) => {
   return await res.json({ message: 'welcome' })
 })
 
-const auth = require('./auth')
-const passwordChange = require('./passwordChange')
-const profile = require('./personal')
-const family = require('./family')
+const auth = require('./authRoute')
+const passwordChange = require('./passwordChangeRoute')
+const profile = require('./personalRoute')
+const family = require('./familyRoute')
 
 router.use('/auth', auth)
 router.use('/auth', passwordChange)
 router.use('/auth/personal', profile)
 router.use('/personal/family', family)
-router.use('/personal/account', require('./bankAtmCard'))
-router.use('/users', require('./users'))
-router.use('/supplier', require('./supplier'))
-router.use('/product', require('./product'))
-router.use('/product-list', require('./productList'))
-router.use('/incoming-stock', require('./incoming-stock-main'))
-router.use('/incoming-stock-detail', require('./incoming-stock-detail'))
-router.use('/stock', require('./stock'))
-router.use('/incoming-stock-cancellation', require('./cancelStock'))
-router.use('/stock-out-transaction', require('./stockOutTransaction'))
+router.use('/personal/account', require('./bankAtmCardRoute'))
+router.use('/users', require('./usersRoute'))
+router.use('/supplier', require('./supplierRoute'))
+router.use('/product', require('./productRoute'))
+router.use('/product-list', require('./productListRoute'))
+router.use('/incoming-stock', require('./stockInRoute'))
+router.use('/incoming-stock-detail', require('./stockInTransactionDetailRoute'))
+router.use('/stock', require('./stockInTransactionApproveRoute'))
+router.use(
+  '/incoming-stock-cancellation',
+  require('./stockInTransactionCancelRoute')
+)
+router.use('/stock-out-transaction', require('./stockOutTransactionRoute'))
 router.use(
   '/stock-out-transaction-detail',
-  require('./StockOutTransactionDetail')
+  require('./stockOutTransactionDetailRoute')
 )
 router.use(
   '/stock-out-transaction-approve',
-  require('./StockOutTransactionApprove')
+  require('./stockOutTransactionApproveRoute')
 )
 router.use(
   '/stock-out-transaction-cancel',
-  require('./stockOutTransactionCancel')
+  require('./stockOutTransactionCancelRoute')
 )
 module.exports = router

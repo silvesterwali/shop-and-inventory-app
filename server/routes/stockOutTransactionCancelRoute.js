@@ -13,7 +13,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
-const stockOutTransactionCancel = require('../controllers/StockOutTransactionCancel.js')
+const stockOutTransactionCancel = require('../controllers/StockOutTransactionCancelController.js')
 router.use(auth)
 router.put('/:id', stockOutTransactionCancel.update)
 

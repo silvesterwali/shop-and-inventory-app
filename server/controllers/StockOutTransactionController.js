@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * @copyright 2021
  *
@@ -5,8 +6,8 @@
  **/
 
 const ObjectID = require('mongodb').ObjectID
-const StockNumber = require('../utilities/stockNumber.js')
 const db = require('../db').db
+const stockNumber = require('../utilities/stockNumberUtils.js')
 
 /**
  *=====================================
@@ -28,7 +29,10 @@ exports.index = async (req, res) => {
   const query = {}
   try {
     // count all document with same parameter before load to client
-    result.totalRows = await db.collection('IncomingStocks').find(query).count()
+    result.totalRows = await db
+      .collection('stockOutTransactions')
+      .find(query)
+      .count()
     if (endIndex < result.totalRows) {
       result.next = {
         page: page - 1,
@@ -44,16 +48,8 @@ exports.index = async (req, res) => {
     }
     // take document with aggregation
     result.data = await db
-      .collection('IncomingStocks')
+      .collection('stockOutTransactions')
       .aggregate([
-        {
-          $lookup: {
-            from: 'suppliers',
-            localField: 'supplierId',
-            foreignField: '_id',
-            as: 'supplier',
-          },
-        },
         {
           $lookup: {
             from: 'users',
@@ -63,9 +59,17 @@ exports.index = async (req, res) => {
           },
         },
         {
+          $lookup: {
+            from: 'users',
+            localField: 'updatedBy',
+            foreignField: '_id',
+            as: 'updatedBy',
+          },
+        },
+        {
           // convert array of supplier to object if exist
           $unwind: {
-            path: '$supplier',
+            path: '$updatedBy',
             preserveNullAndEmptyArrays: true,
           },
         },
@@ -83,8 +87,11 @@ exports.index = async (req, res) => {
             'createdBy.verifiedEmail': 0,
             'createdBy.created_at': 0,
             'createdBy.updated_at': 0,
-            'supplier.createdAt': 0,
-            'supplier.updatedAt': 0,
+            'updatedBy.password': 0,
+            'updatedBy.verifiedEmail': 0,
+            'updatedBy.created_at': 0,
+            'updatedBy.updated_at': 0,
+            productsInTransactions: 0,
           },
         },
         {
@@ -116,28 +123,25 @@ exports.index = async (req, res) => {
  * @async
  **/
 exports.store = async (req, res) => {
-  const { description, supplierId, transactionDate } = req.body
-  const supplierID =
-    req.body.supplier !== null ? new ObjectID(supplierId) : null
+  const { type, description, transactionDate } = req.body
+
   try {
-    const result = await db.collection('IncomingStocks').insertOne({
+    const result = await db.collection('stockOutTransactions').insertOne({
       _id: new ObjectID(),
-      serialNumber: await StockNumber.stockInNumber(),
+      serialNumber: await stockNumber.stockOutTransactionNumber(),
       transactionDate,
-      supplierId: supplierID,
       description,
-      status: 0, // recent create
+      type, // to define the type of stock out transaction [production ,return]
+      status: 0, // user pending,
       createdBy: new ObjectID(req.user._id),
       createdAt: new Date(),
       productsInTransactions: [],
     })
-
     return res.json({
-      message: 'Success create header stock',
+      message: 'Success create new stock out transaction',
       data: result.ops[0],
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
@@ -156,8 +160,8 @@ exports.store = async (req, res) => {
 exports.show = async (req, res) => {
   const _id = new ObjectID(req.params.id)
   try {
-    const IncomingStock = await db
-      .collection('IncomingStocks')
+    const stockOutTransactions = await db
+      .collection('stockOutTransactions')
       .aggregate([
         {
           $match: {
@@ -165,14 +169,7 @@ exports.show = async (req, res) => {
           },
         },
         {
-          $lookup: {
-            from: 'suppliers',
-            localField: 'supplierId',
-            foreignField: '_id',
-            as: 'supplier',
-          },
-        },
-        {
+          // join the user collection as createdBy
           $lookup: {
             from: 'users',
             localField: 'createdBy',
@@ -181,39 +178,44 @@ exports.show = async (req, res) => {
           },
         },
         {
-          // convert array of supplier to object if exist
-          $unwind: {
-            path: '$supplier',
-            preserveNullAndEmptyArrays: true,
+          // join the user collection as updatedBy
+          $lookup: {
+            from: 'users',
+            localField: 'updatedBy',
+            foreignField: '_id',
+            as: 'updatedBy',
           },
         },
         {
-          // convert array of createBy to object if exists
+          // using unwind to take the object outside the array of user collection
           $unwind: {
             path: '$createdBy',
             preserveNullAndEmptyArrays: true,
           },
         },
         {
-          // exclude some field  from return result to client
+          $unwind: {
+            path: '$updatedBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
           $project: {
             'createdBy.password': 0,
             'createdBy.verifiedEmail': 0,
             'createdBy.created_at': 0,
             'createdBy.updated_at': 0,
-            'supplier.createdAt': 0,
-            'supplier.updatedAt': 0,
+            'updatedBy.password': 0,
+            'updatedBy.verifiedEmail': 0,
+            'updatedBy.created_at': 0,
+            'updatedBy.updated_at': 0,
             productsInTransactions: 0,
           },
         },
       ])
       .toArray()
-    return res.json(IncomingStock[0])
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.log(err)
-    return res.status(500).json({ message: 'Internal Server Error' })
-  }
+    return res.json(stockOutTransactions[0])
+  } catch (err) {}
 }
 
 /**
@@ -228,11 +230,11 @@ exports.show = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { description, supplierId, transactionDate } = req.body
-  const supplierID = req.body.supplier ? new ObjectID(supplierId) : null
+  const { type, description, transactionDate } = req.body
+
   try {
-    const IncomingStock = await db
-      .collection('IncomingStocks')
+    const stockOut = await db
+      .collection('stockOutTransactions')
       .findOneAndUpdate(
         {
           _id: new ObjectID(req.params.id),
@@ -240,8 +242,8 @@ exports.update = async (req, res) => {
         {
           $set: {
             transactionDate,
-            supplierId: supplierID,
             description,
+            type, // to define the type of stock out transaction [production ,return]
             updatedBy: new ObjectID(req.user._id),
             updatedAt: new Date(),
           },
@@ -251,11 +253,10 @@ exports.update = async (req, res) => {
         }
       )
     return res.json({
-      message: 'Success To Update Stock',
-      data: IncomingStock.value,
+      message: 'Success update current stock out transaction',
+      data: stockOut.value,
     })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }
@@ -273,12 +274,11 @@ exports.update = async (req, res) => {
  **/
 exports.destroy = async (req, res) => {
   try {
-    await db
-      .collection('IncomingStocks')
-      .deleteOne({ _id: new ObjectID(req.params.id) })
-    return res.json({ message: 'Success remove resource' })
+    await db.collection('stockOutTransactions').deleteOne({
+      _id: new ObjectID(req.params.id),
+    })
+    return res.json({ message: 'Success remove current stock out transaction' })
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
   }

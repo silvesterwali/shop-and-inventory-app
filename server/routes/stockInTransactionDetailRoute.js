@@ -13,7 +13,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
-const incomingStockDetail = require('../controllers/incomingStockDetail')
+const incomingStockDetail = require('../controllers/StockInTransactionDetailController')
 router.use(auth)
 router.get('/:StockInId/main', incomingStockDetail.index)
 router.post('/:StockInId/main', incomingStockDetail.store)

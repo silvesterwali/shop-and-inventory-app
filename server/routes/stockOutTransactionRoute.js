@@ -12,7 +12,7 @@
 const express = require('express')
 const auth = require('../middleware/auth')
 const router = express.Router()
-const StockOutTransaction = require('../controllers/StockOutController')
+const StockOutTransaction = require('../controllers/StockOutTransactionController')
 
 router.use(auth)
 router.get('/', StockOutTransaction.index)

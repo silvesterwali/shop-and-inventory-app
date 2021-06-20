@@ -4,7 +4,7 @@ const router = express.Router()
 
 const { bankAtmCardRules, validate } = require('../validate')
 
-const atmCardController = require('../controllers/atmCardController')
+const atmCardController = require('../controllers/AtmCardController')
 
 // implement authenticate middleware
 

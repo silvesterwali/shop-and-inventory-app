@@ -9,7 +9,7 @@
 
 const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
-const { incrementStockProduct } = require('../utilities/stock.js')
+const { incrementStockProduct } = require('../utilities/stockUtils.js')
 
 /**
  *=====================================
