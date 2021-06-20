@@ -108,9 +108,9 @@
   </v-row>
 </template>
 <script>
-import { getProductListResources } from '@/services/productList.js'
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage'
+import { getProductListResources } from '~/services/ProductList.js'
 import {
   createStockOutDetailsTransactionResource,
   updateStockOutDetailsTransactionResource,
