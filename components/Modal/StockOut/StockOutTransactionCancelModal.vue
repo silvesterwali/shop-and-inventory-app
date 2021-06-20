@@ -2,9 +2,9 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="400">
       <v-card :loading="loading">
-        <v-card-title> Are sure want cancel ? </v-card-title>
+        <v-card-title> Are sure want to cancel ? </v-card-title>
         <v-card-text>
-          <p>Serial {{ incomingStock.serialNumber }}</p>
+          <p>Serial {{ stockOutHeader.serialNumber }}</p>
           <p>All item in this transaction will be cancel also</p>
           <v-form ref="form" @submit.prevent="sendUpdateResouce">
             <v-textarea
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { updateCancelIncomingStockResource } from '@/services/CancelIncomingStock.js'
+import { updateStockOutTransactionCancelResource } from '@/services/StockOutTransactionCancel.js'
 import setMessage from '@/mixins/setMessage.js'
 export default {
   mixins: [setMessage],
@@ -39,7 +39,7 @@ export default {
       type: Boolean,
       default: null,
     },
-    incomingStock: {
+    stockOutHeader: {
       type: Object,
       default: null,
     },
@@ -75,8 +75,8 @@ export default {
         return false
       }
       try {
-        const { data } = await updateCancelIncomingStockResource(
-          this.incomingStock._id,
+        const { data } = await updateStockOutTransactionCancelResource(
+          this.stockOutHeader._id,
           this.dataForm
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
