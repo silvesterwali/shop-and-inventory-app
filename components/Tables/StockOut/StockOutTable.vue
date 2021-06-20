@@ -114,9 +114,9 @@
       </v-card>
     </v-dialog>
     <template v-if="dialogApprove">
-      <approve-stock-in-modal
+      <stock-out-transaction-approve-modal
         :dialog-approve.sync="dialogApprove"
-        :incoming-stock="selectedItem"
+        :stock-out-header="selectedItem"
       />
     </template>
     <template v-if="dialogCancel">
@@ -131,7 +131,7 @@
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
-import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
+import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
 import CancellationStockInModal from '@/components/Modal/StockIn/CancellationStockInModal.vue'
 import {
   getStockOutTransactionResources,
@@ -142,7 +142,7 @@ export default {
   components: {
     IndexCardPage,
     StockInChip,
-    ApproveStockInModal,
+    StockOutTransactionApproveModal,
     CancellationStockInModal,
   },
   mixins: [setMessage],
