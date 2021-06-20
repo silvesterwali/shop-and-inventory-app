@@ -7,6 +7,7 @@
 
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
+const { totalPages } = require('../utilities/totalPagesUtils.js')
 
 /**
  * getProducts
@@ -33,6 +34,8 @@ exports.getProducts = async (req, res) => {
   try {
     result.totalRows = await db.collection('products').find(query).count()
     // apply next pagination
+
+    result.totalPages = totalPages(result.totalPages, limit)
 
     if (endIndex < result.totalRows) {
       result.next = {
