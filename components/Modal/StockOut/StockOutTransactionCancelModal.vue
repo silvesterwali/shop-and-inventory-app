@@ -85,7 +85,7 @@ export default {
       } finally {
         this.loading = false
         this.dialog = false
-        this.$router.push('/inventory/stock-in')
+        this.$router.push('/inventory/stock-out')
       }
     },
   },

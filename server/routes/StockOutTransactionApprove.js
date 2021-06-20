@@ -13,9 +13,9 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
-const approveStockOutTransaction = require('../controllers/approveStockOutTransaction.js')
+const StockOutTransactionApprove = require('../controllers/StockOutTransactionApprove.js')
 router.use(auth)
 
-router.put('/:id', approveStockOutTransaction.update)
+router.put('/:id', StockOutTransactionApprove.update)
 
 module.exports = router

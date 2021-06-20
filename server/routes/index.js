@@ -27,7 +27,7 @@ router.use('/incoming-stock-cancellation', require('./cancelStock'))
 router.use('/stock-out-transaction', require('./stockOutTransaction'))
 router.use(
   '/stock-out-transaction-detail',
-  require('./StockOutDetailTransaction')
+  require('./StockOutTransactionDetail')
 )
 router.use(
   '/stock-out-transaction-approve',

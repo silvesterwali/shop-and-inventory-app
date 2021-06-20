@@ -46,11 +46,14 @@ exports.update = async (req, res) => {
         .json({ message: 'This actions cannot be execute, it wrong sections' })
     }
 
-    const productTemp = await productGroup(productsInTransactions)
+    const productTemp = productGroup(productsInTransactions)
 
     const runLoopIncrease = async () => {
       for (const item of productTemp) {
-        await stockUtils.incrementStockProduct(item.productId, item.qty)
+        await stockUtils.incrementStockProduct(
+          item.productId,
+          parseFloat(item.qty)
+        )
       }
     }
     /**
