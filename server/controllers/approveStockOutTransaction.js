@@ -72,7 +72,7 @@ exports.update = async (req, res) => {
       for (const item of groupProductInTransaction) {
         const product = await findProduct(item.productId)
 
-        if (parseFloat(product.stockOut) >= parseFloat(item.qty)) {
+        if (parseFloat(product.stockQty) >= parseFloat(item.qty)) {
           validStock.push({ id: item.qty })
         }
       }
