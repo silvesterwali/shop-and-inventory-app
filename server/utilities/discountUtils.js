@@ -13,5 +13,5 @@ exports.countDiscount = (price, qty, discount) => {
   const total = parseFloat(price) * parseFloat(qty)
   const totalDiscount = (parseFloat(discount) / 100) * total
   const totalPrice = total - totalDiscount
-  return totalPrice.toFixed(2)
+  return parseFloat(totalPrice.toFixed(2))
 }
