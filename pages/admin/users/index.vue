@@ -1,5 +1,12 @@
 <template>
   <index-base-page>
+    <template #info>
+      <v-card>
+        <v-card-text>
+          {{ pageInfo.content }}
+        </v-card-text>
+      </v-card>
+    </template>
     <template #content>
       <user-table />
     </template>
@@ -14,6 +21,13 @@ export default {
     IndexBasePage,
     UserTable,
   },
+  data() {
+    return {
+      pageInfo: {
+        content: 'User management page and list all user',
+      },
+    }
+  },
   head() {
     return {
       title: 'User Management',
@@ -21,7 +35,7 @@ export default {
         {
           uid: 'description',
           name: 'description',
-          content: 'User management page and list all user',
+          content: this.pageInfo.content,
         },
       ],
     }
