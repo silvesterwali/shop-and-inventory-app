@@ -120,9 +120,9 @@
       />
     </template>
     <template v-if="dialogCancel">
-      <cancellation-stock-in-modal
+      <stock-out-transaction-cancel-modal
         :dialog-cancel.sync="dialogCancel"
-        :incoming-stock="selectedItem"
+        :stock-out-header="selectedItem"
       />
     </template>
   </div>
@@ -132,7 +132,7 @@
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
-import CancellationStockInModal from '@/components/Modal/StockIn/CancellationStockInModal.vue'
+import StockOutTransactionCancelModal from '@/components/Modal/StockOut/StockOutTransactionCancelModal.vue'
 import {
   getStockOutTransactionResources,
   deleteStockOutTransactionResource,
@@ -143,7 +143,7 @@ export default {
     IndexCardPage,
     StockInChip,
     StockOutTransactionApproveModal,
-    CancellationStockInModal,
+    StockOutTransactionCancelModal,
   },
   mixins: [setMessage],
   data: () => ({
