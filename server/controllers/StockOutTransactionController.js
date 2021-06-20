@@ -8,7 +8,7 @@
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
 const stockNumber = require('../utilities/stockNumberUtils.js')
-
+const { totalPages } = require('../utilities/totalPagesUtils')
 /**
  *=====================================
  * index
@@ -33,6 +33,8 @@ exports.index = async (req, res) => {
       .collection('stockOutTransactions')
       .find(query)
       .count()
+
+    result.totalPages = totalPages(result.totalRows, limit)
     if (endIndex < result.totalRows) {
       result.next = {
         page: page - 1,

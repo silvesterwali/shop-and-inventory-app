@@ -35,7 +35,7 @@ exports.getProducts = async (req, res) => {
     result.totalRows = await db.collection('products').find(query).count()
     // apply next pagination
 
-    result.totalPages = totalPages(result.totalPages, limit)
+    result.totalPages = totalPages(result.totalRows, limit)
 
     if (endIndex < result.totalRows) {
       result.next = {
