@@ -29,6 +29,12 @@
           :items-per-page="limit"
           hide-default-footer
         >
+          <template #top>
+            <v-toolbar flat dense>
+              <div>page {{ page }} of {{ items.totalRows }} rows</div>
+              <v-spacer />
+            </v-toolbar>
+          </template>
           <template #[`item.status`]="{ item }">
             <stock-in-chip :status="item.status" />
           </template>

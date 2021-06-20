@@ -16,6 +16,12 @@
           :items-per-page="limit"
           hide-default-footer
         >
+          <template #top>
+            <v-toolbar flat dense>
+              <div>page {{ page }} of {{ users.totalRows }} rows</div>
+              <v-spacer />
+            </v-toolbar>
+          </template>
           <template #[`item.actions`]="{ item }">
             <v-menu bottom left>
               <template #activator="{ on, attrs }">
