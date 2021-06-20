@@ -72,12 +72,12 @@
 
 <script>
 import { getSupplierResources } from '@/services/supplier.js'
+import setMessage from '@/mixins/setMessage.js'
+import errorKey from '@/mixins/errorKey.js'
 import {
   createIncomingStockResource,
   updateIncomingStockResource,
-} from '@/services/IncomingStock.js'
-import setMessage from '@/mixins/setMessage.js'
-import errorKey from '@/mixins/errorKey.js'
+} from '~/services/StockInTransaction.js'
 export default {
   mixins: [setMessage, errorKey],
   props: {

@@ -114,10 +114,10 @@
 
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getStockOutDetailsTransactionResources } from '@/services/StockOutDetailsTransaction.js'
 import ProductModal from '@/components/Modal/StockOut/StockOutProductModal.vue'
 import DeleteStockOutModal from '@/components/Modal/StockOut/DeleteStockOutDetailModal.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
+import { getStockOutDetailsTransactionResources } from '~/services/StockOutTransactionDetatil.js'
 export default {
   components: {
     // register component here

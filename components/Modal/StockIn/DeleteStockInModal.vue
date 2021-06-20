@@ -31,7 +31,7 @@
 </template>
 <script>
 import setMessage from '@/mixins/setMessage.js'
-import { deleteIncomingStockDetailResource } from '@/services/IncomingStockDetail.js'
+import { deleteIncomingStockDetailResource } from '~/services/StockInTransactionDetail.js'
 export default {
   mixins: [setMessage],
   props: {

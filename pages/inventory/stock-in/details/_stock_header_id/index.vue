@@ -14,9 +14,9 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import { getIncomingStockResource } from '@/services/IncomingStock.js'
 import StockInHeaderItem from '@/components/Item/StockInHeaderItem.vue'
 import StockInDetailTable from '@/components/Tables/StockIn/StockInDetailTable.vue'
+import { getIncomingStockResource } from '~/services/StockInTransaction.js'
 export default {
   components: {
     // define your component here

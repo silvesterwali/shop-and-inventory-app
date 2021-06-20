@@ -109,12 +109,12 @@
 </template>
 <script>
 import { getProductListResources } from '@/services/productList.js'
+import errorKey from '@/mixins/errorKey.js'
+import setMessage from '@/mixins/setMessage'
 import {
   createIncomingStockDetailResource,
   updateIncomingStockDetailResource,
-} from '@/services/IncomingStockDetail.js'
-import errorKey from '@/mixins/errorKey.js'
-import setMessage from '@/mixins/setMessage'
+} from '~/services/StockInTransactionDetail.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {

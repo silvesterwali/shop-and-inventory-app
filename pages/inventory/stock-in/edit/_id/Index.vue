@@ -37,7 +37,7 @@
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
-import { getIncomingStockResource } from '@/services/IncomingStock.js'
+import { getIncomingStockResource } from '~/services/StockInTransaction.js'
 import HeaderStockInForm from '~/components/Forms/StockIn/HeaderStockInForm.vue'
 export default {
   components: {

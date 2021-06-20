@@ -133,11 +133,11 @@ import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
 import CancellationStockInModal from '@/components/Modal/StockIn/CancellationStockInModal.vue'
+import setMessage from '@/mixins/setMessage.js'
 import {
   getIncomingStockResources,
   deleteIncomingStockResource,
-} from '@/services/IncomingStock.js'
-import setMessage from '@/mixins/setMessage.js'
+} from '~/services/StockInTransaction.js'
 export default {
   components: {
     IndexCardPage,

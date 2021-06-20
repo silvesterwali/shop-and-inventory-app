@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { updateStockIncreaseResource } from '@/services/StockIncrease.js'
 import setMessage from '@/mixins/setMessage.js'
+import { updateStockIncreaseResource } from '~/services/StockInTransactionApprove.js'
 export default {
   mixins: [setMessage],
   props: {

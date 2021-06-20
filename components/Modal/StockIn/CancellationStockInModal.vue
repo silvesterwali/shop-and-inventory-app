@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { updateCancelIncomingStockResource } from '@/services/CancelIncomingStock.js'
 import setMessage from '@/mixins/setMessage.js'
+import { updateCancelIncomingStockResource } from '~/services/StockInTransactionCancel.js'
 export default {
   mixins: [setMessage],
   props: {
