@@ -33,4 +33,8 @@ router.use(
   '/stock-out-transaction-approve',
   require('./StockOutTransactionApprove')
 )
+router.use(
+  '/stock-out-transaction-cancel',
+  require('./stockOutTransactionCancel')
+)
 module.exports = router
