@@ -38,7 +38,7 @@
         <v-pagination
           v-model="page"
           class="my-4"
-          :length="users.totalRows"
+          :length="users.totalPages"
         ></v-pagination>
         <v-spacer />
       </template>

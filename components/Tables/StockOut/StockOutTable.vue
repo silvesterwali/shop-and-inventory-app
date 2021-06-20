@@ -85,7 +85,7 @@
         <v-pagination
           v-model="page"
           class="my-4"
-          :length="totalPage"
+          :length="items.totalPages"
         ></v-pagination>
         <v-spacer />
       </template>
@@ -194,20 +194,6 @@ export default {
     if (data) {
       this.items = data
     }
-  },
-  computed: {
-    totalPage() {
-      if (this.items.length === 0) {
-        return 1
-      }
-
-      const currentPage = Math.ceil(this.items.totalRows / this.limit)
-      if (currentPage <= 0) {
-        return 1
-      }
-
-      return isNaN(currentPage) ? 1 : currentPage
-    },
   },
   watch: {
     page: {

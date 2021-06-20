@@ -53,7 +53,7 @@
         <v-pagination
           v-model="page"
           class="my-4"
-          :length="totalPage"
+          :length="products.totalPages"
         ></v-pagination>
         <v-spacer />
       </template>
@@ -133,11 +133,6 @@ export default {
     if (data) {
       this.products = data
     }
-  },
-  computed: {
-    totalPage() {
-      return this.products.length > 0 ? this.products.totalPages : 1
-    },
   },
   watch: {
     page: {

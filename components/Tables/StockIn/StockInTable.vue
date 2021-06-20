@@ -85,7 +85,7 @@
         <v-pagination
           v-model="page"
           class="my-4"
-          :length="totalPage"
+          :length="items.totalPages"
         ></v-pagination>
         <v-spacer />
       </template>
