@@ -33,8 +33,8 @@ exports.productGroup = (productArray) => {
   const products = []
   productArray.forEach(function (el) {
     if (!this[el.productId] && !this[el.qty]) {
-      this[el.productId] = { productId: el.productId, qty: el.qty }
-      productArray.push(this[el.productId])
+      this[el.productId] = { productId: el.productId, qty: 0 }
+      products.push(this[el.productId])
     }
     this[el.productId].qty += el.qty
   }, Object.create({}))
