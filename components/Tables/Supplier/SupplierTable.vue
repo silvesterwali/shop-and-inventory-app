@@ -22,6 +22,11 @@
           :loading="$fetchState.pending"
           dense
         >
+          <template #[`item.address`]="{ item }">
+            <div class="d-inline-block text-truncate" style="max-width: 150px">
+              {{ item.address }}
+            </div>
+          </template>
           <template #[`item.actions`]="{ item }">
             <v-menu bottom left>
               <template #activator="{ on, attrs }">
