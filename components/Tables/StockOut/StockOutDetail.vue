@@ -104,9 +104,9 @@
       />
     </template>
     <template v-if="dialogApprove">
-      <approve-stock-in-modal
+      <stock-out-transaction-approve-modal
         :dialog-approve.sync="dialogApprove"
-        :incoming-stock="stockOutHeader"
+        :stock-out-header="stockOutHeader"
       />
     </template>
   </div>
@@ -117,14 +117,14 @@ import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getStockOutDetailsTransactionResources } from '@/services/StockOutDetailsTransaction.js'
 import ProductModal from '@/components/Modal/StockOut/StockOutProductModal.vue'
 import DeleteStockOutModal from '@/components/Modal/StockOut/DeleteStockOutDetailModal.vue'
-import ApproveStockInModal from '@/components/Modal/StockIn/ApproveStockInModal.vue'
+import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
 export default {
   components: {
     // register component here
     IndexCardPage,
     ProductModal,
     DeleteStockOutModal,
-    ApproveStockInModal,
+    StockOutTransactionApproveModal,
   },
   props: {
     stockOutHeader: {
