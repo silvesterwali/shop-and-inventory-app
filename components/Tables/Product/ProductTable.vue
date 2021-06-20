@@ -136,16 +136,7 @@ export default {
   },
   computed: {
     totalPage() {
-      if (this.products.length === 0) {
-        return 1
-      }
-
-      const currentPage = Math.ceil(this.products.totalRows / this.limit)
-      if (currentPage <= 0) {
-        return 1
-      }
-
-      return isNaN(currentPage) ? 1 : currentPage
+      return this.products.length > 0 ? this.products.totalPages : 1
     },
   },
   watch: {
