@@ -51,7 +51,9 @@ const registrationRules = () => {
 const loginRules = () => {
   return [
     body('email').isEmail().withMessage('email is not valid').normalizeEmail(),
-    body('password').isLength({ min: 8, max: 20 }),
+    body('password')
+      .isLength({ min: 8, max: 20 })
+      .withMessage('password length min 8 and max 20'),
   ]
 }
 
@@ -144,7 +146,8 @@ const validate = (req, res, next) => {
    *
    */
   const simpleValidate = validationResult.withDefaults({
-    format: (err) => err.msg,
+    formatter: (err) => err.msg,
+    onlyFirstError: true,
   })
 
   const errors = simpleValidate(req)
