@@ -103,11 +103,12 @@ export default {
   },
   methods: {
     validateForm() {
+      this.errors = null
+      this.loading = true
       if (!this.$refs.familyFrom.validate()) {
         return false
       }
-      this.errors = null
-      this.loading = true
+
       if (this.family !== null) {
         this._updateFamily()
       } else {
