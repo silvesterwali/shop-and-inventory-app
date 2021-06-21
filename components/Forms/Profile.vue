@@ -137,11 +137,12 @@ export default {
   },
   methods: {
     validateForm() {
+      this.loading = false
+      this.errors = null
       if (!this.$refs.profileForm.validate()) {
         return
       }
-      this.loading = false
-      this.errors = null
+
       if (this.dataForm._id === null) {
         this._createUserProfile()
       } else {
