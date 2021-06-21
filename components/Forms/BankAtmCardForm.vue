@@ -101,11 +101,12 @@ export default {
   },
   methods: {
     validateForm() {
+      this.errors = null
+      this.loading = true
       if (!this.$refs.form.validate()) {
         return false
       }
-      this.errors = null
-      this.loading = true
+
       if (this.bankAtmCard !== null) {
         this._updateResource()
       } else {
