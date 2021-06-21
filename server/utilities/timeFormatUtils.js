@@ -6,6 +6,12 @@ const moment = require('moment')
  * - will return `YYYY-MM-DD` format
  */
 exports.stringToDateFormat = (strTime) => {
-  const dateToMoment = moment(strTime).format('YYYY-MM-DD')
-  return new Date(dateToMoment).toISOString().substr(0, 10)
+  return new Date(moment(strTime).format('YYYY-MM-DD[T00:00:00.000Z]'))
+}
+/**
+ * currentDateFormat
+ *
+ */
+exports.currentDateFormat = () => {
+  return new Date(moment().format('YYYY-MM-DD[T00:00:00.000Z]'))
 }
