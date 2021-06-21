@@ -48,10 +48,10 @@ exports.stockInNumber = async () => {
   const strLength = newNumber.toString().length
   let _stringFormat = ''
   for (let index = 6; index > 1; index--) {
-    _stringFormat += '0'.toString()
     if (strLength === index) {
       break
     }
+    _stringFormat += '0'.toString()
   }
   return (
     'STM' +
@@ -115,10 +115,10 @@ exports.stockOutTransactionNumber = async () => {
   const strLength = newNumber.toString().length
   let _stringFormat = ''
   for (let index = 6; index > 1; index--) {
-    _stringFormat += '0'.toString()
     if (strLength === index) {
       break
     }
+    _stringFormat += '0'.toString()
   }
   return (
     'STO' +
