@@ -9,6 +9,8 @@ const StockNumber = require('../utilities/stockNumberUtils.js')
 const db = require('../db').db
 const { totalPages } = require('../utilities/totalPagesUtils')
 
+const timeFormatUtils = require('../utilities/timeFormatUtils')
+
 /**
  *=====================================
  * index
@@ -127,7 +129,7 @@ exports.store = async (req, res) => {
     const result = await db.collection('IncomingStocks').insertOne({
       _id: new ObjectID(),
       serialNumber: await StockNumber.stockInNumber(),
-      transactionDate,
+      transactionDate: timeFormatUtils.stringToDateFormat(transactionDate),
       supplierId: supplierID,
       description,
       status: 0, // recent create
@@ -243,7 +245,8 @@ exports.update = async (req, res) => {
         },
         {
           $set: {
-            transactionDate,
+            transactionDate:
+              timeFormatUtils.stringToDateFormat(transactionDate),
             supplierId: supplierID,
             description,
             updatedBy: new ObjectID(req.user._id),

@@ -9,6 +9,7 @@ const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
 const stockNumber = require('../utilities/stockNumberUtils.js')
 const { totalPages } = require('../utilities/totalPagesUtils')
+const timeFormatUtils = require('../utilities/timeFormatUtils')
 /**
  *=====================================
  * index
@@ -131,7 +132,7 @@ exports.store = async (req, res) => {
     const result = await db.collection('stockOutTransactions').insertOne({
       _id: new ObjectID(),
       serialNumber: await stockNumber.stockOutTransactionNumber(),
-      transactionDate,
+      transactionDate: timeFormatUtils.stringToDateFormat(transactionDate),
       description,
       type, // to define the type of stock out transaction [production ,return]
       status: 0, // user pending,
@@ -243,7 +244,8 @@ exports.update = async (req, res) => {
         },
         {
           $set: {
-            transactionDate,
+            transactionDate:
+              timeFormatUtils.stringToDateFormat(transactionDate),
             description,
             type, // to define the type of stock out transaction [production ,return]
             updatedBy: new ObjectID(req.user._id),
