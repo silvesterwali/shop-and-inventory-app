@@ -108,7 +108,26 @@ this optional for product schema
 
 ```
 
+### customer
 
+```js
+  {
+    _id:ObjectId,
+    serialNumber:String,
+    isActive:false,
+    fullName:String,
+    email:String,
+    phone:String,
+    phoneAlternate:String,
+    address:String,
+    addressAlternate:String,
+    createdBy:ObjectId
+    createdAt:Date,
+    updatedBy:ObjectId,
+    updatedAt:Date
+  }
+
+```
 
 
 
