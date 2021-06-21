@@ -35,6 +35,9 @@
               <v-spacer />
             </v-toolbar>
           </template>
+          <template #[`item.transactionDate`]="{ item }">
+            <date-format :date-string="item.transactionDate" />
+          </template>
           <template #[`item.status`]="{ item }">
             <stock-in-chip :status="item.status" />
           </template>
@@ -137,6 +140,7 @@
 <script>
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
+import DateFormat from '@/components/Formatter/DateFormat.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
 import StockOutTransactionCancelModal from '@/components/Modal/StockOut/StockOutTransactionCancelModal.vue'
 import {
@@ -150,6 +154,7 @@ export default {
     StockInChip,
     StockOutTransactionApproveModal,
     StockOutTransactionCancelModal,
+    DateFormat,
   },
   mixins: [setMessage],
   data: () => ({
