@@ -73,8 +73,8 @@ export default {
   },
   methods: {
     validate() {
+      this.errors = null
       if (this.$refs.formRegister.validate()) {
-        this.errors = null
         this.login()
       }
     },
