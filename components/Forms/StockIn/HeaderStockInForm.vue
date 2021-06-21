@@ -33,7 +33,7 @@
           >
             <template #activator="{ on, attrs }">
               <v-text-field
-                v-model="dataForm.transactionDate"
+                v-model="dateFormat"
                 label="Transaction Date"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -73,6 +73,7 @@
 <script>
 import setMessage from '@/mixins/setMessage.js'
 import errorKey from '@/mixins/errorKey.js'
+import moment from 'moment'
 import { getSupplierResources } from '~/services/Supplier.js'
 import {
   createIncomingStockResource,
@@ -103,6 +104,16 @@ export default {
   async fetch() {
     const { data } = await getSupplierResources()
     this.supliers = data
+  },
+  computed: {
+    dateFormat: {
+      get() {
+        return moment(this.dataForm.transactionDate).format('YYYY-MM-DD')
+      },
+      set(value) {
+        this.dataForm.transactionDate = moment(value).format('YYYY-MM-DD')
+      },
+    },
   },
   watch: {
     stockIn: {
