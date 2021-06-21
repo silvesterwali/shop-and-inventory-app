@@ -162,6 +162,7 @@ export default {
   },
   methods: {
     validateForm() {
+      this.errors = null
       if (!this.$refs.form.validate()) return false
       if (this.dataForm._id === null) {
         this.createResource()
