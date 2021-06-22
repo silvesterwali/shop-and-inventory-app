@@ -40,4 +40,6 @@ router.use(
   '/stock-out-transaction-cancel',
   require('./stockOutTransactionCancelRoute')
 )
+
+router.use('/customer', require('./CustomerRoute'))
 module.exports = router
