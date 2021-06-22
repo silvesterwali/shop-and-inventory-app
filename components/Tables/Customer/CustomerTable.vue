@@ -21,19 +21,10 @@
           v-model="selected"
           dense
           :loading="$fetchState.pending"
-          :items="products.data"
+          :items="items"
           :headers="headers"
           item-key="id"
-          :page.sync="page"
-          :items-per-page="limit"
-          hide-default-footer
         >
-          <template #top>
-            <v-toolbar flat dense>
-              <div>page {{ page }} of {{ products.totalRows }} rows</div>
-              <v-spacer />
-            </v-toolbar>
-          </template>
           <template #[`item.actions`]="{ item }">
             <v-menu bottom left>
               <template #activator="{ on, attrs }">
@@ -54,15 +45,6 @@
           </template>
         </v-data-table>
       </template>
-      <template #card-action>
-        <v-spacer></v-spacer>
-        <v-pagination
-          v-model="page"
-          class="my-4"
-          :length="products.totalPages"
-        ></v-pagination>
-        <v-spacer />
-      </template>
     </index-card-page>
   </div>
 </template>
@@ -77,7 +59,7 @@ export default {
   },
   mixins: [setMessage],
   data: () => ({
-    products: [],
+    items: [],
     selected: [],
     selectedItem: null,
     dialogDelete: false,
@@ -119,10 +101,10 @@ export default {
     ],
   }),
   async fetch() {
-    this.products = []
+    this.items = []
     const { data } = await getCustomerResources(this.limit, this.page)
     if (data) {
-      this.products = data
+      this.items = data
     }
   },
   watch: {
