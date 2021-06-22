@@ -130,6 +130,10 @@ export default {
               url: '/inventory/supplier',
             },
             {
+              title: 'Customer',
+              url: '/inventory/customer',
+            },
+            {
               title: 'Stock In',
               url: '/inventory/stock-in',
             },
