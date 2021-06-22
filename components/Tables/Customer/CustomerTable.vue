@@ -70,8 +70,8 @@ export default {
     headers: [
       { text: 'Serial Numberd', value: 'serialNumber', sort: true },
       {
-        text: 'FullName',
-        value: 'fullname',
+        text: 'Fullname',
+        value: 'fullName',
       },
       {
         text: 'Email',

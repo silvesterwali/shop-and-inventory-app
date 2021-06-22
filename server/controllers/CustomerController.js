@@ -53,11 +53,12 @@ exports.store = async (req, res) => {
       address,
       addressAlternate,
       createdBy: new ObjectID(req.user_id),
+      createdAt: new Date(),
     })
     return res.json({ message: 'Success create new customer' })
   } catch (err) {
     console.log(err)
-    return res.status(500).json()
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }
 
@@ -109,6 +110,8 @@ exports.update = async (req, res) => {
         phoneAlternate,
         address,
         addressAlternate,
+        updatedBy: new ObjectID(req.user._id),
+        updatedAt: new Date(),
       }
     )
     return res.json({ message: 'Success update specific resource' })

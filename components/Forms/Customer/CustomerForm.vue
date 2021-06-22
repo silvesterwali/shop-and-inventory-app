@@ -33,17 +33,19 @@
             :rules="[errorKey('phoneAlternate')]"
           ></v-text-field>
         </v-col>
-        <v-col lg="6" sm="6">
+        <v-col lg="12" sm="12">
           <v-textarea
             v-model="dataForm.address"
             label="Address"
+            rows="2"
             :rules="[(v) => !!v || 'required', errorKey('address')]"
           ></v-textarea>
         </v-col>
-        <v-col lg="6" sm="6">
+        <v-col lg="12" sm="12">
           <v-textarea
             v-model="dataForm.addressAternate"
             label="Address Alternate"
+            rows="2"
             :rules="[errorKey('addressAlternate')]"
           ></v-textarea>
         </v-col>
@@ -64,12 +66,12 @@ import setMessage from '@/mixins/setMessage.js'
 import {
   createCustomerResource,
   updateCustomerResource,
-} from '~/services/Customer.js'
+} from '@/services/Customer.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {
-    // props existing product
-    product: {
+    // props existing customer
+    customer: {
       type: Object,
       default: null,
     },
@@ -94,18 +96,10 @@ export default {
       errors: null,
     }
   },
-  computed: {
-    // check if current product data cannot edit the stock quantity
-    canAddStockQty() {
-      if (this.product === null) {
-        return true
-      }
-      return false
-    },
-  },
+
   watch: {
     // if props is null it's mean form should update
-    product: {
+    customer: {
       immediate: true,
       handler(value) {
         if (value !== null) {
@@ -135,6 +129,8 @@ export default {
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.push(this.redirectUrl)
       } catch (err) {
+        // eslint-disable-next-line no-debugger
+        debugger
         this.errors = err.response.data
       }
     },

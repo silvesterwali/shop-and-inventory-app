@@ -10,6 +10,23 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <card-index-page>
+          <template #card-title>Create new customer</template>
+          <template #card-subtitle>
+            <div>
+              <v-btn
+                small
+                class="mt-n5 float-right"
+                color="primary"
+                to="/inventory/Cusotmer"
+                >Back</v-btn
+              >
+            </div>
+          </template>
+          <template #card-text>
+            <customer-form redirect-url="/inventory/customer" />
+          </template>
+        </card-index-page>
       </template>
     </index-base-page>
   </div>
@@ -17,11 +34,14 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import CardIndexPage from '~/components/CardPage/IndexCardPage.vue'
+import CustomerForm from '~/components/Forms/Customer/CustomerForm.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    CardIndexPage,
+    CustomerForm,
   },
   data() {
     return {
