@@ -42,4 +42,5 @@ router.use(
 )
 
 router.use('/customer', require('./CustomerRoute'))
+router.use('/brand', require('./brandRoute'))
 module.exports = router
