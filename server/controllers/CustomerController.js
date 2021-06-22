@@ -6,6 +6,9 @@
  **/
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
+const {
+  customerSerialNumberGenerate,
+} = require('../utilities/customerNumberUtils')
 
 /**
  *=====================================
@@ -37,11 +40,12 @@ exports.index = async (req, res) => {
  * @param {express.Response} res
  * @async
  **/
-exports.store = (req, res) => {
+exports.store = async (req, res) => {
   const { fullName, email, phone, phoneAlternate, address, addressAlternate } =
     req.body
   try {
-    db.collection('customers').insertOne({
+    await db.collection('customers').insertOne({
+      serialNumber: await customerSerialNumberGenerate(),
       fullName,
       email,
       phone,
