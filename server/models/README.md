@@ -129,6 +129,17 @@ this optional for product schema
 
 ```
 
+### Brand
+
+```js
+
+  {
+    title:String,
+    summary:String,
+    content:String
+  }
+
+```
 
 
 ### Sales Transaction
