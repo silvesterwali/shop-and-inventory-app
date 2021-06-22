@@ -19,7 +19,7 @@ const url = `api/customer`
  * @async
  *
  */
-export const getCustomerResources = async (limit, page) => {
+export const getCustomerResources = async () => {
   return await ApiClient.get(`/${url}`)
 }
 
