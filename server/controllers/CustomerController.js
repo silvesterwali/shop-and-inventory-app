@@ -104,14 +104,16 @@ exports.update = async (req, res) => {
         _id: new ObjectID(req.params.id),
       },
       {
-        fullName,
-        email,
-        phone,
-        phoneAlternate,
-        address,
-        addressAlternate,
-        updatedBy: new ObjectID(req.user._id),
-        updatedAt: new Date(),
+        $set: {
+          fullName,
+          email,
+          phone,
+          phoneAlternate,
+          address,
+          addressAlternate,
+          updatedBy: new ObjectID(req.user._id),
+          updatedAt: new Date(),
+        },
       }
     )
     return res.json({ message: 'Success update specific resource' })

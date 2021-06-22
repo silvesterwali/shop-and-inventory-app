@@ -43,7 +43,7 @@
         </v-col>
         <v-col lg="12" sm="12">
           <v-textarea
-            v-model="dataForm.addressAternate"
+            v-model="dataForm.addressAlternate"
             label="Address Alternate"
             rows="2"
             :rules="[errorKey('addressAlternate')]"
@@ -91,7 +91,7 @@ export default {
         phone: null,
         phoneAlternate: null,
         address: null,
-        addressAternate: null,
+        addressAlternate: null,
       },
       errors: null,
     }
