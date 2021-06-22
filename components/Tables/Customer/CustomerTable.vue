@@ -46,6 +46,12 @@
         </v-data-table>
       </template>
     </index-card-page>
+    <template v-if="dialogDelete">
+      <customer-delete-modal
+        :dialog-delete.sync="dialogDelete"
+        :item="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
@@ -53,9 +59,11 @@
 import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import setMessage from '@/mixins/setMessage.js'
 import { getCustomerResources } from '~/services/Customer.js'
+import CustomerDeleteModal from '~/components/Modal/Customer/CustomerDeleteModal.vue'
 export default {
   components: {
     IndexCardPage,
+    CustomerDeleteModal,
   },
   mixins: [setMessage],
   data: () => ({
@@ -115,6 +123,14 @@ export default {
           if (process.client) {
             this.$fetch()
           }
+        }
+      },
+    },
+    dialogDelete: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
         }
       },
     },

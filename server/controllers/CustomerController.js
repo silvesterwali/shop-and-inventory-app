@@ -136,9 +136,9 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
   try {
     await db
-      .collection('costumers')
+      .collection('customers')
       .deleteOne({ _id: new ObjectID(req.params.id) })
-    return res.json({ message: 'Internal Server Error' })
+    return res.json({ message: 'Success remove specific resource' })
   } catch (err) {
     console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })
