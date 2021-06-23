@@ -1,7 +1,7 @@
 {
 	"Inventory Base Page":{
 		"scope":"vue",
-		"prefix": "base-page",
+		"prefix": "app-page",
 		"body": [
 			"<template>",
 			"  <div>",

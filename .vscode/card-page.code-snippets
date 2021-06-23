@@ -1,7 +1,7 @@
 {
 	"Base Component":{
 		"scope": "vue",
-		"prefix": "base-card-page",
+		"prefix": "app-card-page",
 		"description": "This snipper for create basic page component content of the page",
 		"body": [
 			"<template>",
