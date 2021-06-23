@@ -3,7 +3,17 @@
     <v-dialog v-model="dialog" persistent max-width="400">
       <v-card :loading="loading">
         <v-card-title> Are you sure ? </v-card-title>
-        <v-card-text>lorem inpusm dolor</v-card-text>
+        <v-card-text
+          >lorem inpusm dolor
+
+          <v-col lg="12" sm="12" md="12">
+            <v-text-field
+              v-model="data"
+              lable="myData"
+              :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+            />
+          </v-col>
+        </v-card-text>
         <v-card-actions>
           <v-btn color="red darken-1" text>No</v-btn>
           <v-btn color="green darken-1" text>Yes</v-btn>
