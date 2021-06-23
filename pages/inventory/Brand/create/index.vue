@@ -10,7 +10,7 @@
       </template>
       <template #content>
         <card-toolbar-page>
-          <template #title>Brand's</template>
+          <template #title>Create new brand</template>
           <template #action>
             <toolbar-nav
               create-url="/inventory/brand/create"
@@ -20,7 +20,7 @@
           </template>
           <template #content>
             <v-card-text>
-              <brand-form />
+              <brand-form redirect-url="/inventory/brand" />
             </v-card-text>
           </template>
         </card-toolbar-page>

@@ -4,25 +4,25 @@
       <!-- define your form input here-->
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
-          v-model="data"
-          label="myData"
-          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+          v-model="dataForm.title"
+          label="Title"
+          :rules="[(v) => !!v || 'Title is required', errorKey('title')]"
         />
       </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-textarea
-          v-model="data"
+          v-model="dataForm.summary"
           rows="2"
-          label="myData"
-          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+          label="Summary"
+          :rules="[(v) => !!v || 'summary is required', errorKey('summary')]"
         />
       </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-textarea
-          v-model="data"
+          v-model="dataForm.content"
           rows="2"
-          label="myData"
-          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+          label="Content"
+          :rules="[(v) => !!v || 'Content is required', errorKey('content')]"
         />
       </v-col>
       <v-col lg="12" sm="12" md="12" cols="12">
@@ -58,6 +58,9 @@ export default {
     return {
       dataForm: {
         _id: null,
+        title: null,
+        summary: null,
+        description: null,
         // define the form property here
       },
       errors: null,
@@ -77,7 +80,7 @@ export default {
   methods: {
     validateForm() {
       this.errors = null
-      if (!this.refs.form.validate()) return false
+      if (!this.$refs.form.validate()) return false
       if (this.dataForm._id === null) {
         this.createResource()
       } else {
@@ -93,7 +96,7 @@ export default {
       try {
         const { data } = await createBrandResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.router.push(this.redirectUrl)
+        this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors(err)
       }
@@ -110,7 +113,7 @@ export default {
           this.dataForm
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.router.push(this.redirectUrl)
+        this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors(err)
       }

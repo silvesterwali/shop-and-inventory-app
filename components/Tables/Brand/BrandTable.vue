@@ -8,28 +8,43 @@
       class="mt-4"
     >
       <template #[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click.prevent="editItem(item)"
-          >mdi-pencil</v-icon
-        >
-        <v-icon small class="mr-2" @click.prevent="deleteItem(item)"
-          >mdi-delete</v-icon
-        >
+        <v-menu bottom left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list dense>
+            <v-list-item dense :to="`/inventory/brand/edit/${item._id}`">
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
+            <v-list-item dense @click="deleteItemConfirm(item)">
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
     </v-data-table>
   </div>
 </template>
 <script>
+import { getBrandResources } from '@/services/Brand.js'
 export default {
   data() {
     return {
       headers: [
         {
-          text: 'name',
-          value: 'name',
+          text: 'Title',
+          value: 'title',
         },
         {
-          text: 'email',
-          value: 'email',
+          text: 'Summary',
+          value: 'summary',
+        },
+        {
+          text: 'Content',
+          value: 'content',
         },
         {
           text: 'actions',
@@ -43,7 +58,10 @@ export default {
       editDialog: false,
     }
   },
-  fetch() {},
+  async fetch() {
+    const { data } = await getBrandResources()
+    this.items = data
+  },
   methods: {
     /**
      * deleteItem
