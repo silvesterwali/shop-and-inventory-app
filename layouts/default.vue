@@ -126,6 +126,10 @@ export default {
               url: '/inventory/product',
             },
             {
+              title: 'Brand',
+              url: '/inventory/brand',
+            },
+            {
               title: 'Supplier',
               url: '/inventory/supplier',
             },

@@ -3,16 +3,10 @@
     <v-data-table
       :headers="headers"
       :items="items"
-      :loading="fetchState.pending"
-      class="elevation-1"
+      :loading="$fetchState.pending"
+      dense
+      class="mt-4"
     >
-      <template #top>
-        <v-toolbar flat>
-          <v-toolbar-title>Item management</v-toolbar-title>
-          <v-devider class="mt-4" inset vertical />
-          <v-btn color="primary" class="mb-2">New Item</v-btn>
-        </v-toolbar>
-      </template>
       <template #[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click.prevent="editItem(item)"
           >mdi-pencil</v-icon
@@ -28,7 +22,7 @@
 export default {
   data() {
     return {
-      headres: [
+      headers: [
         {
           text: 'name',
           value: 'name',
