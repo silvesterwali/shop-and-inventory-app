@@ -129,8 +129,6 @@ export default {
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.push(this.redirectUrl)
       } catch (err) {
-        // eslint-disable-next-line no-debugger
-        debugger
         this.errors = err.response.data
       }
     },
