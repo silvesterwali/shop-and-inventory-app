@@ -66,7 +66,7 @@ export default {
       errors: null,
     }
   },
-  watct: {
+  watch: {
     // special props to change the dataForm for update
     brand: {
       immediate: true,

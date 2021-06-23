@@ -20,7 +20,7 @@
           </template>
           <template #content>
             <v-card-text>
-              <brand-form />
+              <brand-form :brand="brand" redirect-url="/inventory/brand" />
             </v-card-text>
           </template>
         </card-toolbar-page>
@@ -34,6 +34,7 @@ import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import CardToolbarPage from '@/components/CardPage/CardToolbarPage.vue'
 import ToolbarNav from '@/components/Nav/Toolbar/ToolbarNav.vue'
 import BrandForm from '@/components/Forms/Brand/BrandForm.vue'
+import { getBrandResource } from '@/services/Brand.js'
 export default {
   components: {
     // define your component here
@@ -41,6 +42,12 @@ export default {
     CardToolbarPage,
     ToolbarNav,
     BrandForm,
+  },
+  async asyncData({ params }) {
+    const { data } = await getBrandResource(params.id)
+    return {
+      brand: data,
+    }
   },
   data() {
     return {
