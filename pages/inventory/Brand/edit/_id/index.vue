@@ -9,7 +9,21 @@
         </v-card>
       </template>
       <template #content>
-        <!-- page page will be here -->
+        <card-toolbar-page>
+          <template #title>Brand's</template>
+          <template #action>
+            <toolbar-nav
+              create-url="/inventory/brand/create"
+              return-url="/inventory/brand"
+              :add-action="false"
+            />
+          </template>
+          <template #content>
+            <v-card-text>
+              <brand-form />
+            </v-card-text>
+          </template>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -17,11 +31,16 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-
+import CardToolbarPage from '@/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '@/components/Nav/Toolbar/ToolbarNav.vue'
+import BrandForm from '@/components/Forms/Brand/BrandForm.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    CardToolbarPage,
+    ToolbarNav,
+    BrandForm,
   },
   data() {
     return {

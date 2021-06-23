@@ -2,14 +2,14 @@
   <v-form ref="form" @submit.prevent="validateForm">
     <v-row>
       <!-- define your form input here-->
-      <v-col lg="12" sm="12" md="12">
+      <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
           v-model="data"
           label="myData"
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>
-      <v-col lg="12" sm="12" md="12">
+      <v-col cols="12" lg="12" sm="12" md="12">
         <v-textarea
           v-model="data"
           rows="2"
@@ -17,7 +17,7 @@
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>
-      <v-col lg="12" sm="12" md="12">
+      <v-col cols="12" lg="12" sm="12" md="12">
         <v-textarea
           v-model="data"
           rows="2"
@@ -25,7 +25,7 @@
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>
-      <v-col lg="12" sm="12" md="12">
+      <v-col lg="12" sm="12" md="12" cols="12">
         <v-spacer />
         <v-btn type="submit" class="float-right" color="primary">{{
           dataForm._id == null ? 'Submit' : 'Update'

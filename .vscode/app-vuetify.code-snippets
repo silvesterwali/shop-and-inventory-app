@@ -3,7 +3,7 @@
 		"prefix": "app-col-text-fields",
 		"description": "Snipper for create v-col and wrap v-text-field from vuetify",
 		"body": [
-			"<v-col lg=\"12\" sm=\"12\" md=\"12\">",
+			"<v-col cols=\"12\" lg=\"12\" sm=\"12\" md=\"12\">",
 			"  <v-text-field v-model=\"data\" label=\"myData\" :rules=\"[v=>!!v||'myData is required',errorKey('myData')]\" />",
 			"</v-col>"
 		]
@@ -12,7 +12,7 @@
 		"prefix": "app-col-textarea",
 		"description": "Snippet for create v-col and wrap v-textarea with defalt rows 2 from vuetify",
 		"body": [
-			"<v-col lg=\"12\" sm=\"12\" md=\"12\">",
+			"<v-col cols=\"12\" lg=\"12\" sm=\"12\" md=\"12\">",
 			"  <v-textarea  v-model=\"data\" rows=\"2\" label=\"myData\" :rules=\"[v=>!!v||'myData is required',errorKey('myData')]\" />",
 			"</v-col>"
 		]
