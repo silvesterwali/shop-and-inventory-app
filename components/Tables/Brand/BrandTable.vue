@@ -19,7 +19,7 @@
             <v-list-item dense :to="`/inventory/brand/edit/${item._id}`">
               <v-list-item-title>Edit</v-list-item-title>
             </v-list-item>
-            <v-list-item dense @click="deleteItemConfirm(item)">
+            <v-list-item dense @click="deleteItem(item)">
               <v-list-item-title>Delete</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -69,13 +69,6 @@ export default {
     deleteItem(item) {
       this.selectedItem = item
       this.deleteDialog = true
-    },
-    /**
-     * editItem
-     **/
-    editItem(item) {
-      this.selectedItem = item
-      this.editDialog = true
     },
   },
 }
