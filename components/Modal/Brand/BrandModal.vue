@@ -10,7 +10,9 @@
         <v-card-actions>
           <v-btn color="red darken-1" text @click="dialog = false">No</v-btn>
           <v-spacer />
-          <v-btn color="green darken-1" text>Yes</v-btn>
+          <v-btn color="green darken-1" text @click.prevent="sendDelete"
+            >Yes</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -19,6 +21,7 @@
 
 <script>
 import setMessage from '@/mixins/setMessage.js'
+import { deleteBrandResource } from '~/services/Brand.js'
 export default {
   mixins: [setMessage],
   props: {
@@ -46,6 +49,21 @@ export default {
       get() {
         return this.deleteDialog
       },
+    },
+  },
+  methods: {
+    async sendDelete() {
+      this.loading = true
+      try {
+        const { data } = await deleteBrandResource(this.item._id)
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+        this.dialog = false
+      } catch (err) {
+        this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
+        this.dialog = false
+      } finally {
+        this.loading = false
+      }
     },
   },
 }
