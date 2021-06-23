@@ -66,8 +66,19 @@ export default {
     }
   },
   async fetch() {
+    this.selectedItem = null
     const { data } = await getBrandResources()
     this.items = data
+  },
+  watch: {
+    deleteDialog: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
     /**
