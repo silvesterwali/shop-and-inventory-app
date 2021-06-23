@@ -26,11 +26,18 @@
         </v-menu>
       </template>
     </v-data-table>
+    <template v-if="deleteDialog">
+      <brand-modal :delete-dialog.sync="deleteDialog" />
+    </template>
   </div>
 </template>
 <script>
 import { getBrandResources } from '@/services/Brand.js'
+import BrandModal from '@/components/Modal/Brand/BrandModal.vue'
 export default {
+  components: {
+    BrandModal,
+  },
   data() {
     return {
       headers: [

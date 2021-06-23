@@ -32,6 +32,7 @@
 			"        <v-card-text>lorem inpusm dolor</v-card-text>",
 			"         <v-card-actions>",
 			"            <v-btn color=\"red darken-1\" text >No</v-btn>",
+			"               <v-spacer />",
 			"            <v-btn color=\"green darken-1\" text>Yes</v-btn>",
 			"         </v-card-actions>",
 			"        </v-card>",

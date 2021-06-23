@@ -6,6 +6,7 @@
         <v-card-text>lorem inpusm dolor</v-card-text>
         <v-card-actions>
           <v-btn color="red darken-1" text>No</v-btn>
+          <v-spacer />
           <v-btn color="green darken-1" text>Yes</v-btn>
         </v-card-actions>
       </v-card>
@@ -19,9 +20,13 @@ export default {
   mixins: [setMessage],
   props: {
     // control the ***dialog*** with this props
-    dialogProps: {
+    deleteDialog: {
       type: Boolean,
       default: false,
+    },
+    item: {
+      type: Object,
+      default: null,
     },
   },
   data() {
@@ -30,13 +35,13 @@ export default {
     }
   },
   computed: {
-    // make sure  that ***dialogProps*** is using ***sync*** props
+    // make sure  that ***deleteDialog*** is using ***sync*** props
     dialog: {
       set(value) {
-        this.emit('update:dialogProps', value)
+        this.emit('update:deleteDialog', value)
       },
       get() {
-        return this.dialogProps
+        return this.deleteDialog
       },
     },
   },
