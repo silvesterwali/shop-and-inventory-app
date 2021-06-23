@@ -5,7 +5,7 @@
       <v-col lg="12" sm="12" md="12">
         <v-text-field
           v-model="data"
-          lable="myData"
+          label="myData"
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>
@@ -13,7 +13,7 @@
         <v-textarea
           v-model="data"
           rows="2"
-          lable="myData"
+          label="myData"
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>
@@ -21,7 +21,7 @@
         <v-textarea
           v-model="data"
           rows="2"
-          lable="myData"
+          label="myData"
           :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
         />
       </v-col>

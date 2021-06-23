@@ -1,25 +1,9 @@
 <template>
   <div>
-    <v-btn
-      v-if="!addAction"
-      text
-      x-small
-      title="Back"
-      :to="returnUrl"
-      depressed
-      right
-    >
+    <v-btn v-if="!addAction" fab x-small :to="returnUrl" depressed right>
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
-    <v-btn
-      v-if="addAction"
-      depressed
-      fab
-      x-small
-      color="primary"
-      :to="createUrl"
-      right
-    >
+    <v-btn v-if="addAction" fab x-small color="primary" :to="createUrl" right>
       <v-icon>mdi-plus </v-icon>
     </v-btn>
   </div>
