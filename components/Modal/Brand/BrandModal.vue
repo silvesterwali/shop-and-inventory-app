@@ -3,9 +3,12 @@
     <v-dialog v-model="dialog" persistent max-width="400">
       <v-card :loading="loading">
         <v-card-title> Are you sure ? </v-card-title>
-        <v-card-text>lorem inpusm dolor</v-card-text>
+        <v-card-text>
+          <p>You will delete {{ item ? item.title : '' }}</p>
+          <p>You cannot undo this action if you press Yes</p>
+        </v-card-text>
         <v-card-actions>
-          <v-btn color="red darken-1" text>No</v-btn>
+          <v-btn color="red darken-1" text @click="dialog = false">No</v-btn>
           <v-spacer />
           <v-btn color="green darken-1" text>Yes</v-btn>
         </v-card-actions>
@@ -38,7 +41,7 @@ export default {
     // make sure  that ***deleteDialog*** is using ***sync*** props
     dialog: {
       set(value) {
-        this.emit('update:deleteDialog', value)
+        this.$emit('update:deleteDialog', value)
       },
       get() {
         return this.deleteDialog
