@@ -3,6 +3,29 @@
     <v-row>
       <!-- define your form input here-->
       <v-col lg="12" sm="12" md="12">
+        <v-text-field
+          v-model="data"
+          lable="myData"
+          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+        />
+      </v-col>
+      <v-col lg="12" sm="12" md="12">
+        <v-textarea
+          v-model="data"
+          rows="2"
+          lable="myData"
+          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+        />
+      </v-col>
+      <v-col lg="12" sm="12" md="12">
+        <v-textarea
+          v-model="data"
+          rows="2"
+          lable="myData"
+          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+        />
+      </v-col>
+      <v-col lg="12" sm="12" md="12">
         <v-spacer />
         <v-btn type="submit" class="float-right" color="primary">{{
           dataForm._id == null ? 'Submit' : 'Update'
@@ -15,12 +38,13 @@
 <script>
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
+import { createBrandResource, updateBrandResource } from '~/services/Brand.js'
 
 export default {
   mixins: [errorKey, setMessage],
   props: {
     // define your props update purpose
-    propsName: {
+    brand: {
       type: Object,
       default: null,
     },
@@ -41,7 +65,7 @@ export default {
   },
   watct: {
     // special props to change the dataForm for update
-    propsName: {
+    brand: {
       immediate: true,
       handler(value) {
         if (value !== null) {
@@ -67,7 +91,7 @@ export default {
      **/
     async createResource() {
       try {
-        const { data } = await createResource(this.dataForm)
+        const { data } = await createBrandResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.router.push(this.redirectUrl)
       } catch (err) {
@@ -81,7 +105,10 @@ export default {
      **/
     async updateResource() {
       try {
-        const { data } = await updateResource(this.dataForm._id, this.dataForm)
+        const { data } = await updateBrandResource(
+          this.dataForm._id,
+          this.dataForm
+        )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.router.push(this.redirectUrl)
       } catch (err) {
