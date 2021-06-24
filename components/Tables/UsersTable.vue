@@ -1,64 +1,47 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Users Management</template>
-      <template #card-subtitle>Contain list of user </template>
-      <template #card-text>
-        <v-data-table
-          v-model="selected"
-          dense
-          :loading="$fetchState.pending"
-          :items="users.data"
-          :headers="headers"
-          item-key="id"
-          :page.sync="page"
-          show-select
-          :items-per-page="limit"
-          hide-default-footer
-        >
-          <template #top>
-            <v-toolbar flat dense>
-              <div>page {{ page }} of {{ users.totalRows }} rows</div>
-              <v-spacer />
-            </v-toolbar>
+    <v-data-table
+      v-model="selected"
+      dense
+      :loading="$fetchState.pending"
+      :items="users.data"
+      :headers="headers"
+      item-key="id"
+      :page.sync="page"
+      class="mt-4"
+      :items-per-page="limit"
+      hide-default-footer
+    >
+      <template #[`item.actions`]="{ item }">
+        <v-menu bottom left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
           </template>
-          <template #[`item.actions`]="{ item }">
-            <v-menu bottom left>
-              <template #activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
 
-              <v-list dense>
-                <v-list-item dense :to="`/admin/users/details/${item._id}`">
-                  <v-list-item-title>Details</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </template>
-        </v-data-table>
+          <v-list dense>
+            <v-list-item dense :to="`/admin/users/details/${item._id}`">
+              <v-list-item-title>Details</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
-      <template #card-action>
-        <v-spacer></v-spacer>
-        <v-pagination
-          v-model="page"
-          class="my-4"
-          :length="users.totalPages"
-        ></v-pagination>
-        <v-spacer />
-      </template>
-    </index-card-page>
+    </v-data-table>
+
+    <v-spacer></v-spacer>
+    <v-pagination
+      v-model="page"
+      class="my-4 mt-4"
+      :length="users.totalPages"
+    ></v-pagination>
+    <v-spacer />
   </div>
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import { getUsers } from '~/services/Users.js'
 export default {
-  components: {
-    IndexCardPage,
-  },
   data: () => ({
     users: [],
     selected: [],
