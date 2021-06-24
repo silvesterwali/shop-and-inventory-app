@@ -10,26 +10,20 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <card-index-page>
-          <template #card-title>Create new customer</template>
-          <template #card-subtitle>
-            <div>
-              <v-btn
-                small
-                class="mt-n5 float-right"
-                color="primary"
-                to="/inventory/Cusotmer"
-                >Back</v-btn
-              >
-            </div>
+        <card-toolbar-page>
+          <template #title>Edit Customer</template>
+          <template #action>
+            <toolbar-nav :add-action="false" return-url="/inventory/customer" />
           </template>
-          <template #card-text>
-            <customer-form
-              redirect-url="/inventory/customer"
-              :customer="customer"
-            />
+          <template #content>
+            <v-card-text>
+              <customer-form
+                redirect-url="/inventory/customer"
+                :customer="customer"
+              />
+            </v-card-text>
           </template>
-        </card-index-page>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -37,15 +31,17 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import CardIndexPage from '~/components/CardPage/IndexCardPage.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import CustomerForm from '~/components/Forms/Customer/CustomerForm.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 import { getCustomerResource } from '~/services/Customer.js'
 export default {
   components: {
     // define your component here
     IndexBasePage,
-    CardIndexPage,
+    CardToolbarPage,
     CustomerForm,
+    ToolbarNav,
   },
   async asyncData({ params }) {
     const { data } = await getCustomerResource(params.id)
