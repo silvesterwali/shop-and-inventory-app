@@ -19,7 +19,7 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-title>{{
-                stockHeader.supplier.name
+                stockHeader.supplier ? stockHeader.supplier.name : ''
               }}</v-list-item-title>
               <v-divider />
               <v-list-item-subtitle>Supplier</v-list-item-subtitle>
