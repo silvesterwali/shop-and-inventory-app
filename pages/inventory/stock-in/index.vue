@@ -3,7 +3,7 @@
     <card-toolbar-page>
       <template #title>Stock In</template>
       <template #action>
-        <toolbar-nav create-url="/inventory/stock-in/craete" />
+        <toolbar-nav create-url="/inventory/stock-in/create" />
       </template>
       <template #content>
         <stock-in-table />
