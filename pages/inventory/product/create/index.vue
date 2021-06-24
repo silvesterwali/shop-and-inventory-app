@@ -9,24 +9,17 @@
         </v-card>
       </template>
       <template #content>
-        <index-card-page>
-          <template #card-title>Create new product</template>
-          <template #card-subtitle>
-            <div>
-              <v-btn
-                small
-                class="mt-n5 float-right"
-                color="primary"
-                to="/inventory/product"
-                >Back</v-btn
-              >
-            </div>
+        <card-toolbar-page>
+          <template #title>Create prodcut</template>
+          <template #action>
+            <toolbar-nav :add-action="false" return-url="/inventory/product" />
           </template>
-          <template #card-text>
-            <v-divider class="mb-2" />
-            <product-from redirect-url="/inventory/product" />
+          <template #content>
+            <v-card-text>
+              <product-from redirect-url="/inventory/product" />
+            </v-card-text>
           </template>
-        </index-card-page>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -34,13 +27,15 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import ProductFrom from '@/components/Forms/Product/ProductForm.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     IndexBasePage,
-    IndexCardPage,
     ProductFrom,
+    CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
