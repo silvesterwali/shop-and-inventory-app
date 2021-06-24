@@ -31,40 +31,24 @@
         </v-menu>
       </template>
     </v-data-table>
-    <v-dialog v-model="dialogDelete" persistent max-width="300">
-      <v-card :loading="loading">
-        <v-card-title class="headline"> Are you sure? </v-card-title>
-        <v-card-text
-          >Will you remove
-          {{ selectedItem ? selectedItem.name : '' }}</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="dialogDelete = false">
-            Disagree
-          </v-btn>
-          <v-btn
-            :loading="loading"
-            color="green darken-1"
-            text
-            @click.prevent="sendDelete"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <template v-if="deleteModal">
+      <delete-supplier-modal
+        :delete-modal.sync="deleteModal"
+        :supplier="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
-import {
-  getSupplierResources,
-  deleteSupplierResource,
-} from '~/services/Supplier.js'
+import { getSupplierResources } from '~/services/Supplier.js'
+import DeleteSupplierModal from '~/components/Modal/Supplier/DeleteSupplierModal.vue'
 export default {
+  components: {
+    DeleteSupplierModal,
+  },
   mixins: [errorKey, setMessage],
   data() {
     return {
@@ -101,7 +85,7 @@ export default {
         },
       ],
       suppliers: [],
-      dialogDelete: null,
+      deleteModal: false,
       selectedItem: null,
       loading: false,
     }
@@ -110,24 +94,20 @@ export default {
     const { data } = await getSupplierResources()
     this.suppliers = data
   },
+  watch: {
+    deleteModal: {
+      immediate: false,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
+  },
   methods: {
     deleteItemConfirm(item) {
       this.selectedItem = item
-      this.dialogDelete = true
-    },
-    async sendDelete() {
-      try {
-        this.loading = true
-        const { data } = await deleteSupplierResource(this.selectedItem._id)
-        this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.dialogDelete = false
-        this.selectedItem = null
-        this.$fetch()
-        this.loading = false
-      } catch (err) {
-        this.loading = false
-        this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
-      }
+      this.deleteModal = true
     },
   },
 }
