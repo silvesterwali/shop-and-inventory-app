@@ -1,69 +1,53 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Product Management</template>
-      <template #card-subtitle>
-        <div>
-          <span> Contain list of product </span>
-
-          <v-btn
-            small
-            class="mt-n5 float-right"
-            color="primary"
-            to="/inventory/product/create"
-            >Add new product</v-btn
-          >
-        </div>
+    <v-data-table
+      v-model="selected"
+      dense
+      :loading="$fetchState.pending"
+      :items="products.data"
+      :headers="headers"
+      item-key="id"
+      :page.sync="page"
+      :items-per-page="limit"
+      class="mt-2"
+      hide-default-footer
+    >
+      <template #top>
+        <v-toolbar flat dense>
+          <div style="font-size: 11px">
+            page {{ page }} of {{ products.totalRows }} rows
+          </div>
+          <v-spacer />
+        </v-toolbar>
       </template>
-      <template #card-text>
-        <v-divider class="mb-2" />
-        <v-data-table
-          v-model="selected"
-          dense
-          :loading="$fetchState.pending"
-          :items="products.data"
-          :headers="headers"
-          item-key="id"
-          :page.sync="page"
-          :items-per-page="limit"
-          hide-default-footer
-        >
-          <template #top>
-            <v-toolbar flat dense>
-              <div>page {{ page }} of {{ products.totalRows }} rows</div>
-              <v-spacer />
-            </v-toolbar>
+      <template #[`item.actions`]="{ item }">
+        <v-menu bottom left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
           </template>
-          <template #[`item.actions`]="{ item }">
-            <v-menu bottom left>
-              <template #activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
 
-              <v-list dense>
-                <v-list-item dense :to="`/inventory/product/edit/${item._id}`">
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item dense @click="deleteItemConfirm(item)">
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </template>
-        </v-data-table>
+          <v-list dense>
+            <v-list-item dense :to="`/inventory/product/edit/${item._id}`">
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
+            <v-list-item dense @click="deleteItemConfirm(item)">
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
-      <template #card-action>
-        <v-spacer></v-spacer>
-        <v-pagination
-          v-model="page"
-          class="my-4"
-          :length="products.totalPages"
-        ></v-pagination>
-        <v-spacer />
-      </template>
-    </index-card-page>
+    </v-data-table>
+
+    <v-spacer></v-spacer>
+    <v-pagination
+      v-model="page"
+      class="my-4"
+      :length="products.totalPages"
+    ></v-pagination>
+    <v-spacer />
+
     <v-dialog v-model="dialogDelete" persistent max-width="300">
       <v-card :loading="loading">
         <v-card-title class="headline"> Are you sure? </v-card-title>
@@ -91,13 +75,9 @@
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import setMessage from '@/mixins/setMessage.js'
 import { getProducts, deleteProduct } from '~/services/Product.js'
 export default {
-  components: {
-    IndexCardPage,
-  },
   mixins: [setMessage],
   data: () => ({
     products: [],
