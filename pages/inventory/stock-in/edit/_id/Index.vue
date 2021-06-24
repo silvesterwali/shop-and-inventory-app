@@ -10,25 +10,17 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <index-card-page>
-          <template #card-title>Stock Masuk</template>
-          <template #card-subtitle
-            >List Stock Masuk
-            <div>
-              <v-btn
-                small
-                class="mt-n10 float-right"
-                color="primary"
-                to="/inventory/stock-in"
-                >Back</v-btn
-              >
-            </div>
+        <card-toolbar-page>
+          <template #title>Edit Header Stock In</template>
+          <template #action>
+            <toolbar-nav :add-action="false" return-url="/inventory/stock-in" />
           </template>
-          <template #card-text>
-            <v-divider />
-            <header-stock-in-form :stock-in="stockIn" />
+          <template #content>
+            <v-card-text>
+              <header-stock-in-form :stock-in="stockIn" />
+            </v-card-text>
           </template>
-        </index-card-page>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -36,15 +28,18 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import { getIncomingStockResource } from '~/services/StockInTransaction.js'
 import HeaderStockInForm from '~/components/Forms/StockIn/HeaderStockInForm.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
+
 export default {
   components: {
     // define your component here
     IndexBasePage,
     HeaderStockInForm,
-    IndexCardPage,
+    CardToolbarPage,
+    ToolbarNav,
   },
   async asyncData({ params }) {
     const { data } = await getIncomingStockResource(params.id)
