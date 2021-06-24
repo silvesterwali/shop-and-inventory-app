@@ -10,24 +10,17 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <index-card-page>
-          <template #card-title>New Supplier</template>
-          <template #card-subtitle>
-            <div>
-              <v-btn
-                small
-                class="mt-n5 float-right"
-                color="primary"
-                to="/inventory/supplier"
-                >Back</v-btn
-              >
-            </div>
+        <card-toolbar-page>
+          <template #title>Create Supplier</template>
+          <template #action>
+            <toolbar-nav :add-action="false" return-url="/inventory/supplier" />
           </template>
-          <template #card-text>
-            <v-divider class="mb-4" />
-            <supplier-form />
+          <template #content>
+            <v-card-text>
+              <supplier-form />
+            </v-card-text>
           </template>
-        </index-card-page>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -35,14 +28,16 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
+import CardToolbarPage from '@/components/CardPage/CardToolbarPage.vue'
 import SupplierForm from '@/components/Forms/Supplier/SupplierForm.vue'
+import ToolbarNav from '@/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
-    IndexCardPage,
     SupplierForm,
+    CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
