@@ -10,7 +10,15 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <customer-table />
+        <card-toolbar-page>
+          <template #title>Customer's</template>
+          <template #action>
+            <toolbar-nav create-url="/inventory/customer/create" />
+          </template>
+          <template #content>
+            <customer-table />
+          </template>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -19,11 +27,15 @@
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import CustomerTable from '~/components/Tables/Customer/CustomerTable.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
     CustomerTable,
+    CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
