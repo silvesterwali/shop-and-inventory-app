@@ -47,43 +47,29 @@
       :length="products.totalPages"
     ></v-pagination>
     <v-spacer />
-
-    <v-dialog v-model="dialogDelete" persistent max-width="300">
-      <v-card :loading="loading">
-        <v-card-title class="headline"> Are you sure? </v-card-title>
-        <v-card-text
-          >Will you remove
-          {{ selectedItem ? selectedItem.name : '' }}</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red darken-1" text @click="dialogDelete = false">
-            Disagree
-          </v-btn>
-          <v-btn
-            :loading="loading"
-            color="green darken-1"
-            text
-            @click.prevent="sendDelete"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <template v-if="deleteDialog">
+      <delete-product-modal
+        :delete-dialog.sync="deleteDialog"
+        :product="selectedItem"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import setMessage from '@/mixins/setMessage.js'
-import { getProducts, deleteProduct } from '~/services/Product.js'
+import { getProducts } from '~/services/Product.js'
+import DeleteProductModal from '~/components/Modal/Product/DeleteProductModal.vue'
 export default {
+  components: {
+    DeleteProductModal,
+  },
   mixins: [setMessage],
   data: () => ({
     products: [],
     selected: [],
     selectedItem: null,
-    dialogDelete: false,
+    deleteDialog: false,
     search: '',
     limit: 50,
     page: 1,
@@ -115,6 +101,7 @@ export default {
   }),
   async fetch() {
     this.products = []
+    this.selectedItem = null
     const { data } = await getProducts(this.limit, this.page)
     if (data) {
       this.products = data
@@ -131,25 +118,19 @@ export default {
         }
       },
     },
+    deleteDialog: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
     deleteItemConfirm(item) {
       this.selectedItem = item
-      this.dialogDelete = true
-    },
-    async sendDelete() {
-      try {
-        this.loading = true
-        const { data } = await deleteProduct(this.selectedItem._id)
-        this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.dialogDelete = false
-        this.selectedItem = null
-        this.$fetch()
-        this.loading = false
-      } catch (err) {
-        this.loading = false
-        this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
-      }
+      this.deleteDialog = true
     },
   },
 }
