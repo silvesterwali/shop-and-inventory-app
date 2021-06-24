@@ -10,24 +10,17 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <index-card-page>
-          <template #card-title>Edit Supplier</template>
-          <template #card-subtitle>
-            <div>
-              <v-btn
-                small
-                class="mt-n5 float-right"
-                color="primary"
-                to="/inventory/supplier"
-                >Back</v-btn
-              >
-            </div>
+        <card-toolbar-page>
+          <template #title>Edit Supplier</template>
+          <template #action>
+            <toolbar-nav :add-action="false" return-url="/inventory/supplier" />
           </template>
-          <template #card-text>
-            <v-divider class="mb-4" />
-            <supplier-form v-if="supplier" :key="1" :supplier="supplier" />
+          <template #content>
+            <v-card-text>
+              <supplier-form v-if="supplier" :key="1" :supplier="supplier" />
+            </v-card-text>
           </template>
-        </index-card-page>
+        </card-toolbar-page>
       </template>
     </index-base-page>
   </div>
@@ -35,15 +28,17 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import SupplierForm from '@/components/Forms/Supplier/SupplierForm.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import { getSupplierResource } from '~/services/Supplier.js'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
-    IndexCardPage,
+    CardToolbarPage,
     SupplierForm,
+    ToolbarNav,
   },
   async asyncData({ params }) {
     const { data } = await getSupplierResource(params.id)
