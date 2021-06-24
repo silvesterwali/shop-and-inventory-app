@@ -1,81 +1,63 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Suppliers</template>
-      <template #card-subtitle>
-        <div>
-          <span>All supplier resource</span>
-          <v-btn
-            color="primary"
-            small
-            class="mt-n5 float-right"
-            to="/inventory/supplier/create"
-            >Create new</v-btn
-          >
+    <v-data-table
+      :headers="headers"
+      :items="suppliers"
+      :loading="$fetchState.pending"
+      dense
+      class="mt-4"
+    >
+      <template #[`item.address`]="{ item }">
+        <div class="d-inline-block text-truncate" style="max-width: 150px">
+          {{ item.address }}
         </div>
       </template>
-      <template #card-text>
-        <!-- listed  component for page on this slot section -->
-        <v-data-table
-          :headers="headers"
-          :items="suppliers"
-          :loading="$fetchState.pending"
-          dense
-        >
-          <template #[`item.address`]="{ item }">
-            <div class="d-inline-block text-truncate" style="max-width: 150px">
-              {{ item.address }}
-            </div>
+      <template #[`item.actions`]="{ item }">
+        <v-menu bottom left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
           </template>
-          <template #[`item.actions`]="{ item }">
-            <v-menu bottom left>
-              <template #activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
 
-              <v-list dense>
-                <v-list-item dense :to="`/inventory/supplier/edit/${item._id}`">
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item dense @click="deleteItemConfirm(item)">
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </template>
-        </v-data-table>
-        <v-dialog v-model="dialogDelete" persistent max-width="300">
-          <v-card :loading="loading">
-            <v-card-title class="headline"> Are you sure? </v-card-title>
-            <v-card-text
-              >Will you remove
-              {{ selectedItem ? selectedItem.name : '' }}</v-card-text
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="dialogDelete = false">
-                Disagree
-              </v-btn>
-              <v-btn
-                :loading="loading"
-                color="green darken-1"
-                text
-                @click.prevent="sendDelete"
-              >
-                Agree
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          <v-list dense>
+            <v-list-item dense :to="`/inventory/supplier/edit/${item._id}`">
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
+            <v-list-item dense @click="deleteItemConfirm(item)">
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
-    </index-card-page>
+    </v-data-table>
+    <v-dialog v-model="dialogDelete" persistent max-width="300">
+      <v-card :loading="loading">
+        <v-card-title class="headline"> Are you sure? </v-card-title>
+        <v-card-text
+          >Will you remove
+          {{ selectedItem ? selectedItem.name : '' }}</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" text @click="dialogDelete = false">
+            Disagree
+          </v-btn>
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click.prevent="sendDelete"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
 import {
@@ -83,10 +65,6 @@ import {
   deleteSupplierResource,
 } from '~/services/Supplier.js'
 export default {
-  components: {
-    // register component here
-    IndexCardPage,
-  },
   mixins: [errorKey, setMessage],
   data() {
     return {
