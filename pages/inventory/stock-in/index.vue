@@ -1,15 +1,27 @@
 <template>
   <div>
-    <stock-in-table />
+    <card-toolbar-page>
+      <template #title>Stock In</template>
+      <template #action>
+        <toolbar-nav create-url="/inventory/stock-in/craete" />
+      </template>
+      <template #content>
+        <stock-in-table />
+      </template>
+    </card-toolbar-page>
   </div>
 </template>
 
 <script>
 import StockInTable from '@/components/Tables/StockIn/StockInTable.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     // register component here
     StockInTable,
+    CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
