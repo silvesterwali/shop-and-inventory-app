@@ -6,11 +6,10 @@
       :loading="$fetchState.pending"
       :items="users.data"
       :headers="headers"
+      :server-items-length="users.totalRows"
       item-key="id"
-      :page.sync="page"
       class="mt-4"
-      :items-per-page="limit"
-      hide-default-footer
+      :options.sync="options"
     >
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
@@ -28,14 +27,6 @@
         </v-menu>
       </template>
     </v-data-table>
-
-    <v-spacer></v-spacer>
-    <v-pagination
-      v-model="page"
-      class="my-4 mt-4"
-      :length="users.totalPages"
-    ></v-pagination>
-    <v-spacer />
   </div>
 </template>
 
@@ -46,6 +37,10 @@ export default {
     users: [],
     selected: [],
     selectedItem: false,
+    options: {
+      page: 1,
+      itemsPerPage: 15,
+    },
     search: '',
     limit: 50,
     page: 1,
@@ -70,17 +65,22 @@ export default {
     ],
   }),
   async fetch() {
-    const { data } = await getUsers(this.limit, this.page)
+    const { data } = await getUsers(
+      this.options.itemsPerPage,
+      this.options.page
+    )
     this.users = data
   },
   watch: {
-    immediate: true,
-    handler(valeu, nowValue) {
-      if (valeu !== nowValue) {
-        if (process.client) {
-          this.$fetch()
+    options: {
+      immediate: true,
+      handler(valeu, nowValue) {
+        if (valeu !== nowValue) {
+          if (process.client) {
+            this.$fetch()
+          }
         }
-      }
+      },
     },
   },
   methods: {
