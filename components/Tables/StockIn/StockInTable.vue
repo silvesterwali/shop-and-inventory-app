@@ -7,19 +7,10 @@
       :items="items.data"
       :headers="headers"
       item-key="id"
-      :page.sync="page"
-      :items-per-page="limit"
-      hide-default-footer
+      :options.sync="options"
+      :server-items-length="items.totalRows"
       class="mt-4"
     >
-      <template #top>
-        <v-toolbar flat dense>
-          <div style="font-size: 11px">
-            page {{ page }} of {{ items.totalRows }} rows
-          </div>
-          <v-spacer />
-        </v-toolbar>
-      </template>
       <template #[`item.transactionDate`]="{ item }">
         <date-format :date-string="item.transactionDate" />
       </template>
@@ -70,14 +61,6 @@
         </v-menu>
       </template>
     </v-data-table>
-
-    <v-spacer></v-spacer>
-    <v-pagination
-      v-model="page"
-      class="my-4"
-      :length="items.totalPages"
-    ></v-pagination>
-    <v-spacer />
 
     <v-dialog v-model="dialogDelete" persistent max-width="300">
       <v-card :loading="loading">
@@ -142,6 +125,10 @@ export default {
     dialogDelete: false,
     dialogApprove: false,
     dialogCancel: false,
+    options: {
+      page: 1,
+      itemsPerPage: 15,
+    },
     search: '',
     limit: 50,
     page: 1,
@@ -174,7 +161,10 @@ export default {
   }),
   async fetch() {
     this.items = []
-    const { data } = await getIncomingStockResources(this.limit, this.page)
+    const { data } = await getIncomingStockResources(
+      this.options.itemsPerPage,
+      this.options.page
+    )
     if (data) {
       this.items = data
     }
@@ -194,13 +184,10 @@ export default {
     },
   },
   watch: {
-    page: {
-      immediate: true,
-      handler(valeu, nowValue) {
-        if (valeu !== nowValue) {
-          if (process.client) {
-            this.$fetch()
-          }
+    options: {
+      handler() {
+        if (process.client) {
+          this.$fetch()
         }
       },
     },
