@@ -1,104 +1,68 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Stok Out</template>
-      <template #card-subtitle>
-        <div>
-          <span> Management Stock Out </span>
-
-          <v-btn
-            small
-            class="mt-n5 float-right"
-            color="primary"
-            to="/inventory/stock-out/create"
-            >Stock Keluar Baru</v-btn
-          >
-        </div>
+    <v-data-table
+      v-model="selected"
+      dense
+      :loading="$fetchState.pending"
+      :items="items.data"
+      :headers="headers"
+      item-key="id"
+      fixed-header
+      class="mt-4"
+      :footer-props="footerProps"
+      :options.sync="options"
+    >
+      <template #[`item.transactionDate`]="{ item }">
+        <date-format :date-string="item.transactionDate" />
       </template>
-      <template #card-text>
-        <v-divider class="mb-2" />
-
-        <v-data-table
-          v-model="selected"
-          dense
-          :loading="$fetchState.pending"
-          :items="items.data"
-          :headers="headers"
-          item-key="id"
-          :page.sync="page"
-          :items-per-page="limit"
-          hide-default-footer
-        >
-          <template #top>
-            <v-toolbar flat dense>
-              <div>page {{ page }} of {{ items.totalRows }} rows</div>
-              <v-spacer />
-            </v-toolbar>
-          </template>
-          <template #[`item.transactionDate`]="{ item }">
-            <date-format :date-string="item.transactionDate" />
-          </template>
-          <template #[`item.status`]="{ item }">
-            <stock-in-chip :status="item.status" />
-          </template>
-          <template #[`item.actions`]="{ item }">
-            <v-menu bottom left>
-              <template #activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
-
-              <v-list dense>
-                <v-list-item
-                  v-if="canModify(item)"
-                  dense
-                  :to="`/inventory/stock-out/edit/${item._id}`"
-                >
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                  dense
-                  :to="`/inventory/stock-out/details/${item._id}`"
-                >
-                  <v-list-item-title>Detail</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                  v-if="item.status === 0"
-                  dense
-                  @click="approveSection(item)"
-                >
-                  <v-list-item-title>Approve</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                  v-if="item.status !== 2"
-                  dense
-                  @click="cancelStock(item)"
-                >
-                  <v-list-item-title>Cancel</v-list-item-title>
-                </v-list-item>
-                <v-list-item
-                  v-if="canModify(item)"
-                  dense
-                  @click="deleteItemConfirm(item)"
-                >
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </template>
-        </v-data-table>
+      <template #[`item.status`]="{ item }">
+        <stock-in-chip :status="item.status" />
       </template>
-      <template #card-action>
-        <v-spacer></v-spacer>
-        <v-pagination
-          v-model="page"
-          class="my-4"
-          :length="items.totalPages"
-        ></v-pagination>
-        <v-spacer />
+      <template #[`item.actions`]="{ item }">
+        <v-menu bottom left>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list dense>
+            <v-list-item
+              v-if="canModify(item)"
+              dense
+              :to="`/inventory/stock-out/edit/${item._id}`"
+            >
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
+            <v-list-item dense :to="`/inventory/stock-out/details/${item._id}`">
+              <v-list-item-title>Detail</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              v-if="item.status === 0"
+              dense
+              @click="approveSection(item)"
+            >
+              <v-list-item-title>Approve</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              v-if="item.status !== 2"
+              dense
+              @click="cancelStock(item)"
+            >
+              <v-list-item-title>Cancel</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              v-if="canModify(item)"
+              dense
+              @click="deleteItemConfirm(item)"
+            >
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
-    </index-card-page>
+    </v-data-table>
+
     <v-dialog v-model="dialogDelete" persistent max-width="300">
       <v-card :loading="loading">
         <v-card-title class="headline"> Are you sure? </v-card-title>
@@ -138,7 +102,6 @@
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import DateFormat from '@/components/Formatter/DateFormat.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
@@ -150,7 +113,6 @@ import {
 import setMessage from '@/mixins/setMessage.js'
 export default {
   components: {
-    IndexCardPage,
     StockInChip,
     StockOutTransactionApproveModal,
     StockOutTransactionCancelModal,
@@ -195,19 +157,26 @@ export default {
         sort: false,
       },
     ],
+    options: {
+      page: 1,
+      itemsPerPage: 15,
+    },
+    footerProps: {
+      'items-per-page-options': [5, 10, 15, 50, 100],
+    },
   }),
   async fetch() {
     this.items = []
     const { data } = await getStockOutTransactionResources(
-      this.limit,
-      this.page
+      this.options.itemsPerPage,
+      this.options.page
     )
     if (data) {
       this.items = data
     }
   },
   watch: {
-    page: {
+    options: {
       immediate: true,
       handler(valeu, nowValue) {
         if (valeu !== nowValue) {

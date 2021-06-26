@@ -1,6 +1,7 @@
 <template>
   <div>
     <card-toolbar-page>
+      <template #title>Stock Out</template>
       <template #action>
         <toolbar-nav create-url="/inventory/stock-out/create" />
       </template>
