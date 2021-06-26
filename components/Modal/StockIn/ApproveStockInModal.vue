@@ -15,7 +15,11 @@
           <v-btn color="error darken-1" text @click.prevent="dialog = false">
             Cancel
           </v-btn>
-          <v-btn color="green darken-1" text @click.prevent="sendUpdateResouce"
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click.prevent="sendUpdateResouce"
             >Approve</v-btn
           >
         </v-card-actions>
