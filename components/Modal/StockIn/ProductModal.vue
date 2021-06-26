@@ -100,7 +100,9 @@
             >
               Close
             </v-btn>
-            <v-btn color="blue darken-1" text type="submit"> Save </v-btn>
+            <v-btn :loading="loading" color="blue darken-1" text type="submit">
+              Save
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -207,6 +209,7 @@ export default {
       if (!this.$refs.form.validate()) {
         return false
       }
+      this.loading = true
       if (this.dataForm._id === null) {
         this.sendNewResource()
       } else {
@@ -230,6 +233,8 @@ export default {
         this.dialog = false
       } catch (err) {
         this.errors = err.response.data
+      } finally {
+        this.loading = false
       }
     },
     /**
@@ -250,6 +255,8 @@ export default {
         this.dialog = false
       } catch (err) {
         this.errors = err
+      } finally {
+        this.loading = false
       }
     },
     resetForm() {
