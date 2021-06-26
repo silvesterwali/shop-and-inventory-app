@@ -23,8 +23,8 @@ exports.getProducts = async (req, res) => {
    *
    *
    */
-  const limit = req.params.limit ? parseInt(req.params.limit) : 50
-  const page = req.params.page ? parseInt(req.params.page) : 1
+  const limit = req.query.limit ? parseInt(req.query.limit) : 50
+  const page = req.query.page ? parseInt(req.params.page) : 1
 
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
@@ -53,8 +53,8 @@ exports.getProducts = async (req, res) => {
     result.data = await db
       .collection('products')
       .find(query)
-      .limit(limit)
       .skip(startIndex)
+      .limit(limit)
       .toArray()
     return res.json(result)
   } catch (err) {

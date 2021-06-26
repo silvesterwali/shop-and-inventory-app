@@ -87,7 +87,7 @@ export default {
       itemsPerPage: 15,
     },
     footerProps: {
-      'items-per-page-options': [5, 10, 15, 50, 100],
+      'items-per-page-options': [1, 5, 10, 15, 50, 100],
     },
   }),
   async fetch() {
