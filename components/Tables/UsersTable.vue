@@ -4,15 +4,18 @@
       v-model="selected"
       dense
       :loading="$fetchState.pending"
-      :items="users.data"
+      :items="items.data"
       :headers="headers"
-      :server-items-length="users.totalRows"
+      :server-items-length="items.totalRows"
       item-key="id"
       class="mt-4"
       :options.sync="options"
       fixed-header
       :footer-props="footerProps"
     >
+      <template #[`item.verifiedEmail`]="{ item }">
+        <user-chip :status="item.verifiedEmail" />
+      </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
           <template #activator="{ on, attrs }">
@@ -34,9 +37,13 @@
 
 <script>
 import { getUsers } from '~/services/Users.js'
+import UserChip from '~/components/Chip/User/UserChip.vue'
 export default {
+  components: {
+    UserChip,
+  },
   data: () => ({
-    users: [],
+    items: [],
     selected: [],
     selectedItem: false,
     options: {
@@ -53,7 +60,7 @@ export default {
         value: 'rules',
       },
       {
-        text: 'Verified Email',
+        text: 'Verified',
         value: 'verifiedEmail',
       },
       {
@@ -74,7 +81,7 @@ export default {
       this.options.itemsPerPage,
       this.options.page
     )
-    this.users = data
+    this.items = data
   },
   watch: {
     options: {
