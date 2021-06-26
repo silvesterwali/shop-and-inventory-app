@@ -95,9 +95,13 @@
 
         <v-col lg="12" sm="12" md="12">
           <v-spacer />
-          <v-btn type="submit" class="float-right" color="primary">{{
-            dataForm._id == null ? 'Submit' : 'Update'
-          }}</v-btn>
+          <v-btn
+            :loading="loading"
+            type="submit"
+            class="float-right"
+            color="primary"
+            >{{ dataForm._id == null ? 'Submit' : 'Update' }}</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
@@ -138,6 +142,7 @@ export default {
       errors: null,
       categories: ['Food', 'Drinks'],
       units: ['KG', 'GRAM', 'ROLL', 'SCS'],
+      loading: false,
     }
   },
   computed: {
@@ -164,6 +169,7 @@ export default {
     validateForm() {
       this.errors = null
       if (!this.$refs.form.validate()) return false
+      this.loading = true
       if (this.dataForm._id === null) {
         this.createResource()
       } else {
@@ -182,6 +188,8 @@ export default {
         this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors = err.response.data
+      } finally {
+        this.loading = false
       }
     },
     /**
@@ -196,6 +204,8 @@ export default {
         this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors = err.response.data
+      } finally {
+        this.loading = false
       }
     },
   },
