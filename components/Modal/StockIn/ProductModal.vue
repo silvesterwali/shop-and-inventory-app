@@ -94,6 +94,7 @@
             <v-spacer></v-spacer>
             <v-btn
               color="blue darken-1"
+              :loading="loading"
               type="button"
               text
               @click="dialog = false"
@@ -147,11 +148,14 @@ export default {
       },
       productList: [], // list product
       errors: null,
+      loading: false,
     }
   },
   async fetch() {
+    this.loading = true
     const { data } = await getProductListResources()
     this.productList = data
+    this.loading = false
   },
 
   computed: {
@@ -163,9 +167,7 @@ export default {
         return this.openDialog
       },
     },
-    loading() {
-      return this.$fetchState.pending
-    },
+
     /**
      * units
      * - determine if all product have their own unit
