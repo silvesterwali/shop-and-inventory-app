@@ -61,9 +61,13 @@
           <p>
             mohon mengisi header sebelum mengisi detail product pada transaksi
           </p>
-          <v-btn type="submit" color="primary" class="float-right">{{
-            dataForm._id == null ? 'Submit' : 'Update'
-          }}</v-btn>
+          <v-btn
+            :loading="loading"
+            type="submit"
+            color="primary"
+            class="float-right"
+            >{{ dataForm._id == null ? 'Submit' : 'Update' }}</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
@@ -98,6 +102,7 @@ export default {
       typesTransaction: ['Production', 'Retun'],
       datePicker: false,
       errors: null,
+      loading: false,
     }
   },
   computed: {
@@ -124,7 +129,7 @@ export default {
     validateForm() {
       this.errors = null
       if (!this.$refs.formHeader.validate()) return false
-
+      this.loading = false
       if (this.dataForm._id === null) {
         this.sendCreateNewResource()
       } else {
@@ -138,6 +143,8 @@ export default {
         this.$router.push(`/inventory/stock-out/details/${data.data._id}`)
       } catch (err) {
         this.errors = err.response.data
+      } finally {
+        this.loading = false
       }
     },
     async sendUpdateResource() {
@@ -150,6 +157,8 @@ export default {
         this.$router.push(`/inventory/stock-out/details/${data.data._id}`)
       } catch (err) {
         this.errors = err.response.data
+      } finally {
+        this.loading = false
       }
     },
   },
