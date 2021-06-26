@@ -1,32 +1,29 @@
 <template>
   <div>
-    <index-card-page>
-      <template #card-title>Items</template>
-      <template #card-subtitle>
+    <card-toolbar-page>
+      <template #title>Items</template>
+      <template #action>
         <!-- card subtitle -->
+
         <div>
-          <span>List Of Item </span>
-          <template v-if="stockOutHeader.status == 0">
+          <v-btn fab x-small to="/inventory/stock-out" depressed right>
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <template v-if="stockOutHeader.status === 0">
             <v-btn
               v-if="!openDialog"
+              fab
+              x-small
               color="primary"
-              small
-              class="mt-n5 float-right"
+              right
               @click.prevent="openDialog = true"
-              >Add Item</v-btn
             >
+              <v-icon>mdi-plus </v-icon>
+            </v-btn>
           </template>
-
-          <v-btn
-            color="error"
-            small
-            class="mt-n5 float-right mr-2"
-            to="/inventory/stock-in"
-            >Back</v-btn
-          >
         </div>
       </template>
-      <template #card-text>
+      <template #content>
         <v-divider />
         <!-- card-text -->
         <v-progress-linear indeterminate height="6" :active="loading" />
@@ -88,7 +85,7 @@
           >
         </template>
       </template>
-    </index-card-page>
+    </card-toolbar-page>
     <template v-if="openDialog">
       <product-modal
         v-bind="$props"
@@ -113,18 +110,19 @@
 </template>
 
 <script>
-import IndexCardPage from '@/components/CardPage/IndexCardPage.vue'
 import ProductModal from '@/components/Modal/StockOut/StockOutProductModal.vue'
 import DeleteStockOutModal from '@/components/Modal/StockOut/DeleteStockOutDetailModal.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
 import { getStockOutDetailsTransactionResources } from '~/services/StockOutTransactionDetatil.js'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 export default {
   components: {
     // register component here
-    IndexCardPage,
+
     ProductModal,
     DeleteStockOutModal,
     StockOutTransactionApproveModal,
+    CardToolbarPage,
   },
   props: {
     stockOutHeader: {
