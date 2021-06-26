@@ -15,7 +15,11 @@
           <v-btn color="error darken-1" text @click.prevent="dialog = false">
             Cancel
           </v-btn>
-          <v-btn color="green darken-1" text @click.prevent="sendUpdateResouce"
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click.prevent="sendUpdateResouce"
             >Approve</v-btn
           >
         </v-card-actions>
@@ -60,6 +64,7 @@ export default {
      * @async
      */
     async sendUpdateResouce() {
+      this.loading = true
       try {
         const { data } = await updateStockOutTransactionApproveResource(
           this.stockOutHeader._id
