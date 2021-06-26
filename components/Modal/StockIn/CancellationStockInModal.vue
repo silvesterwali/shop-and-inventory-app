@@ -20,7 +20,11 @@
           <v-btn color="error darken-1" text @click.prevent="dialog = false">
             Close
           </v-btn>
-          <v-btn color="green darken-1" text @click.prevent="sendUpdateResouce"
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click.prevent="sendUpdateResouce"
             >Send Cancellation</v-btn
           >
         </v-card-actions>
@@ -74,6 +78,7 @@ export default {
       if (!this.$refs.form.validate) {
         return false
       }
+      this.loading = false
       try {
         const { data } = await updateCancelIncomingStockResource(
           this.incomingStock._id,
