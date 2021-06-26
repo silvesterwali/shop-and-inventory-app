@@ -21,8 +21,8 @@ const timeFormatUtils = require('../utilities/timeFormatUtils')
  * @async
  **/
 exports.index = async (req, res) => {
-  const limit = req.params.limit ? parseInt(req.params.limit) : 50
-  const page = req.params.page ? parseInt(req.params.page) : 1
+  const limit = req.query.limit ? parseInt(req.query.limit) : 50
+  const page = req.query.page ? parseInt(req.query.page) : 1
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
 
@@ -97,13 +97,14 @@ exports.index = async (req, res) => {
             productsInTransactions: 0,
           },
         },
-        {
-          // take limit for every query
-          $limit: limit,
-        },
+
         {
           // skip the index of document
           $skip: startIndex,
+        },
+        {
+          // take limit for every query
+          $limit: limit,
         },
       ])
       .toArray()

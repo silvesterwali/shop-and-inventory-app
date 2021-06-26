@@ -1,14 +1,25 @@
 <template>
   <div>
-    <stock-out-table />
+    <card-toolbar-page>
+      <template #action>
+        <toolbar-nav create-url="/inventory/stock-out/create" />
+      </template>
+      <template #content>
+        <stock-out-table />
+      </template>
+    </card-toolbar-page>
   </div>
 </template>
 
 <script>
 import StockOutTable from '@/components/Tables/StockOut/StockOutTable.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     StockOutTable,
+    CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
