@@ -7,6 +7,8 @@
       :items="items"
       :headers="headers"
       item-key="id"
+      fixed-header
+      :footer-props="footerProps"
       class="mt-4"
     >
       <template #[`item.actions`]="{ item }">
@@ -82,6 +84,9 @@ export default {
         sort: false,
       },
     ],
+    footerProps: {
+      'items-per-page-options': [5, 10, 15, 100],
+    },
   }),
   async fetch() {
     this.items = []
