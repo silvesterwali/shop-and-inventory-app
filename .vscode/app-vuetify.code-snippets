@@ -81,7 +81,7 @@
 		"body": [
 			"<template>",
 			"\t<div>",
-			"\t\t<v-data-table :headers=\"headers\" :items=\"items.data\" :loading=\"$$fetchState.pending\" dense class=\"mt-4\" :server-items-length=\"$$items.totalRows\" item-key=\"id\" :options.sync=\"options\" fixed-header :footer-props=\"footerProps\" >",
+			"\t\t<v-data-table :headers=\"headers\" :items=\"items.data\" :loading=\"$$fetchState.pending\" dense class=\"mt-4\" :server-items-length=\"items.totalRows\" item-key=\"id\" :options.sync=\"options\" fixed-header :footer-props=\"footerProps\" >",
 			"\t\t\t<template #[`item.actions`]=\"{item}\">",
 			"\t\t\t\t<v-icon small class=\"mr-2\" @click.prevent=\"editItem(item)\">mdi-pencil</v-icon>",
 			"\t\t\t\t<v-icon small class=\"mr-2\" @click.prevent=\"deleteItem(item)\">mdi-delete</v-icon>",
