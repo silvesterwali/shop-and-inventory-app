@@ -4,22 +4,15 @@
       v-model="selected"
       dense
       :loading="$fetchState.pending"
-      :items="products.data"
+      :items="items.data"
       :headers="headers"
       item-key="id"
-      :page.sync="page"
-      :items-per-page="limit"
-      class="mt-2"
-      hide-default-footer
+      :server-items-length="items.totalRows"
+      class="mt-4"
+      :options.sync="options"
+      fixed-header
+      :footer-props="footerProps"
     >
-      <template #top>
-        <v-toolbar flat dense>
-          <div style="font-size: 11px">
-            page {{ page }} of {{ products.totalRows }} rows
-          </div>
-          <v-spacer />
-        </v-toolbar>
-      </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
           <template #activator="{ on, attrs }">
@@ -40,13 +33,6 @@
       </template>
     </v-data-table>
 
-    <v-spacer></v-spacer>
-    <v-pagination
-      v-model="page"
-      class="my-4"
-      :length="products.totalPages"
-    ></v-pagination>
-    <v-spacer />
     <template v-if="deleteDialog">
       <delete-product-modal
         :delete-dialog.sync="deleteDialog"
@@ -66,13 +52,11 @@ export default {
   },
   mixins: [setMessage],
   data: () => ({
-    products: [],
+    items: [],
     selected: [],
     selectedItem: null,
     deleteDialog: false,
     search: '',
-    limit: 50,
-    page: 1,
     loading: false,
     headers: [
       { text: 'Serial', value: 'serial', sort: true },
@@ -98,23 +82,30 @@ export default {
         sort: false,
       },
     ],
+    options: {
+      page: 1,
+      itemsPerPage: 15,
+    },
+    footerProps: {
+      'items-per-page-options': [5, 10, 15, 50, 100],
+    },
   }),
   async fetch() {
-    this.products = []
+    this.items = []
     this.selectedItem = null
-    const { data } = await getProducts(this.limit, this.page)
+    const { data } = await getProducts(
+      this.options.itemsPerPage,
+      this.options.page
+    )
     if (data) {
-      this.products = data
+      this.items = data
     }
   },
   watch: {
-    page: {
-      immediate: true,
-      handler(valeu, nowValue) {
-        if (valeu !== nowValue) {
-          if (process.client) {
-            this.$fetch()
-          }
+    options: {
+      handler() {
+        if (process.client) {
+          this.$fetch()
         }
       },
     },
