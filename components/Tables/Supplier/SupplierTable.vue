@@ -5,6 +5,9 @@
       :items="suppliers"
       :loading="$fetchState.pending"
       dense
+      fixed-header
+      items-key="id"
+      :footer-props="footerProps"
       class="mt-4"
     >
       <template #[`item.address`]="{ item }">
@@ -88,6 +91,9 @@ export default {
       deleteModal: false,
       selectedItem: null,
       loading: false,
+      footerProps: {
+        'items-per-page-options': [5, 10, 15, 50, 100],
+      },
     }
   },
   async fetch() {
