@@ -10,7 +10,11 @@
         <v-card-actions>
           <v-btn color="red darken-1" text @click="dialog = false">No</v-btn>
           <v-spacer />
-          <v-btn color="green darken-1" text @click.prevent="sendDelete"
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click.prevent="sendDelete"
             >Yes</v-btn
           >
         </v-card-actions>
