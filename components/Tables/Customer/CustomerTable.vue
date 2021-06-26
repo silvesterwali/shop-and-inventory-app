@@ -59,7 +59,7 @@ export default {
     page: 1,
     loading: false,
     headers: [
-      { text: 'Serial Numberd', value: 'serialNumber', sort: true },
+      { text: 'Serial Number', value: 'serialNumber', sort: true },
       {
         text: 'Fullname',
         value: 'fullName',
