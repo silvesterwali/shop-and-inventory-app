@@ -10,6 +10,8 @@
       :options.sync="options"
       :server-items-length="items.totalRows"
       class="mt-4"
+      fixed-header
+      :footer-props="footerProps"
     >
       <template #[`item.transactionDate`]="{ item }">
         <date-format :date-string="item.transactionDate" />
@@ -158,6 +160,9 @@ export default {
         sort: false,
       },
     ],
+    footerProps: {
+      'items-per-page-options': [5, 10, 15, 50, 100],
+    },
   }),
   async fetch() {
     this.items = []
