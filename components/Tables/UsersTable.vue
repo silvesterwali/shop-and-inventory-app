@@ -10,6 +10,8 @@
       item-key="id"
       class="mt-4"
       :options.sync="options"
+      fixed-header
+      :footer-props="footerProps"
     >
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
@@ -63,6 +65,9 @@ export default {
         value: 'actions',
       },
     ],
+    footerProps: {
+      'items-per-page-options': [5, 10, 15, 50, 100],
+    },
   }),
   async fetch() {
     const { data } = await getUsers(

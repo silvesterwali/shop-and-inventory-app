@@ -20,8 +20,8 @@ exports.getUsers = async (req, res) => {
    *
    **/
 
-  const limit = req.params.limit ? parseInt(req.params.limit) : 50
-  const page = req.params.page ? parseInt(req.params.page) : 1
+  const limit = req.query.limit ? parseInt(req.query.limit) : 50
+  const page = req.query.page ? parseInt(req.query.page) : 1
 
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
@@ -48,8 +48,8 @@ exports.getUsers = async (req, res) => {
     result.data = await db
       .collection('users')
       .find(query, { projection: { password: 0 } })
-      .limit(limit)
       .skip(startIndex)
+      .limit(limit)
       .toArray()
 
     // response
