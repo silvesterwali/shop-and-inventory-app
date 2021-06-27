@@ -2,27 +2,30 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="400">
       <v-card :loading="loading">
-        <v-card-title class="text-h5">
-          Are sure want delete this item ?
-        </v-card-title>
-        <v-card-text>You cannot undo if your are agree</v-card-text>
+        <v-card-title> Are sure want delete this item ? </v-card-title>
+        <v-card-subtitle> </v-card-subtitle>
+        <v-card-text>
+          <p>Product name {{ itemStock.product.name }}</p>
+          You cannot undo this actions</v-card-text
+        >
+        <v-divider />
         <v-card-actions>
-          <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
             color="green darken-1"
             text
             @click="dialog = false"
           >
-            Disagree
+            Cancel
           </v-btn>
+          <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
             color="red darken-1"
             text
             @click.prevent="deleteConfirm"
           >
-            Agree
+            Delete
           </v-btn>
         </v-card-actions>
       </v-card>

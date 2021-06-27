@@ -91,16 +91,21 @@
             <small>*indicates required field</small>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
             <v-btn
-              color="blue darken-1"
+              color="red darken-1"
               type="button"
               text
               @click="dialog = false"
             >
               Close
             </v-btn>
-            <v-btn :loading="loading" color="blue darken-1" text type="submit">
+            <v-spacer></v-spacer>
+            <v-btn
+              :loading="loading"
+              outlined
+              color="primary darken-1"
+              type="submit"
+            >
               Save
             </v-btn>
           </v-card-actions>
