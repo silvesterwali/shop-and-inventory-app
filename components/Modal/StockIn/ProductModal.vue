@@ -91,7 +91,6 @@
             <small>*indicates required field</small>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
             <v-btn
               color="blue darken-1"
               :loading="loading"
@@ -101,6 +100,7 @@
             >
               Close
             </v-btn>
+            <v-spacer></v-spacer>
             <v-btn :loading="loading" color="blue darken-1" text type="submit">
               Save
             </v-btn>
