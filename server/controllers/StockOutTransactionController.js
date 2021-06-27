@@ -127,7 +127,7 @@ exports.index = async (req, res) => {
  * @async
  **/
 exports.store = async (req, res) => {
-  const { type, description, transactionDate } = req.body
+  const { type, customerId, description, transactionDate } = req.body
 
   try {
     const result = await db.collection('stockOutTransactions').insertOne({
@@ -136,6 +136,7 @@ exports.store = async (req, res) => {
       transactionDate: timeFormatUtils.stringToDateFormat(transactionDate),
       description,
       type, // to define the type of stock out transaction [production ,return]
+      customerId: customerId ? new ObjectID(customerId) : null,
       status: 0, // user pending,
       createdBy: new ObjectID(req.user._id),
       createdAt: new Date(),
@@ -234,7 +235,7 @@ exports.show = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { type, description, transactionDate } = req.body
+  const { type, customerId, description, transactionDate } = req.body
 
   try {
     const stockOut = await db
@@ -248,7 +249,8 @@ exports.update = async (req, res) => {
             transactionDate:
               timeFormatUtils.stringToDateFormat(transactionDate),
             description,
-            type, // to define the type of stock out transaction [production ,return]
+            type, // to define the type of stock out transaction [production ,return],
+            customerId: customerId ? new ObjectID(customerId) : null,
             updatedBy: new ObjectID(req.user._id),
             updatedAt: new Date(),
           },
