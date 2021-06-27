@@ -86,8 +86,7 @@ exports.createProduct = async (req, res) => {
     stockQty,
     brandId,
   } = req.body
-  // eslint-disable-next-line no-console
-  console.log(unit)
+
   try {
     await db.collection('products').insertOne(
       {

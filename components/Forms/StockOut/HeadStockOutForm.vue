@@ -20,7 +20,7 @@
             :rules="[errorKey('type')]"
             item-text="name"
             item-value="_id"
-            placeholder="Supplier"
+            placeholder="Type"
           ></v-select>
         </v-col>
         <v-col cols="12" sm="6" md="6">
@@ -48,6 +48,18 @@
               @input="datePicker = false"
             ></v-date-picker>
           </v-menu>
+        </v-col>
+        <v-col sm="6" md="6" lg="6">
+          <v-select
+            v-model="dataForm.customerId"
+            dense
+            label="Customer"
+            :items="customers"
+            :rules="[errorKey('customerId')]"
+            item-text="fullName"
+            item-value="_id"
+            placeholder="Customer"
+          ></v-select>
         </v-col>
         <v-col cols="12" sm="12" md="12">
           <v-textarea
@@ -82,6 +94,7 @@ import {
 import setMessage from '@/mixins/setMessage.js'
 import errorKey from '@/mixins/errorKey.js'
 import moment from 'moment'
+import { getCustomerResources } from '~/services/Customer.js'
 export default {
   mixins: [setMessage, errorKey],
   props: {
@@ -97,13 +110,21 @@ export default {
         serialNumber: null,
         description: null,
         type: null,
+        costumerId: null,
         transactionDate: new Date().toISOString().substr(0, 10),
       },
       typesTransaction: ['Production', 'Retun'],
       datePicker: false,
       errors: null,
       loading: false,
+      customers: [],
     }
+  },
+  async fetch() {
+    this.loading = true
+    const { data } = await getCustomerResources()
+    this.customers = data
+    this.loading = false
   },
   computed: {
     dateFormat: {
