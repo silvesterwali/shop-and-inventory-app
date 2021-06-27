@@ -84,6 +84,7 @@ exports.createProduct = async (req, res) => {
     retailPrice,
     description,
     stockQty,
+    brandId,
   } = req.body
   // eslint-disable-next-line no-console
   console.log(unit)
@@ -98,6 +99,7 @@ exports.createProduct = async (req, res) => {
         retailPrice: parseFloat(retailPrice),
         description,
         stockQty: parseFloat(stockQty),
+        brandId: new ObjectID(brandId),
         createdBy: new ObjectID(req.user._id),
         createdAt: new Date(),
       },
@@ -141,8 +143,16 @@ exports.getProduct = async (req, res) => {
  * @param {express.Response} res
  */
 exports.updateProduct = async (req, res) => {
-  const { name, serial, category, unit, wholeSale, retailPrice, description } =
-    req.body
+  const {
+    name,
+    serial,
+    category,
+    unit,
+    wholeSale,
+    retailPrice,
+    description,
+    brandId,
+  } = req.body
   try {
     await db.collection('products').updateOne(
       { _id: new ObjectID(req.params.productId) },
@@ -155,6 +165,7 @@ exports.updateProduct = async (req, res) => {
           wholeSale: parseFloat(wholeSale),
           retailPrice: parseFloat(retailPrice),
           description,
+          brandId: new ObjectID(brandId),
           updatedBy: new ObjectID(req.user._id),
           updatedAt: new Date(),
         },
