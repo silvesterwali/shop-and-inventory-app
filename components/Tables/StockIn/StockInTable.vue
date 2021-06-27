@@ -143,7 +143,7 @@ export default {
       },
       {
         text: 'Create By',
-        value: 'createdBy.email',
+        value: 'createdBy.username',
       },
 
       {

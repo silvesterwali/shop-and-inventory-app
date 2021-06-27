@@ -16,7 +16,7 @@
         <date-format :date-string="item.transactionDate" />
       </template>
       <template #[`item.status`]="{ item }">
-        <stock-in-chip :status="item.status" />
+        <stock-out-chip :status="item.status" />
       </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
@@ -102,7 +102,6 @@
 </template>
 
 <script>
-import StockInChip from '@/components/Chip/StockIn/StockInChip.vue'
 import DateFormat from '@/components/Formatter/DateFormat.vue'
 import StockOutTransactionApproveModal from '@/components/Modal/StockOut/StockOutTransactionApproveModal.vue'
 import StockOutTransactionCancelModal from '@/components/Modal/StockOut/StockOutTransactionCancelModal.vue'
@@ -111,9 +110,10 @@ import {
   deleteStockOutTransactionResource,
 } from '@/services/StockOutTransaction.js'
 import setMessage from '@/mixins/setMessage.js'
+import StockOutChip from '~/components/Chip/StockOut/StockOutChip.vue'
 export default {
   components: {
-    StockInChip,
+    StockOutChip,
     StockOutTransactionApproveModal,
     StockOutTransactionCancelModal,
     DateFormat,
@@ -138,7 +138,7 @@ export default {
       },
       {
         text: 'Create By',
-        value: 'createdBy.email',
+        value: 'createdBy.username',
       },
 
       {

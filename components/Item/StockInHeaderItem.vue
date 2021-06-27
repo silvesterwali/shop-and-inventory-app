@@ -28,7 +28,7 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-title>{{
-                stockHeader.createdBy.email
+                stockHeader.createdBy.username
               }}</v-list-item-title>
               <v-divider />
               <v-list-item-subtitle>Inputer</v-list-item-subtitle>
