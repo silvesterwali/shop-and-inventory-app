@@ -16,10 +16,10 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
           <v-btn color="error darken-1" text @click.prevent="dialog = false">
             Close
           </v-btn>
+          <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
             color="green darken-1"
