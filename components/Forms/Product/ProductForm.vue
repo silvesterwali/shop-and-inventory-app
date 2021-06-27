@@ -81,6 +81,16 @@
             ]"
           ></v-text-field>
         </v-col>
+        <v-col lg="6" md="6" sm="6">
+          <v-select
+            v-model="dataForm.brandId"
+            label="Brand"
+            :items="brands"
+            item-text="title"
+            item-value="_id"
+            :rules="[errorKey('category')]"
+          ></v-select>
+        </v-col>
         <v-col lg="12" md="12" sm="12">
           <v-textarea
             v-model="dataForm.description"
@@ -112,6 +122,7 @@
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
 import { createProduct, updateProduct } from '~/services/Product.js'
+import { getBrandResources } from '~/services/Brand.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {
@@ -138,12 +149,20 @@ export default {
         retailPrice: 0,
         description: null,
         stockQty: 0,
+        brandId: null,
       },
       errors: null,
       categories: ['Food', 'Drinks'],
       units: ['KG', 'GRAM', 'ROLL', 'SCS'],
       loading: false,
+      brands: [],
     }
+  },
+  async fetch() {
+    this.loading = true
+    const { data } = await getBrandResources()
+    this.brands = data
+    this.loading = false
   },
   computed: {
     // check if current product data cannot edit the stock quantity
