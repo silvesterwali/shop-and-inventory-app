@@ -2,11 +2,7 @@
   <div>
     <index-base-page>
       <template #info>
-        <v-card>
-          <v-card-text>
-            {{ pageDescription }}
-          </v-card-text>
-        </v-card>
+        <stock-out-header-item :stock-out="stockOutHeader" />
       </template>
       <template #content>
         <!-- page page will be here -->
@@ -20,11 +16,13 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import StockOutDetail from '@/components/Tables/StockOut/StockOutDetail.vue'
 import { getStockOutTransactionResource } from '@/services/StockOutTransaction.js'
+import StockOutHeaderItem from '~/components/Item/StockOutHeaderItem.vue'
 export default {
   components: {
     // define your component here
     IndexBasePage,
     StockOutDetail,
+    StockOutHeaderItem,
   },
   async asyncData({ params }) {
     const { data } = await getStockOutTransactionResource(params.stock_out_id)
