@@ -12,13 +12,13 @@
         </v-card-text>
         <v-divider />
         <v-card-actions>
-          <v-btn color="error darken-1" text @click.prevent="dialog = false">
+          <v-btn color="red darken-1" text @click.prevent="dialog = false">
             Cancel
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
-            color="green darken-1"
+            color="primary darken-1"
             text
             @click.prevent="sendUpdateResouce"
             >Approve</v-btn
