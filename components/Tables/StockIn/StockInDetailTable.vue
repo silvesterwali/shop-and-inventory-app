@@ -22,55 +22,58 @@
         </div>
       </template>
       <template #content>
-        <v-progress-linear indeterminate height="6" :active="loading" />
+        <v-card-text>
+          <v-progress-linear indeterminate height="6" :active="loading" />
 
-        <v-simple-table>
-          <template #default>
-            <thead>
-              <tr>
-                <th class="text-left">Product</th>
-                <th class="text-left">Qty</th>
-                <th class="text-left">Unit</th>
-                <th class="text-left">Price</th>
-                <th class="text-left">Discount</th>
-                <th class="text-left">Total</th>
-                <th class="text-left">Description</th>
-                <th v-if="stockHeader.status == 0" class="text-center">
-                  Action
-                </th>
-              </tr>
-            </thead>
+          <v-simple-table>
+            <template #default>
+              <thead>
+                <tr>
+                  <th class="text-left">Product</th>
+                  <th class="text-left">Qty</th>
+                  <th class="text-left">Unit</th>
+                  <th class="text-left">Price</th>
+                  <th class="text-left">Discount</th>
+                  <th class="text-left">Total</th>
+                  <th class="text-left">Description</th>
+                  <th v-if="stockHeader.status == 0" class="text-center">
+                    Action
+                  </th>
+                </tr>
+              </thead>
 
-            <tbody v-if="items.length > 0">
-              <tr v-for="(item, index) in items" :key="index">
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.qty }}</td>
-                <td>{{ item.unit }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.discount }}</td>
-                <td>{{ item.total }}</td>
-                <td>{{ item.description }}</td>
-                <td v-if="stockHeader.status == 0">
-                  <div class="d-flex flex-row">
-                    <v-icon
-                      small
-                      color="primary"
-                      @click.prevent="editItem(item)"
-                      >mdi-pencil</v-icon
-                    >
+              <tbody v-if="items.length > 0">
+                <tr v-for="(item, index) in items" :key="index">
+                  <td>{{ item.product.name }}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.unit }}</td>
+                  <td>{{ item.price }}</td>
+                  <td>{{ item.discount }}</td>
+                  <td>{{ item.total }}</td>
+                  <td>{{ item.description }}</td>
+                  <td v-if="stockHeader.status == 0">
+                    <div class="d-flex flex-row">
+                      <v-icon
+                        small
+                        color="primary"
+                        @click.prevent="editItem(item)"
+                        >mdi-pencil</v-icon
+                      >
 
-                    <v-icon
-                      small
-                      color="error"
-                      @click.prevent="deleteItem(item)"
-                      >mdi-delete</v-icon
-                    >
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+                      <v-icon
+                        small
+                        color="error"
+                        @click.prevent="deleteItem(item)"
+                        >mdi-delete</v-icon
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-card-text>
+
         <v-card-actions>
           <v-spacer />
           <template v-if="items.length > 0 && stockHeader.status == 0">
