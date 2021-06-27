@@ -7,7 +7,6 @@
         </v-card-title>
         <v-card-text>You cannot undo if your are agree</v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
             color="green darken-1"
@@ -16,6 +15,7 @@
           >
             Disagree
           </v-btn>
+          <v-spacer></v-spacer>
           <v-btn
             :loading="loading"
             color="red darken-1"
