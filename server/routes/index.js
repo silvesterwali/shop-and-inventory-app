@@ -40,7 +40,10 @@ router.use(
   '/stock-out-transaction-cancel',
   require('./stockOutTransactionCancelRoute')
 )
-
+router.use(
+  '/product-in-stock-out-transaction',
+  require('./productInStockOutTransactioRoute')
+)
 router.use('/customer', require('./CustomerRoute'))
 router.use('/brand', require('./brandRoute'))
 module.exports = router
