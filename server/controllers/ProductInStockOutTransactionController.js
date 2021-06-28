@@ -1,6 +1,8 @@
 /**
  * @copyright 2021
  *
+ * this controller is responsive to retrieve each product in stock out product
+ *
  *
  **/
 const db = require('../db').db
@@ -70,6 +72,7 @@ exports.index = async (req, res) => {
         unwindProductPipeline,
         projectPipeline,
       ])
+      .toArray()
     return res.json(product)
   } catch (err) {
     // eslint-disable-next-line no-console
