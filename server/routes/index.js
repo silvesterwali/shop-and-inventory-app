@@ -42,7 +42,7 @@ router.use(
 )
 router.use(
   '/product-in-stock-out-transaction',
-  require('./productInStockOutTransactioRoute')
+  require('./productInStockOutTransactionRoute')
 )
 router.use('/customer', require('./CustomerRoute'))
 router.use('/brand', require('./brandRoute'))
