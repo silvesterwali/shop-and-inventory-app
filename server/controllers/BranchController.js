@@ -38,7 +38,7 @@ exports.index = async (req, res) => {
 exports.store = async (req, res) => {
   const { name, code, phone, address, isActive } = req.body
   try {
-    await db.collection('branch').insertOne({
+    await db.collection('branches').insertOne({
       name,
       code,
       phone,
@@ -92,11 +92,13 @@ exports.update = async (req, res) => {
     await db.collection('branches').updateOne(
       { _id: new ObjectID(req.params.id) },
       {
-        name,
-        code,
-        phone,
-        address,
-        isActive,
+        $set: {
+          name,
+          code,
+          phone,
+          address,
+          isActive,
+        },
       }
     )
     return res.json({ message: 'Success update branch' })

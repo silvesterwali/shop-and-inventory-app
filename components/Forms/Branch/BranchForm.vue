@@ -16,9 +16,16 @@
           :rules="[(v) => !!v || 'Code is required', errorKey('code')]"
         />
       </v-col>
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-text-field
+          v-model="dataForm.phone"
+          label="Phone"
+          :rules="[(v) => !!v || 'phone is required', errorKey('phone')]"
+        />
+      </v-col>
 
       <v-col lg="12" sm="12" md="12">
-        <v-checkbox v-model="dataFrom.isActive" label="Is Active"></v-checkbox>
+        <v-checkbox v-model="dataForm.isActive" label="Is Active"></v-checkbox>
       </v-col>
 
       <v-col cols="12" lg="12" sm="12" md="12">
@@ -32,9 +39,13 @@
 
       <v-col lg="12" sm="12" md="12">
         <v-spacer />
-        <v-btn type="submit" class="float-right" color="primary">{{
-          dataForm._id == null ? 'Submit' : 'Update'
-        }}</v-btn>
+        <v-btn
+          type="submit"
+          :loading="loading"
+          class="float-right"
+          color="primary"
+          >{{ dataForm._id == null ? 'Submit' : 'Update' }}</v-btn
+        >
       </v-col>
     </v-row>
   </v-form>
@@ -77,6 +88,7 @@ export default {
         // define the form property here
       },
       errors: null,
+      loading: false,
     }
   },
   watch: {
@@ -101,6 +113,7 @@ export default {
   methods: {
     validateForm() {
       this.errors = null
+      this.loading = true
       if (!this.$refs.form.validate()) return false
       if (this.dataForm._id === null) {
         this.createResource()
@@ -120,6 +133,8 @@ export default {
         this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors(err)
+      } finally {
+        this.loading = false
       }
     },
     /**
@@ -137,6 +152,8 @@ export default {
         this.$router.push(this.redirectUrl)
       } catch (err) {
         this.errors(err)
+      } finally {
+        this.loading = false
       }
     },
   },

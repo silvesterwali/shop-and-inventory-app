@@ -106,6 +106,11 @@ export default {
           title: 'Welcome',
           url: '/',
         },
+        {
+          icon: 'mdi-apps',
+          title: 'Branch',
+          url: '/branch',
+        },
 
         {
           icon: 'mdi-apps',

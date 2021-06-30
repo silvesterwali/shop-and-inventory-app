@@ -9,13 +9,16 @@
         </v-card>
       </template>
       <template #content>
+        <!-- page page will be here -->
         <CardToolbarPage>
-          <template #title>Branch</template>
+          <template #title>Create Branch</template>
           <template #action>
-            <ToolbarNav create-url="/branch/create" />
+            <ToolbarNav :add-action="false" return-url="/branch" />
           </template>
           <template #content>
-            <BranchTable />
+            <v-card-text>
+              <BranchForm redirect-url="/branch" />
+            </v-card-text>
           </template>
         </CardToolbarPage>
       </template>
@@ -26,14 +29,15 @@
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
-import BranchTable from '~/components/Tables/Branch/BranchTable'
+import BranchForm from '~/components/Forms/Branch/BranchForm.vue'
 import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
+
 export default {
   components: {
     // define your component here
     IndexBasePage,
     CardToolbarPage,
-    BranchTable,
+    BranchForm,
     ToolbarNav,
   },
   data() {
