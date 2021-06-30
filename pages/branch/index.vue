@@ -10,6 +10,12 @@
       </template>
       <template #content>
         <!-- page page will be here -->
+        <CardToolbarPage>
+          <template #title>Branch</template>
+          <template #content>
+            
+          </template>
+        </CardToolbarPage>
       </template>
     </IndexBasePage>
   </div>
@@ -17,11 +23,13 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
+import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 
 export default {
   components: {
     // define your component here
     IndexBasePage,
+    CardToolbarPage,
   },
   data() {
     return {

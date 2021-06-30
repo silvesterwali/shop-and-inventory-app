@@ -4,16 +4,29 @@
       <!-- define your form input here-->
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
-          v-model="data"
-          label="myData"
-          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+          v-model="dataForm.name"
+          label="Name"
+          :rules="[(v) => !!v || 'Name is require', errorKey('name')]"
         />
       </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
-          v-model="data"
-          label="myData"
-          :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
+          v-model="dataForm.code"
+          label="Code"
+          :rules="[(v) => !!v || 'Code is required', errorKey('code')]"
+        />
+      </v-col>
+
+      <v-col lg="12" sm="12" md="12">
+        <v-checkbox v-model="dataFrom.isActive" label="Is Active"></v-checkbox>
+      </v-col>
+
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-textarea
+          v-model="dataForm.address"
+          rows="2"
+          label="Address"
+          :rules="[(v) => !!v || 'address is required', errorKey('address')]"
         />
       </v-col>
 
@@ -30,7 +43,10 @@
 <script>
 import errorKey from '@/mixins/errorKey.js'
 import setMessage from '@/mixins/setMessage.js'
-
+import {
+  createBranchResource,
+  updateBranchResource,
+} from '~/services/Branch.js'
 export default {
   mixins: [errorKey, setMessage],
   props: {
@@ -44,11 +60,20 @@ export default {
       type: String,
       default: '/',
     },
+    branch: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
       dataForm: {
         _id: null,
+        name: null,
+        code: null,
+        phone: null,
+        address: null,
+        isActive: false,
         // define the form property here
       },
       errors: null,
@@ -57,6 +82,14 @@ export default {
   watch: {
     // special props to change the dataForm for update
     propsName: {
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.dataForm = value
+        }
+      },
+    },
+    branch: {
       immediate: true,
       handler(value) {
         if (value !== null) {
@@ -82,7 +115,7 @@ export default {
      **/
     async createResource() {
       try {
-        const { data } = await createResource(this.dataForm)
+        const { data } = await createBranchResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.push(this.redirectUrl)
       } catch (err) {
@@ -96,7 +129,10 @@ export default {
      **/
     async updateResource() {
       try {
-        const { data } = await updateResource(this.dataForm._id, this.dataForm)
+        const { data } = await updateBranchResource(
+          this.dataForm._id,
+          this.dataForm
+        )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
         this.$router.push(this.redirectUrl)
       } catch (err) {
