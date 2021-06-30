@@ -32,7 +32,7 @@
     </v-data-table>
 
     <template v-if="dialogDelete">
-      <customer-delete-modal
+      <CustomerDeleteModal
         :dialog-delete.sync="dialogDelete"
         :item="selectedItem"
       />

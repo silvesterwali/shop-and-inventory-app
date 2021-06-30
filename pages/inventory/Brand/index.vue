@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -9,20 +9,20 @@
         </v-card>
       </template>
       <template #content>
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Brand's</template>
           <template #action>
-            <toolbar-nav
+            <ToolbarNav
               create-url="/inventory/brand/create"
               return-url="/inventory/brand"
             />
           </template>
           <template #content>
-            <brand-table />
+            <BrandTable />
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

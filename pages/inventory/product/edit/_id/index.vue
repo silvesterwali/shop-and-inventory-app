@@ -1,28 +1,28 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>{{ pageDescription }}</v-card-text>
         </v-card>
       </template>
       <template #content>
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Edit Product</template>
           <template #action>
-            <toolbal-nav return-url="/inventory/product" :add-action="false" />
+            <ToolbalNav return-url="/inventory/product" :add-action="false" />
           </template>
           <template #content>
             <v-card-text>
-              <product-from
+              <ProductFrom
                 :product="product"
                 redirect-url="/inventory/product"
               />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

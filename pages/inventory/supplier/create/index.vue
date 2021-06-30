@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -10,19 +10,19 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Create Supplier</template>
           <template #action>
-            <toolbar-nav :add-action="false" return-url="/inventory/supplier" />
+            <ToolbarNav :add-action="false" return-url="/inventory/supplier" />
           </template>
           <template #content>
             <v-card-text>
-              <supplier-form />
+              <SupplierForm />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

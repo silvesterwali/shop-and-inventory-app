@@ -30,7 +30,7 @@
       </template>
     </v-data-table>
     <template v-if="deleteDialog">
-      <brand-modal :delete-dialog.sync="deleteDialog" :item="selectedItem" />
+      <BrandModal :delete-dialog.sync="deleteDialog" :item="selectedItem" />
     </template>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col lg="12" md="12" sm="12">
-        <bank-atm-card-group-component :user-id="userId" />
+        <BankAtmCardGroupComponent :user-id="userId" />
       </v-col>
     </v-row>
   </div>

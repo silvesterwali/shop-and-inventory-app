@@ -1,11 +1,11 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info></template>
       <template #content>
-        <index-card-page></index-card-page>
+        <IndexCardPage></IndexCardPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

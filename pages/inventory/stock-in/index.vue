@@ -1,14 +1,14 @@
 <template>
   <div>
-    <card-toolbar-page>
+    <CardToolbarPage>
       <template #title>Stock In</template>
       <template #action>
-        <toolbar-nav create-url="/inventory/stock-in/create" />
+        <ToolbarNav create-url="/inventory/stock-in/create" />
       </template>
       <template #content>
-        <stock-in-table />
+        <StockInTable />
       </template>
-    </card-toolbar-page>
+    </CardToolbarPage>
   </div>
 </template>
 

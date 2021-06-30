@@ -35,7 +35,7 @@
       </template>
     </v-data-table>
     <template v-if="deleteModal">
-      <delete-supplier-modal
+      <DeleteSupplierModal
         :delete-modal.sync="deleteModal"
         :supplier="selectedItem"
       />

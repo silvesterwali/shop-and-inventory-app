@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -10,22 +10,22 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Edit Customer</template>
           <template #action>
-            <toolbar-nav :add-action="false" return-url="/inventory/customer" />
+            <ToolbarNav :add-action="false" return-url="/inventory/customer" />
           </template>
           <template #content>
             <v-card-text>
-              <customer-form
+              <CustomerForm
                 redirect-url="/inventory/customer"
                 :customer="customer"
               />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

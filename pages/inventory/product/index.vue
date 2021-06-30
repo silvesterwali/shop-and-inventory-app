@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card class="mb-1">
           <v-card-text>
@@ -9,17 +9,17 @@
         </v-card>
       </template>
       <template #content>
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Product's</template>
           <template #action>
-            <toolbar-nav create-url="/inventory/product/create" />
+            <ToolbarNav create-url="/inventory/product/create" />
           </template>
           <template #content>
-            <product-table />
+            <ProductTable />
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

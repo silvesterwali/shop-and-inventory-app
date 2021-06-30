@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col sm="12" lg="12" md="12">
-        <change-password :user-id="userId" />
+        <ChangePassword :user-id="userId" />
       </v-col>
     </v-row>
   </div>

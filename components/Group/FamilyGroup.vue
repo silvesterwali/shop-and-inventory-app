@@ -25,7 +25,7 @@
           </v-col>
           <v-col md="8" lg="8" sm="8" xs="12">
             <v-list v-if="families.length > 0">
-              <family-item
+              <FamilyItem
                 v-for="(family, index) in families"
                 :key="index"
                 :family="family"
@@ -35,7 +35,7 @@
             </v-list>
             <v-divider class="mb-2" />
 
-            <family
+            <Family
               v-if="addForm"
               v-bind="$props"
               :reload-status.sync="reloadStatus"

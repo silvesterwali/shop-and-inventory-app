@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -10,22 +10,19 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Edit Stock Out</template>
           <template #action>
-            <toolbar-nav
-              return-url="/inventory/stock-out"
-              :add-action="false"
-            />
+            <ToolbarNav return-url="/inventory/stock-out" :add-action="false" />
           </template>
           <template #content>
             <v-card-text>
-              <head-stock-out-form :stock-out="stockOut" />
+              <HeadStockOutForm :stock-out="stockOut" />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

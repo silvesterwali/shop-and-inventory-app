@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>{{ stockHeader.serialNumber }}</v-card-title>
       <v-card-subtitle>
-        <stock-in-chip :status="stockHeader.status" />
+        <StockInChip :status="stockHeader.status" />
       </v-card-subtitle>
       <v-card-text class="pa-1">
         <v-list>

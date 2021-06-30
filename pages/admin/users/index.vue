@@ -1,5 +1,5 @@
 <template>
-  <index-base-page>
+  <IndexBasePage>
     <template #info>
       <v-card>
         <v-card-text>
@@ -8,14 +8,14 @@
       </v-card>
     </template>
     <template #content>
-      <card-toolbar-page>
+      <CardToolbarPage>
         <template #title>User's</template>
         <template #content>
-          <user-table />
+          <UserTable />
         </template>
-      </card-toolbar-page>
+      </CardToolbarPage>
     </template>
-  </index-base-page>
+  </IndexBasePage>
 </template>
 
 <script>

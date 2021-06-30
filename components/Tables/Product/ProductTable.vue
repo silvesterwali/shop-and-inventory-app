@@ -34,7 +34,7 @@
     </v-data-table>
 
     <template v-if="deleteDialog">
-      <delete-product-modal
+      <DeleteProductModal
         :delete-dialog.sync="deleteDialog"
         :product="selectedItem"
       />

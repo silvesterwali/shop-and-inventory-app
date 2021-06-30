@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -9,10 +9,10 @@
         </v-card>
       </template>
       <template #content>
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Brand's</template>
           <template #action>
-            <toolbar-nav
+            <ToolbarNav
               create-url="/inventory/brand/create"
               return-url="/inventory/brand"
               :add-action="false"
@@ -20,12 +20,12 @@
           </template>
           <template #content>
             <v-card-text>
-              <brand-form :brand="brand" redirect-url="/inventory/brand" />
+              <BrandForm :brand="brand" redirect-url="/inventory/brand" />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

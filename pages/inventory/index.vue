@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -10,9 +10,9 @@
       </template>
       <template #content>
         <!-- page page will be here -->
-        <supplier-table />
+        <SupplierTable />
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

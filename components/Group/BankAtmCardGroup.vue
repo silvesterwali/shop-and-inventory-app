@@ -25,7 +25,7 @@
           </v-col>
           <v-col md="8" lg="8" sm="8" xs="12">
             <v-list v-if="accounts.length > 0">
-              <bank-atm-card-item
+              <BankAtmCardItem
                 v-for="(bankAtmCard, index) in accounts"
                 :key="index"
                 :bank-atm-card="bankAtmCard"
@@ -35,7 +35,7 @@
             </v-list>
             <v-divider class="mb-2" />
 
-            <bank-card-atm-form
+            <BankCardAtmForm
               v-if="addForm"
               v-bind="$props"
               :reload-status.sync="reloadStatus"

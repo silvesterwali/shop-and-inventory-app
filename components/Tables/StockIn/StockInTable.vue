@@ -14,10 +14,10 @@
       :footer-props="footerProps"
     >
       <template #[`item.transactionDate`]="{ item }">
-        <date-format :date-string="item.transactionDate" />
+        <DateFormat :date-string="item.transactionDate" />
       </template>
       <template #[`item.status`]="{ item }">
-        <stock-in-chip :status="item.status" />
+        <StockInChip :status="item.status" />
       </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
@@ -88,13 +88,13 @@
       </v-card>
     </v-dialog>
     <template v-if="dialogApprove">
-      <approve-stock-in-modal
+      <ApproveStockInModal
         :dialog-approve.sync="dialogApprove"
         :incoming-stock="selectedItem"
       />
     </template>
     <template v-if="dialogCancel">
-      <cancellation-stock-in-modal
+      <CancellationStockInModal
         :dialog-cancel.sync="dialogCancel"
         :incoming-stock="selectedItem"
       />

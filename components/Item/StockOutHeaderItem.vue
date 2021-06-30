@@ -2,23 +2,23 @@
   <v-card
     ><v-card-title> {{ stockOut.serialNumber }}</v-card-title>
     <v-card-subtitle>
-      <stock-out-chip :status="stockOut.status" />
+      <StockOutChip :status="stockOut.status" />
     </v-card-subtitle>
     <v-card-text class="pa-1">
       <v-list>
-        <list-two-line
+        <ListTwoLine
           :title="stockOut.transactionDate"
           subtitle="Transaction Date"
         />
-        <list-two-line
+        <ListTwoLine
           :title="stockOut.createdBy.username"
           subtitle="Created By"
         />
-        <list-two-line :title="stockOut.type" subtitle="Type" />
-        <list-two-line
+        <ListTwoLine :title="stockOut.type" subtitle="Type" />
+        <ListTwoLine
           :title="stockOut.description"
           subtitle="Description"
-        ></list-two-line>
+        ></ListTwoLine>
       </v-list>
     </v-card-text>
   </v-card>

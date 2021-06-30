@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-page>
+    <BasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -9,9 +9,9 @@
         </v-card>
       </template>
       <template #content>
-        <user-detail-page :user-id="userId" />
+        <UserDetailPage :user-id="userId" />
       </template>
-    </base-page>
+    </BasePage>
   </div>
 </template>
 

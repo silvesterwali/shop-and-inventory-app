@@ -14,7 +14,7 @@
       :footer-props="footerProps"
     >
       <template #[`item.verifiedEmail`]="{ item }">
-        <user-chip :status="item.verifiedEmail" />
+        <UserChip :status="item.verifiedEmail" />
       </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>

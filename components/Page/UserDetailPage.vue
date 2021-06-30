@@ -5,7 +5,7 @@
       class="mx-auto"
       type="card"
     ></v-skeleton-loader>
-    <card-page v-else>
+    <CardPage v-else>
       <template #card-title>User Detail</template>
       <template #card-subtitle>
         <div class="d-flex justify-space-between">
@@ -102,7 +102,7 @@
         <template v-if="families">
           <v-list subheader two-line>
             <v-subheader>Families</v-subheader>
-            <family-item
+            <FamilyItem
               v-for="(family, index) in families"
               :key="index"
               :family="family"
@@ -113,7 +113,7 @@
         <template v-if="banks">
           <v-list subheader two-line>
             <v-subheader>Bank Atm Card</v-subheader>
-            <bank-atm-card-item
+            <BankAtmCardItem
               v-for="(bank, index) in banks"
               :key="index"
               :bank-atm-card="bank"
@@ -122,7 +122,7 @@
           </v-list>
         </template>
       </template>
-    </card-page>
+    </CardPage>
   </div>
 </template>
 

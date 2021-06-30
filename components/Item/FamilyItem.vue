@@ -32,7 +32,7 @@
       </v-list-item>
     </template>
     <template v-else>
-      <family
+      <Family
         v-bind="$props"
         :family="family"
         :open-form.sync="openForm"

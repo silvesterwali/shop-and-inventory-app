@@ -1,6 +1,6 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
         <v-card>
           <v-card-text>
@@ -9,19 +9,19 @@
         </v-card>
       </template>
       <template #content>
-        <card-toolbar-page>
+        <CardToolbarPage>
           <template #title>Create prodcut</template>
           <template #action>
-            <toolbar-nav :add-action="false" return-url="/inventory/product" />
+            <ToolbarNav :add-action="false" return-url="/inventory/product" />
           </template>
           <template #content>
             <v-card-text>
-              <product-from redirect-url="/inventory/product" />
+              <ProductFrom redirect-url="/inventory/product" />
             </v-card-text>
           </template>
-        </card-toolbar-page>
+        </CardToolbarPage>
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

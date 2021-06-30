@@ -13,10 +13,10 @@
       :options.sync="options"
     >
       <template #[`item.transactionDate`]="{ item }">
-        <date-format :date-string="item.transactionDate" />
+        <DateFormat :date-string="item.transactionDate" />
       </template>
       <template #[`item.status`]="{ item }">
-        <stock-out-chip :status="item.status" />
+        <StockOutChip :status="item.status" />
       </template>
       <template #[`item.actions`]="{ item }">
         <v-menu bottom left>
@@ -87,13 +87,13 @@
       </v-card>
     </v-dialog>
     <template v-if="dialogApprove">
-      <stock-out-transaction-approve-modal
+      <StockOutTransactionApproveModal
         :dialog-approve.sync="dialogApprove"
         :stock-out-header="selectedItem"
       />
     </template>
     <template v-if="dialogCancel">
-      <stock-out-transaction-cancel-modal
+      <StockOutTransactionCancelModal
         :dialog-cancel.sync="dialogCancel"
         :stock-out-header="selectedItem"
       />

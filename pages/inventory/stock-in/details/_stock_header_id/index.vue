@@ -1,14 +1,14 @@
 <template>
   <div>
-    <index-base-page>
+    <IndexBasePage>
       <template #info>
-        <stock-in-header-item :stock-header="stock" />
+        <StockInHeaderItem :stock-header="stock" />
       </template>
       <template #content>
         <!-- page page will be here -->
-        <stock-in-detail-table :stock-header="stock" />
+        <StockInDetailTable :stock-header="stock" />
       </template>
-    </index-base-page>
+    </IndexBasePage>
   </div>
 </template>
 

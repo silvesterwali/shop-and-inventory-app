@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col lg="12" md="12" sm="12">
-        <family-group :user-id="userId" />
+        <FamilyGroup :user-id="userId" />
       </v-col>
     </v-row>
   </div>

@@ -31,7 +31,7 @@
       </v-list-item>
     </template>
     <template v-else>
-      <bank-atm-card
+      <BankAtmCard
         v-bind="$props"
         :bank-atm-card="bankAtmCard"
         :open-form.sync="openForm"

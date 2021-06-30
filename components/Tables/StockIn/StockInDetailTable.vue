@@ -1,6 +1,6 @@
 <template>
   <div>
-    <card-toolbar-page>
+    <CardToolbarPage>
       <template #title>Item</template>
       <template #action>
         <div>
@@ -86,23 +86,23 @@
           </template>
         </v-card-actions>
       </template>
-    </card-toolbar-page>
+    </CardToolbarPage>
     <template v-if="openDialog">
-      <product-modal
+      <ProductModal
         v-bind="$props"
         :open-dialog.sync="openDialog"
         :item-stock="selectedItem"
       />
     </template>
     <template v-if="dialogDelete">
-      <delete-stock-in-modal
+      <DeleteStockInModal
         v-bind="$props"
         :dialog-delete.sync="dialogDelete"
         :item-stock="selectedItem"
       />
     </template>
     <template v-if="dialogApprove">
-      <approve-stock-in-modal
+      <ApproveStockInModal
         :dialog-approve.sync="dialogApprove"
         :incoming-stock="stockHeader"
       />
