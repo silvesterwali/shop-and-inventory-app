@@ -18,11 +18,21 @@
         >
       </template>
     </v-data-table>
+    <template v-if="deleteDialog">
+      <DeleteBranchModal
+        :delete-dialog.sync="deleteDialog"
+        :branch="selectedItem"
+      />
+    </template>
   </div>
 </template>
 <script>
 import { getBranchResources } from '~/services/Branch.js'
+import DeleteBranchModal from '~/components/Modal/Branch/DeleteBranchModal.vue'
 export default {
+  components: {
+    DeleteBranchModal,
+  },
   data() {
     return {
       headers: [
@@ -60,6 +70,16 @@ export default {
     // call the service axios here
     const { data } = await getBranchResources()
     this.items = data
+  },
+  watch: {
+    deleteDialog: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
     /**
