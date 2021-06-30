@@ -220,3 +220,16 @@ document to store sales transaction ***(SELLING)***
     isActive:Boolean
   }
 ```
+
+
+### Brach
+
+```js
+    {
+      name:String,
+      code:String,
+      phone:String,
+      address:String,
+      isActive:Boolean
+    }
+```
