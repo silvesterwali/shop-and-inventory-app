@@ -113,8 +113,9 @@ export default {
   methods: {
     validateForm() {
       this.errors = null
-      this.loading = true
+
       if (!this.$refs.form.validate()) return false
+      this.loading = true
       if (this.dataForm._id === null) {
         this.createResource()
       } else {
