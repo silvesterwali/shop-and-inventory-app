@@ -31,7 +31,7 @@ export default {
       headers: [
         {
           text: 'title',
-          value: 'name',
+          value: 'title',
         },
         {
           text: 'URL',
@@ -39,7 +39,7 @@ export default {
         },
         {
           text: 'Status',
-          value: 'Status',
+          value: 'status',
         },
         {
           text: 'actions',

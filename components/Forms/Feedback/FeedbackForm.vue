@@ -2,27 +2,27 @@
   <v-form ref="form" @submit.prevent="validateForm">
     <v-row>
       <!-- define your form input here-->
-      <v-col lg="6" md="6" sm="6">
-        <v-col cols="12" lg="12" sm="12" md="12">
-          <v-text-field
-            v-model="data"
-            label="myData"
-            :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
-          />
-        </v-col>
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-text-field
+          v-model="dataForm.title"
+          label="Title"
+          :rules="[(v) => !!v || 'title is required', errorKey('title')]"
+        />
       </v-col>
-      <v-col lg="6" md="6" sm="6">
-        <v-col cols="12" lg="12" sm="12" md="12">
-          <v-text-field
-            v-model="data"
-            label="myData"
-            :rules="[(v) => !!v || 'myData is required', errorKey('myData')]"
-          />
-        </v-col>
+
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-text-field v-model="dataForm.url" label="Url (optional)" />
       </v-col>
-      <v-col lg="6" md="6" sm="6"></v-col>
-      <v-col lg="6" md="6" sm="6"></v-col>
-      <v-col lg="6" md="6" sm="6"></v-col>
+
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-textarea
+          v-model="dataForm.content"
+          rows="2"
+          label="Content"
+          :rules="[(v) => !!v || 'Content is required', errorKey('content')]"
+        />
+      </v-col>
+
       <v-col lg="12" sm="12" md="12">
         <v-spacer />
         <v-btn type="submit" class="float-right" color="primary">{{
@@ -44,14 +44,14 @@ export default {
   mixins: [errorKey, setMessage],
   props: {
     // define your props update purpose
-    propsName: {
+    feedback: {
       type: Object,
       default: null,
     },
     // define redirectUrl will redirect to destination after form execute
     redirectUrl: {
       type: String,
-      default: '/',
+      default: null,
     },
   },
   data() {
@@ -70,7 +70,7 @@ export default {
   },
   watch: {
     // special props to change the dataForm for update
-    propsName: {
+    feedback: {
       immediate: true,
       handler(value) {
         if (value !== null) {
@@ -98,9 +98,9 @@ export default {
       try {
         const { data } = await createFeedbackResource(this.dataForm)
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.$router.push(this.redirectUrl)
+        this.redirectAction()
       } catch (err) {
-        this.errors(err)
+        this.errors(err.response.data)
       }
     },
     /**
@@ -115,9 +115,14 @@ export default {
           this.dataForm
         )
         this.SET_MESSAGE({ text: data.message, color: 'success' })
-        this.$router.push(this.redirectUrl)
+        this.redirectAction()
       } catch (err) {
-        this.errors(err)
+        this.errors(err.response.data)
+      }
+    },
+    redirectAction() {
+      if (this.redirectUrl !== null) {
+        this.$router.push(this.redirectUrl)
       }
     },
   },
