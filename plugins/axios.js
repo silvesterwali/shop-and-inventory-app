@@ -8,7 +8,7 @@ export default function ({ $axios, error: nuxtError }) {
     if (error.response.status === 404 || error.response.status === 500) {
       nuxtError({
         statusCode: error.response.status,
-        message: error.message,
+        message: error.response.data.message,
       })
     }
   })
