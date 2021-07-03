@@ -4,6 +4,9 @@
       <v-toolbar-title v-text="title" />
 
       <v-spacer />
+      <v-btn class="mr-1" title="Feedback" to="/feedback" icon>
+        <v-icon>mdi-comment-quote-outline</v-icon>
+      </v-btn>
       <v-btn text :exact="false" class="mr-1 ml-1" to="/login">Login</v-btn>
       <v-btn text :exact="false" to="/register">Register</v-btn>
     </v-app-bar>
