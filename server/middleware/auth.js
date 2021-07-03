@@ -19,9 +19,11 @@ const auth = async (req, res, next) => {
       _id: user._id,
       email: user.email,
       rules: user.rules,
+      username: user.username,
     }
     next()
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
     return res.status(401).send('Access is not Authorization')
   }
 }

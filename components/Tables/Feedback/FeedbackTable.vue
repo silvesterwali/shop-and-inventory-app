@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import {getFeedbackResources } from '~/services/Feedback.js'
+import { getFeedbackResources } from '~/services/Feedback.js'
 export default {
   data() {
     return {
@@ -38,8 +38,8 @@ export default {
           value: 'url',
         },
         {
-            text:"Status",
-            value:"Status"
+          text: 'Status',
+          value: 'Status',
         },
         {
           text: 'actions',
@@ -57,14 +57,17 @@ export default {
       options: { page: 1, itemsPerPage: 15 },
     }
   },
-  fetch() {
+  async fetch() {
     // use options.itemsPerPage for limit pagination
     // use options.page to skip pagination in backend
     // call the service axios here
-    this.deleteDialog=false
-    this.selectedItem=null
-    const {data}=await getFeedbackResources(this.options.itemsPerPage,this.option.page)
-    this.items=data
+    this.deleteDialog = false
+    this.selectedItem = null
+    const { data } = await getFeedbackResources(
+      this.options.itemsPerPage,
+      this.option.page
+    )
+    this.items = data
   },
   methods: {
     /**

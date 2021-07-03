@@ -56,11 +56,9 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <template v-if="$auth.loggedIn">
+        <p class="my-auto">{{ $auth.user.username }}</p>
         <v-btn text @click="$auth.logout()">Log out</v-btn>
       </template>
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -76,16 +74,6 @@
     >
       {{ snackbarMessage.text }}
     </v-snackbar>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list dense>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -101,6 +89,59 @@ export default {
       drawer: false,
       fixed: false,
       items: [
+        {
+          icon: 'mdi-apps',
+          title: 'Welcome',
+          url: '/',
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'Branch',
+          url: '/branch',
+        },
+
+        {
+          icon: 'mdi-apps',
+          title: 'Admin',
+          child: [
+            {
+              title: 'User',
+              url: '/admin/users',
+            },
+          ],
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'inventory',
+          child: [
+            {
+              title: 'Product',
+              url: '/inventory/product',
+            },
+            {
+              title: 'Brand',
+              url: '/inventory/brand',
+            },
+            {
+              title: 'Supplier',
+              url: '/inventory/supplier',
+            },
+            {
+              title: 'Customer',
+              url: '/inventory/customer',
+            },
+            {
+              title: 'Stock In',
+              url: '/inventory/stock-in',
+            },
+            {
+              title: 'Stock Out',
+              url: '/inventory/stock-out',
+            },
+          ],
+        },
+      ],
+      itemsDev: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
