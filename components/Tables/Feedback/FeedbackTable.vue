@@ -100,6 +100,15 @@ export default {
         }
       },
     },
+    options: {
+      handler() {
+        if (process.client) {
+          setTimeout(() => {
+            this.$fetch()
+          }, 500)
+        }
+      },
+    },
   },
   methods: {
     /**
