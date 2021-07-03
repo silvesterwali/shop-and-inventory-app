@@ -20,7 +20,10 @@
           </template>
           <template #content>
             <v-card-text>
-              <FeedbackForm redirect-url="/development/feedback" />
+              <FeedbackForm
+                :feedback="feedback"
+                redirect-url="/development/feedback"
+              />
             </v-card-text>
           </template>
         </CardToolbarPage>
@@ -34,6 +37,7 @@ import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import FeedbackForm from '~/components/Forms/Feedback/FeedbackForm.vue'
 import ToolbalNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
+import { getFeedbackResource } from '~/services/Feedback.js'
 export default {
   components: {
     // define your component here
@@ -41,6 +45,12 @@ export default {
     CardToolbarPage,
     FeedbackForm,
     ToolbalNav,
+  },
+  async asyncData({ params }) {
+    const { data } = await getFeedbackResource(params.id)
+    return {
+      feedback: data,
+    }
   },
   data() {
     return {

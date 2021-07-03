@@ -81,8 +81,7 @@ export default {
      * editItem
      **/
     editItem(item) {
-      this.selectedItem = item
-      this.editDialog = true
+      this.$router.push(`/development/feedback/edit/${item._id}`)
     },
   },
 }
