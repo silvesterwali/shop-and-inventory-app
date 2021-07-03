@@ -125,6 +125,11 @@ export default {
         },
         {
           icon: 'mdi-apps',
+          title: 'Dashboard',
+          url: '/dashboard',
+        },
+        {
+          icon: 'mdi-apps',
           title: 'Branch',
           url: '/branch',
         },
