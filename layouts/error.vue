@@ -9,6 +9,7 @@
           <h1 v-else>
             {{ error.message ? error.message : otherError }}
           </h1>
+          {{ error }}
           <NuxtLink to="/"> Home page </NuxtLink>
         </v-col>
       </v-row>
