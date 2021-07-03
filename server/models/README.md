@@ -233,3 +233,16 @@ document to store sales transaction ***(SELLING)***
       isActive:Boolean
     }
 ```
+
+### Feedback
+
+```js
+  {
+    _id,
+    title:String,
+    url:String,
+    content:String,
+    status:String
+  }
+
+``
