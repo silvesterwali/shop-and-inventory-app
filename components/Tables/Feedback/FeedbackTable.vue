@@ -65,7 +65,7 @@ export default {
     this.selectedItem = null
     const { data } = await getFeedbackResources(
       this.options.itemsPerPage,
-      this.option.page
+      this.options.page
     )
     this.items = data
   },
