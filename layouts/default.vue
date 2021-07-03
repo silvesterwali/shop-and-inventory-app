@@ -56,7 +56,10 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <template v-if="$auth.loggedIn">
-        <p class="my-auto">{{ $auth.user.username }}</p>
+        <p class="my-auto mr-1">{{ $auth.user.username }}</p>
+        <v-btn class="mr-1" title="Feedback" to="/feedback" icon>
+          <v-icon>mdi-comment-quote-outline</v-icon>
+        </v-btn>
         <v-btn text @click="$auth.logout()">Log out</v-btn>
       </template>
     </v-app-bar>
@@ -74,15 +77,17 @@
     >
       {{ snackbarMessage.text }}
     </v-snackbar>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import Footer from '~/components/Footer/index.vue'
 export default {
+  components: {
+    Footer,
+  },
   data() {
     return {
       clipped: false,

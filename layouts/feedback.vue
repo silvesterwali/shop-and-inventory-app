@@ -3,7 +3,7 @@
     <v-app-bar :clipped-left="clipped" fixed app dense elevate-on-scroll tile>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn text :exact="false" class="mr-1 ml-1" to="">Back</v-btn>
+      <v-btn text :exact="true" class="mr-1 ml-1" to="/">Back</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -11,14 +11,16 @@
       </v-container>
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
 <script>
+import Footer from '~/components/Footer/index.vue'
 export default {
+  components: {
+    Footer,
+  },
   data() {
     return {
       clipped: false,
