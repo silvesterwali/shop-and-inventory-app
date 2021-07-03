@@ -117,7 +117,7 @@ exports.show = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { title, email, url, content } = req.body
+  const { title, email, url, content, status } = req.body
   try {
     await db.collection('feedbacks').updateOne(
       { _id: new ObjectID(req.params.id) },
@@ -127,6 +127,7 @@ exports.update = async (req, res) => {
           email,
           url,
           content,
+          status,
         },
       }
     )

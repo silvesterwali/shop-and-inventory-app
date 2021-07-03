@@ -2,12 +2,25 @@
   <v-form ref="form" @submit.prevent="validateForm">
     <v-row>
       <!-- define your form input here-->
+      <v-col v-if="feedback !== null" cols="12" lg="12" sm="12" md="12">
+        <v-col lg="6" md="6">
+          <v-select
+            v-model="dataForm.status"
+            label="Status"
+            :items="statusList"
+            :rules="[(v) => !!v || 'status is required', errorKey('status')]"
+          />
+        </v-col>
+      </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
           v-model="dataForm.title"
           label="Title"
           :rules="[(v) => !!v || 'title is required', errorKey('title')]"
         />
+      </v-col>
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-text-field v-model="dataForm.email" label="Email" />
       </v-col>
 
       <v-col cols="12" lg="12" sm="12" md="12">
@@ -21,6 +34,7 @@
           label="Content"
           :rules="[(v) => !!v || 'Content is required', errorKey('content')]"
         />
+        <p>Tell us what you need to improve this site</p>
       </v-col>
 
       <v-col lg="12" sm="12" md="12">
@@ -66,6 +80,7 @@ export default {
         // define the form property here
       },
       errors: null,
+      statusList: ['Request', 'Pending', 'In Progress', 'Canceled', 'Done'],
     }
   },
   watch: {

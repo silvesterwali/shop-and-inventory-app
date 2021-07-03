@@ -12,6 +12,9 @@
       fixed-header
       :footer-props="footerProps"
     >
+      <template #[`item.status`]="{ item }">
+        <FeedbackChip :status="item.status" />
+      </template>
       <template #[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click.prevent="editItem(item)"
           >mdi-pencil</v-icon
@@ -32,9 +35,11 @@
 <script>
 import { getFeedbackResources } from '~/services/Feedback.js'
 import DeleteFeedbackModal from '~/components/Modal/Feedback/DeleteFeedbackModal.vue'
+import FeedbackChip from '~/components/Chip/Feedback/FeedbackChip.vue'
 export default {
   components: {
     DeleteFeedbackModal,
+    FeedbackChip,
   },
   data() {
     return {
@@ -42,6 +47,10 @@ export default {
         {
           text: 'title',
           value: 'title',
+        },
+        {
+          text: 'email',
+          value: 'email',
         },
         {
           text: 'URL',
