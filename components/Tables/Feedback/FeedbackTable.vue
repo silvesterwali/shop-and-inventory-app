@@ -16,10 +16,13 @@
         <FeedbackChip :status="item.status" />
       </template>
       <template #[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click.prevent="editItem(item)"
+        <v-icon small class="mr-1" @click.prevent="editItem(item)"
           >mdi-pencil</v-icon
         >
-        <v-icon small class="mr-2" @click.prevent="deleteItem(item)"
+        <v-icon small class="mr-1" @click.prevent="detailItem(item)"
+          >mdi-eye</v-icon
+        >
+        <v-icon small class="mr-1" @click.prevent="deleteItem(item)"
           >mdi-delete</v-icon
         >
       </template>
@@ -111,6 +114,9 @@ export default {
      **/
     editItem(item) {
       this.$router.push(`/development/feedback/edit/${item._id}`)
+    },
+    detailItem(item) {
+      this.$router.push(`/development/feedback/detail/${item._id}`)
     },
   },
 }

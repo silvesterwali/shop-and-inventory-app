@@ -80,7 +80,7 @@ export default {
         // define the form property here
       },
       errors: null,
-      statusList: ['Request', 'Pending', 'In Progress', 'Canceled', 'Done'],
+      statusList: ['Request', 'Pending', 'In Progress', 'Cancelled', 'Done'],
     }
   },
   watch: {
