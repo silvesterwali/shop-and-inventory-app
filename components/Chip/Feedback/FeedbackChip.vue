@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-chip small dark :color="chip.color">{{ chip.text }}</v-chip>
+    <v-chip x-small dark :color="chip.color">{{ chip.text }}</v-chip>
   </div>
 </template>
 

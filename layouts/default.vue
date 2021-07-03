@@ -40,6 +40,30 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
+        <template v-if="$auth.user.email === 'silvesterlhwali@gmail.com'">
+          <v-list-group
+            v-for="item in itemsDev"
+            :key="item.title"
+            :prepend-icon="item.icon"
+          >
+            <template #activator>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title"></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="child in item.child"
+              :key="child.title"
+              :to="child.url"
+              exact
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="child.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </template>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app dense tile>
@@ -149,52 +173,11 @@ export default {
       itemsDev: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
-          url: '/',
-        },
-        {
-          icon: 'mdi-apps',
-          title: 'Branch',
-          url: '/branch',
-        },
-
-        {
-          icon: 'mdi-apps',
-          title: 'Admin',
+          title: 'Development',
           child: [
             {
-              title: 'User',
-              url: '/admin/users',
-            },
-          ],
-        },
-        {
-          icon: 'mdi-apps',
-          title: 'inventory',
-          child: [
-            {
-              title: 'Product',
-              url: '/inventory/product',
-            },
-            {
-              title: 'Brand',
-              url: '/inventory/brand',
-            },
-            {
-              title: 'Supplier',
-              url: '/inventory/supplier',
-            },
-            {
-              title: 'Customer',
-              url: '/inventory/customer',
-            },
-            {
-              title: 'Stock In',
-              url: '/inventory/stock-in',
-            },
-            {
-              title: 'Stock Out',
-              url: '/inventory/stock-out',
+              title: 'Feedback',
+              url: '/development/feedback',
             },
           ],
         },
@@ -224,6 +207,10 @@ export default {
     listWithNoGroup() {
       const items = this.items
       return items.filter((e) => e.url !== undefined)
+    },
+    itemDevs() {
+      const items = this.itemsDev
+      return items.filter((e) => e.child && e.child.length > 0)
     },
   },
 
