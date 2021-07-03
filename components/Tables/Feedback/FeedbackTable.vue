@@ -21,11 +21,21 @@
         >
       </template>
     </v-data-table>
+    <template v-if="deleteDialog">
+      <DeleteFeedbackModal
+        :delete-dialog.sync="deleteDialog"
+        :feedback="selectedItem"
+      />
+    </template>
   </div>
 </template>
 <script>
 import { getFeedbackResources } from '~/services/Feedback.js'
+import DeleteFeedbackModal from '~/components/Modal/Feedback/DeleteFeedbackModal.vue'
 export default {
+  components: {
+    DeleteFeedbackModal,
+  },
   data() {
     return {
       headers: [
@@ -68,6 +78,16 @@ export default {
       this.options.page
     )
     this.items = data
+  },
+  watch: {
+    deleteDialog: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
   },
   methods: {
     /**
