@@ -4,7 +4,7 @@
       <v-row no-gutters justify="center" align="center" class="my-10">
         <v-col cols="12" md="8" lg="8" class="my-5">
           <h1 v-if="error.statusCode === 404">
-            {{ pageNotFound }}
+            {{ error.message ? error.message : pageNotFound }}
           </h1>
           <h1 v-else>
             {{ error.message ? error.message : otherError }}

@@ -107,8 +107,12 @@ export default {
     }
   },
   async fetch() {
-    const { data } = await getSupplierResources()
-    this.supliers = data
+    try {
+      const { data } = await getSupplierResources()
+      this.supliers = data
+    } catch (error) {
+      console.log(error.response.data)
+    }
   },
   computed: {
     dateFormat: {

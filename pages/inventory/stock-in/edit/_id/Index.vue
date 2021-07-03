@@ -16,7 +16,7 @@
             <ToolbarNav :add-action="false" return-url="/inventory/stock-in" />
           </template>
           <template #content>
-            <v-card-text>
+            <v-card-text v-if="stockIn">
               <HeaderStockInForm :stock-in="stockIn" />
             </v-card-text>
           </template>
@@ -42,9 +42,13 @@ export default {
     ToolbarNav,
   },
   async asyncData({ params }) {
-    const { data } = await getIncomingStockResource(params.id)
-    return {
-      stockIn: data,
+    try {
+      const { data } = await getIncomingStockResource(params.id)
+      return {
+        stockIn: data,
+      }
+    } catch (error) {
+      console.log(error)
     }
   },
   data() {
