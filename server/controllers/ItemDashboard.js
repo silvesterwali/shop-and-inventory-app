@@ -7,6 +7,7 @@
 const BranchUtils = require('../utilities/BranchUtils')
 const ProductUtils = require('../utilities/productUtils')
 const customersUtils = require('../utilities/customerUtils')
+const userUtils = require('../utilities/userUtils')
 /**
  *=====================================
  * index
@@ -44,6 +45,15 @@ exports.index = async (req, res) => {
       cardSubTitle: 'Customer',
       icon: 'mdi-account-group',
     }
+    // user utils
+    result[3] = {
+      url: '/admin/users',
+      btnText: 'Go To Users',
+      cardTitle: userUtils.countUser(),
+      cardSubTitle: 'Users',
+      icon: 'med-account-group',
+    }
+
     return res.json(result)
   } catch (err) {
     console.log(err)
