@@ -17,42 +17,16 @@
 
 <script>
 import ItemDashboardCard from '~/components/Card/ItemDashboardCard.vue'
+import { getItemDashboardResources } from '~/services/ItemDashboard'
 export default {
   components: {
     ItemDashboardCard,
   },
-  data() {
+
+  async asyncData() {
+    const { data } = await getItemDashboardResources()
     return {
-      items: [
-        {
-          url: '/inventory/product',
-          btnText: 'Go To Products',
-          cardTitle: '5000',
-          cardSubTitle: 'Product',
-          icon: 'mdi-cube-outline',
-        },
-        {
-          url: '/inventory/brand',
-          btnText: 'Go To Brands',
-          cardTitle: '50',
-          cardSubTitle: 'Brands',
-          icon: 'mdi-apps',
-        },
-        {
-          url: '/inventory/customer',
-          btnText: 'Go To Customer',
-          cardTitle: '50',
-          cardSubTitle: 'Customer',
-          icon: 'mdi-account-group',
-        },
-        {
-          url: '/admin/users',
-          btnText: 'Go To Users',
-          cardTitle: '50',
-          cardSubTitle: 'User',
-          icon: 'mdi-account-group',
-        },
-      ],
+      items: data,
     }
   },
 }

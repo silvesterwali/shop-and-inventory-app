@@ -28,7 +28,7 @@ export default {
       default: 'Go Somewhere',
     },
     cardTitle: {
-      type: String,
+      type: [String, Number],
       default: 'Card title',
     },
     cardSubTitle: {

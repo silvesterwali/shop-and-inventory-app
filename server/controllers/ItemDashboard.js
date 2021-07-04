@@ -49,9 +49,9 @@ exports.index = async (req, res) => {
     result[3] = {
       url: '/admin/users',
       btnText: 'Go To Users',
-      cardTitle: userUtils.countUser(),
+      cardTitle: await userUtils.countUser(),
       cardSubTitle: 'Users',
-      icon: 'med-account-group',
+      icon: 'mdi-account-group',
     }
 
     return res.json(result)
