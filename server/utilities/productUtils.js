@@ -40,3 +40,16 @@ exports.productGroup = (productArray) => {
   }, Object.create({}))
   return products
 }
+/**
+ * productCount
+ *
+ * - count products document without any pipeline
+ */
+exports.productCount = async () => {
+  try {
+    const totalProduct = await db.collection('products').find({}).count()
+    return totalProduct
+  } catch (error) {
+    throw new Error(error)
+  }
+}
