@@ -153,7 +153,7 @@ export default {
       },
       errors: null,
       categories: ['Food', 'Drinks'],
-      units: ['KG', 'GRAM', 'ROLL', 'SCS'],
+      units: ['KG', 'GRAM', 'ROLL', 'SCS', 'PCS', 'KARTON'],
       loading: false,
       brands: [],
     }
