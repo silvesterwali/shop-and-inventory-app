@@ -5,9 +5,8 @@ const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization
   const token = authHeader && authHeader.replace('Bearer ', '')
   if (!token) return res.status(401).send('Access denied')
+  const Verified = await jwt.verify(token, process.env.TOKEN)
   try {
-    const Verified = await jwt.verify(token, process.env.TOKEN)
-
     if (!Verified)
       return res.status(403).message({
         message: 'Unauthorization',
@@ -23,7 +22,7 @@ const auth = async (req, res, next) => {
     }
     next()
   } catch (err) {
-    console.log(err)
+    console.log('session expired')
     return res.status(401).send('Access is not Authorization')
   }
 }

@@ -40,7 +40,11 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-        <template v-if="$auth.user.email === 'silvesterlhwali@gmail.com'">
+        <template
+          v-if="
+            $auth.loggedIn && $auth.user.email === 'silvesterlhwali@gmail.com'
+          "
+        >
           <v-list-group
             v-for="item in itemsDev"
             :key="item.title"
