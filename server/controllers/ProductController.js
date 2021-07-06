@@ -24,7 +24,7 @@ exports.getProducts = async (req, res) => {
    *
    */
   const limit = req.query.limit ? parseInt(req.query.limit) : 50
-  const page = req.query.page ? parseInt(req.params.page) : 1
+  const page = req.query.page ? parseInt(req.query.page) : 1
 
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
