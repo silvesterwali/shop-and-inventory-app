@@ -34,7 +34,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Kue Bolu',
+      title: 'Prima Rasa',
     }
   },
 }
