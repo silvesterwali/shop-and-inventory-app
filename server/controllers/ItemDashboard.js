@@ -32,7 +32,7 @@ exports.index = async (req, res) => {
     // brand items
     result[1] = {
       url: '/inventory/brand',
-      btnText: 'Go To Branch',
+      btnText: 'Go To Brand',
       cardTitle: await BranchUtils.countBranches(),
       cardSubTitle: 'Brand',
       icon: 'mdi-apps',
