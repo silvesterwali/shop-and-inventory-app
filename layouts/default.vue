@@ -1,6 +1,7 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
+      v-if="$auth.loggedIn"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -71,28 +72,37 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app dense tile>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
+      <template v-if="$auth.loggedIn">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        <v-btn icon @click.stop="miniVariant = !miniVariant">
+          <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        </v-btn>
+        <v-btn icon @click.stop="clipped = !clipped">
+          <v-icon>mdi-application</v-icon>
+        </v-btn>
+        <v-btn icon @click.stop="fixed = !fixed">
+          <v-icon>mdi-minus</v-icon>
+        </v-btn>
+      </template>
+
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <template v-if="$auth.loggedIn">
         <p class="my-auto mr-1">{{ $auth.user.username }}</p>
-        <v-btn class="mr-1" title="Feedback" to="/feedback" icon>
+        <v-btn class="mr-1" tile title="Feedback" to="/feedback" icon>
           <v-icon>mdi-comment-quote-outline</v-icon>
         </v-btn>
-        <v-btn text @click="$auth.logout()">Log out</v-btn>
+        <v-btn text tile @click="$auth.logout()">Log out</v-btn>
+      </template>
+      <template v-else>
+        <v-btn text :exact="false" tile class="mr-1 ml-1" to="/login"
+          >Login</v-btn
+        >
+        <v-btn text :exact="false" tile to="/register">Register</v-btn>
       </template>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container :fluid="$route.name === 'index'">
         <nuxt />
       </v-container>
     </v-main>
@@ -198,6 +208,7 @@ export default {
       snackbar: false,
     }
   },
+
   computed: {
     ...mapState(['message']),
     snackbarMessage() {
@@ -240,6 +251,11 @@ export default {
         }
       },
     },
+  },
+  beforeMount() {
+    if (this.$nuxt.$route.name === 'index') {
+      this.drawer = false
+    }
   },
 }
 </script>
