@@ -14,15 +14,15 @@ import ApiClient from './apiClient.js'
  * @param {Number} page
  */
 export const getUsers = async (limit, page) => {
-  return await ApiClient.get(`/api/users?limit=${limit}&page=${page}`)
+  return await ApiClient.get(`/api/user?limit=${limit}&page=${page}`)
 }
 
 /**
  * getUserDetails
  *
  * - get a user information including personal data
- * @param {String} userId
+ * @param {String} id
  */
-export const getUserDetail = async (userId) => {
-  return await ApiClient.get(`/api/users/${userId}/user`)
+export const getUserDetail = async (id) => {
+  return await ApiClient.get(`/api/user/${id}`)
 }

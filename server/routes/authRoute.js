@@ -29,8 +29,8 @@ router.post(
         password: await passwordHash(password),
         rules: ['costumer'],
         verifiedEmail: false,
-        created_at: new Date(),
-        updated_at: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       })
       return res.json({ token: generateToken(user) })
     } catch (err) {
