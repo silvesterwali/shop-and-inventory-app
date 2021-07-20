@@ -10,6 +10,9 @@
     <template #content>
       <CardToolbarPage>
         <template #title>User's</template>
+        <template #action>
+          <ToolbarNav create-url="/admin/user/create" />
+        </template>
         <template #content>
           <UserTable />
         </template>
@@ -22,11 +25,13 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import UserTable from '@/components/Tables/UsersTable.vue'
 import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
+import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
   components: {
     IndexBasePage,
     UserTable,
     CardToolbarPage,
+    ToolbarNav,
   },
   data() {
     return {
