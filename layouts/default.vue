@@ -154,7 +154,7 @@ export default {
           child: [
             {
               title: 'User',
-              url: '/admin/users',
+              url: '/admin/user',
             },
           ],
         },
