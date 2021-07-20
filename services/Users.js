@@ -26,3 +26,12 @@ export const getUsers = async (limit, page) => {
 export const getUserDetail = async (id) => {
   return await ApiClient.get(`/api/user/${id}`)
 }
+/**
+ * createUser
+ *
+ * - create newly user data
+ * @param {object} payload
+ */
+export const createUser = async (payload) => {
+  return await ApiClient.post(`/api/user`, payload)
+}
