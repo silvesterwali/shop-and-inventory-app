@@ -13,7 +13,11 @@
         <template #action>
           <ToolbarNav :add-action="false" return-url="/admin/user" />
         </template>
-        <template #content> </template>
+        <template #content>
+          <v-card-text>
+            <UserStepper />
+          </v-card-text>
+        </template>
       </CardToolbarPage>
     </template>
   </IndexBasePage>
@@ -23,11 +27,13 @@
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
 import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
+import UserStepper from '~/components/Stepper/User/UserStepper.vue'
 export default {
   components: {
     IndexBasePage,
     CardToolbarPage,
     ToolbarNav,
+    UserStepper,
   },
   data() {
     return {
