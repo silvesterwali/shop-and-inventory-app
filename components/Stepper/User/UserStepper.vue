@@ -7,7 +7,9 @@
         <v-stepper-step step="2" :complete="false">Personal</v-stepper-step>
       </v-stepper-header>
       <v-stepper-items>
-        <v-stepper-content step="1"></v-stepper-content>
+        <v-stepper-content step="1">
+          <UserForm />
+        </v-stepper-content>
         <v-stepper-content step="2"></v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -15,7 +17,11 @@
 </template>
 
 <script>
+import UserForm from '~/components/Forms/User/UserForm.vue'
 export default {
+  components: {
+    UserForm,
+  },
   data() {
     return {
       step: 1,
