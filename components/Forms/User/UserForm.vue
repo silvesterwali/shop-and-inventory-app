@@ -50,14 +50,25 @@
           multiple
         />
       </v-col>
+      <v-col cols="12" lg="12" sm="12" md="12">
+        <v-btn
+          type="submit"
+          :loading="loading"
+          color="primary"
+          class="float-right"
+          >Submit</v-btn
+        >
+      </v-col>
     </v-row>
   </v-form>
 </template>
 
 <script>
 import errorKey from '~/mixins/errorKey.js'
+import setMessage from '~/mixins/setMessage.js'
+import { createUser } from '~/services/Users.js'
 export default {
-  mixins: [errorKey],
+  mixins: [errorKey, setMessage],
   data() {
     return {
       dataForm: {
@@ -76,7 +87,17 @@ export default {
     }
   },
   methods: {
-    validateForm() {},
+    async validateForm() {
+      this.loading = true
+      try {
+        const { data } = await createUser(this.dataForm)
+        this.SET_MESSAGE({ text: data.message, color: 'success' })
+      } catch (err) {
+        this.errors = err.response.data
+      } finally {
+        this.loading = false
+      }
+    },
   },
 }
 </script>
