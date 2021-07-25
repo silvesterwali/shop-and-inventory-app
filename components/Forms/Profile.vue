@@ -82,7 +82,7 @@
                 :loading="loading"
                 class="float-right"
                 color="primary"
-                >{{ dataForm._id === null ? 'Add' : 'Update' }}</v-btn
+                >{{ dataForm._id === null ? 'Submit' : 'Update' }}</v-btn
               >
             </v-form>
           </v-col>
@@ -106,6 +106,10 @@ export default {
     userId: {
       type: String,
       default: null,
+    },
+    profileComplete: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -134,6 +138,20 @@ export default {
       this.dataForm = data
     }
     this.loading = false
+  },
+  watch: {
+    // watch the dataForm
+    // if the dataForm _id has value
+    // we will the parent that this
+    // component complete
+    dataForm: {
+      immediate: true,
+      handler(value) {
+        if (value._id !== null) {
+          this.$emit('update:profileComplete', true)
+        }
+      },
+    },
   },
   methods: {
     validateForm() {
