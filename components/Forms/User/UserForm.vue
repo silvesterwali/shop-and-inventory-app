@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="validateForm">
+  <v-form ref="userForm" @submit.prevent="validateForm">
     <v-row>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
@@ -26,18 +26,20 @@
           :type="showPassword ? 'text' : 'password'"
           :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
           :rules="[(v) => !!v || 'password is required', errorKey('password')]"
+          @click:append="showPassword = !showPassword"
         />
       </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
         <v-text-field
-          v-model="dataForm.password_confirm"
+          v-model="dataForm.passwordConfirmation"
           label="Password Confirmation"
           :type="showPasswordConfirm ? 'text' : 'password'"
           :append-icon="showPasswordConfirm ? 'mdi-eye-off' : 'mdi-eye'"
           :rules="[
             (v) => !!v || 'Password Confirmation',
-            errorKey('password_confirmation'),
+            errorKey('passwordConfirmation'),
           ]"
+          @click:append="showPasswordConfirm = !showPasswordConfirm"
         />
       </v-col>
       <v-col cols="12" lg="12" sm="12" md="12">
@@ -54,6 +56,7 @@
         <v-btn
           type="submit"
           :loading="loading"
+          :disabled="dataForm._id !== null"
           color="primary"
           class="float-right"
           >Submit</v-btn
@@ -69,6 +72,12 @@ import setMessage from '~/mixins/setMessage.js'
 import { createUser } from '~/services/Users.js'
 export default {
   mixins: [errorKey, setMessage],
+  props: {
+    user: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       dataForm: {
@@ -76,7 +85,7 @@ export default {
         username: null,
         email: null,
         password: null,
-        password_confirm: null,
+        passwordConfirmation: null,
         rules: [],
       },
       showPassword: false,
@@ -86,11 +95,23 @@ export default {
       rulesOptions: ['customer', 'admin'],
     }
   },
+  watch: {
+    dataForm: {
+      immediate: true,
+      handler(value) {
+        if (value._id !== null) {
+          this.$emit('update:user', value)
+        }
+      },
+    },
+  },
   methods: {
     async validateForm() {
       this.loading = true
       try {
         const { data } = await createUser(this.dataForm)
+        this.dataForm = data.data
+        this.$refs.userForm.resetValidation()
         this.SET_MESSAGE({ text: data.message, color: 'success' })
       } catch (err) {
         this.errors = err.response.data

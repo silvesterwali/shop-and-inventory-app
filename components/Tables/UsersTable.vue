@@ -65,7 +65,7 @@ export default {
       },
       {
         text: 'Join Date',
-        value: 'created_at',
+        value: 'createdAt',
       },
       {
         text: 'Actions',

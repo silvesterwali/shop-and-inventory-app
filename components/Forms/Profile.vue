@@ -10,6 +10,7 @@
       <v-card-text>
         <v-row>
           <v-col
+            v-if="!inSteper"
             cols="12"
             md="4"
             sm="4"
@@ -35,7 +36,12 @@
             </div>
           </v-col>
 
-          <v-col cols="12" md="8" sm="8" lg="8">
+          <v-col
+            cols="12"
+            :md="inSteper ? 12 : 8"
+            :sm="inSteper ? 12 : 8"
+            :lg="inSteper ? 12 : 8"
+          >
             <v-form ref="profileForm" @submit.prevent="validateForm">
               <v-text-field
                 v-model="dataForm.fullName"
@@ -108,6 +114,10 @@ export default {
       default: null,
     },
     profileComplete: {
+      type: Boolean,
+      default: false,
+    },
+    inSteper: {
       type: Boolean,
       default: false,
     },
