@@ -25,7 +25,7 @@
           </template>
 
           <v-list dense>
-            <v-list-item dense :to="`/admin/users/details/${item._id}`">
+            <v-list-item dense :to="`/admin/user/details/${item._id}`">
               <v-list-item-title>Details</v-list-item-title>
             </v-list-item>
           </v-list>
