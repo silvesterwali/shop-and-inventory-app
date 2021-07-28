@@ -26,21 +26,20 @@ exports.sendEmail = async (
   html = undefined,
   attachments = []
 ) => {
-  const testAccount = await nodemailer.createTestAccount()
-
   const transporter = nodemailer.createTransport({
+    service: 'Gmail',
     host: 'smtp.ethereal.email',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: testAccount.user, // will place in env soon
-      pass: testAccount.pass, // will place in env soon
+      user: process.env.EMAIL_USER, // will place in env soon
+      pass: process.env.EMAIL_PASS, // will place in env soon
     },
   })
 
   try {
     const info = await transporter.sendMail({
-      from: 'silveterwalidev@gmail.com', // will place in env soon
+      from: 'silvesterwalidev@gmail.com', // will place in env soon
       to,
       cc,
       subject,

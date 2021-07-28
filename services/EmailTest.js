@@ -10,17 +10,15 @@ import ApiClient from './apiClient.js'
 
 // endpoint for api endpoint
 
-const url = `email-test`
+const url = `api/email-test`
 
 /**
  * getEmailTestResources
  *
  * - endpoint to get all EmailTest resource
- * @param {Number} limit - limit resource to retrieve from backend
- * @param {Number} page - current page index for pagination
  * @async
  *
  */
-export const getEmailTestResources = async (limit, page) => {
-  return await ApiClient.get(`/${url}?limit=${limit}&page=${page}`)
+export const getEmailTestResources = async () => {
+  return await ApiClient.get(`/${url}`)
 }
