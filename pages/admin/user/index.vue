@@ -23,7 +23,7 @@
 
 <script>
 import IndexBasePage from '@/components/BasePage/IndexBasePage.vue'
-import UserTable from '@/components/Tables/UsersTable.vue'
+import UserTable from '~/components/Tables/User/UsersTable.vue'
 import CardToolbarPage from '~/components/CardPage/CardToolbarPage.vue'
 import ToolbarNav from '~/components/Nav/Toolbar/ToolbarNav.vue'
 export default {
