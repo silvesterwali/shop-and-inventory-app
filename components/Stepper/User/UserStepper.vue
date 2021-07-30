@@ -47,6 +47,13 @@ export default {
     UserForm,
     Profile,
   },
+  props: {
+    // this property for exist user
+    currentUser: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       step: 1,
@@ -63,8 +70,23 @@ export default {
         }
       },
     },
+    // watch the current user if have value
+    // will be set the user to update
+    currentUser: {
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.user = value
+        }
+      },
+    },
   },
   methods: {
+    /**
+     * method for stepper go to specific step
+     * @param {number} step
+     *
+     */
     goToStep(step) {
       if (this.user !== null) {
         this.step = step
