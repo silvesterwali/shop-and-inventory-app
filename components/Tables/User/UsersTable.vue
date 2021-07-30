@@ -28,6 +28,9 @@
             <v-list-item dense :to="`/admin/user/details/${item._id}`">
               <v-list-item-title>Details</v-list-item-title>
             </v-list-item>
+            <v-list-item dense :to="`/admin/user/edit/${item._id}`">
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
       </template>

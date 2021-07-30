@@ -104,6 +104,14 @@ export default {
         }
       },
     },
+    user: {
+      immediate: true,
+      handler(value) {
+        if (value !== null) {
+          this.dataForm = value
+        }
+      },
+    },
   },
   methods: {
     async validateForm() {
