@@ -10,7 +10,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  layout: 'feedback',
+}
 </script>
 
 <style lang="scss" scoped></style>
