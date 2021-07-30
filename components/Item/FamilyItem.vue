@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Family from '@/components/Forms/Family.vue'
+import Family from '~/components/Forms/Family/Family.vue'
 import { deleteFamily } from '~/services/Personal.js'
 export default {
   name: 'FamilyItem',

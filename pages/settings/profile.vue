@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import Profile from '@/components/Forms/Profile.vue'
+import Profile from '~/components/Forms/Profile/Profile.vue'
 export default {
   components: {
     Profile,
