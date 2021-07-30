@@ -12,6 +12,7 @@
       <v-card-text>
         <v-row>
           <v-col
+            v-if="!inStepper"
             md="4"
             lg="4"
             sm="4"
@@ -23,7 +24,12 @@
               Add some infomartion about your family. it just optioal only
             </v-sheet>
           </v-col>
-          <v-col md="8" lg="8" sm="8" xs="12">
+          <v-col
+            :md="inStepper ? 12 : 8"
+            :lg="inStepper ? 12 : 8"
+            :sm="inStepper ? 12 : 8"
+            xs="12"
+          >
             <v-list v-if="families.length > 0">
               <FamilyItem
                 v-for="(family, index) in families"
@@ -36,15 +42,16 @@
             <v-divider class="mb-2" />
 
             <Family
-              v-if="addForm"
+              v-if="openForm"
               v-bind="$props"
+              :open-form.sync="openForm"
               :reload-status.sync="reloadStatus"
             />
 
             <div v-else class="d-flex flex-row">
               <p>You can adding and update family member</p>
               <v-spacer />
-              <v-btn small color="primary" @click.prevent="addForm = true"
+              <v-btn small color="primary" @click.prevent="openForm = true"
                 >Add More</v-btn
               >
             </div>
@@ -70,18 +77,25 @@ export default {
       type: String,
       default: null,
     },
+    inStepper: {
+      type: Boolean,
+      default: false,
+    },
+    familyComplete: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       reloadStatus: false, // to reload fomily data from api
       families: [],
-      addForm: false,
+      openForm: false,
     }
   },
   async fetch() {
-    this.addForm = false
     this.reloadStatus = false
-    if (this.userId === false) {
+    if (this.userId === null) {
       return
     }
     const { data } = await getFamilies(this.userId)
@@ -95,6 +109,22 @@ export default {
       handler(value) {
         if (value === true && process.client) {
           this.$fetch()
+        }
+      },
+    },
+    openForm: {
+      immediate: true,
+      handler(value) {
+        if (value === false && process.client) {
+          this.$fetch()
+        }
+      },
+    },
+    families: {
+      immediate: true,
+      handler(value) {
+        if (value.length >= 1 && process.client) {
+          this.$emit('update:familyComplete', true)
         }
       },
     },

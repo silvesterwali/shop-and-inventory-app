@@ -12,6 +12,10 @@
           @click="goToStep(2)"
           >Personal</v-stepper-step
         >
+        <v-divider />
+        <v-stepper-step step="3" :complete="familyComplete" @click="goToStep(3)"
+          >Family</v-stepper-step
+        >
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
@@ -24,15 +28,13 @@
             :in-steper="true"
             :profile-complete.sync="profileComplete"
           />
-          <v-btn
-            v-if="profileComplete"
-            to="/admin/user"
-            color="primary"
-            small
-            text
-            class="float-right mt-4"
-            >Finish</v-btn
-          >
+        </v-stepper-content>
+        <v-stepper-content step="3">
+          <FamilyGroup
+            :user-id="user._id"
+            :family-complete.sync="familyComplete"
+            :in-stepper="true"
+          />
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -41,11 +43,13 @@
 
 <script>
 import UserForm from '~/components/Forms/User/UserForm.vue'
-import Profile from '~/components/Forms/Profile.vue'
+import Profile from '~/components/Forms/Profile/Profile.vue'
+import FamilyGroup from '~/components/Group/FamilyGroup.vue'
 export default {
   components: {
     UserForm,
     Profile,
+    FamilyGroup,
   },
   props: {
     // this property for exist user
@@ -59,6 +63,7 @@ export default {
       step: 1,
       user: null,
       profileComplete: false,
+      familyComplete: false,
     }
   },
   watch: {
@@ -67,6 +72,14 @@ export default {
       handler(value) {
         if (value !== null) {
           this.step = 2
+        }
+      },
+    },
+    profileComplete: {
+      immediate: true,
+      handler(value) {
+        if (value === true) {
+          this.step = 3
         }
       },
     },

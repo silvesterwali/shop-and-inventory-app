@@ -136,11 +136,8 @@ export default {
       }
     },
     reload() {
-      if (this.child === false) {
-        this.$emit('update:reloadStatus', true)
-      } else {
-        this.$emit('update:openForm', false)
-      }
+      this.$emit('update:openForm', false)
+      this.$emit('update:reloadStatus', true)
     },
   },
 }

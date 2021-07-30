@@ -6,8 +6,9 @@
           <v-list-item-title>{{ family.fullName }}</v-list-item-title>
           <v-divider />
           <v-list-item-subtitle
-            >{{ family.familyStatus }} |
-            {{ family.phoneNumber }}</v-list-item-subtitle
+            >Status : {{ family.familyStatus }} | Number :{{
+              family.phoneNumber
+            }}</v-list-item-subtitle
           >
         </v-list-item-content>
         <v-list-item-action v-if="action">
@@ -36,6 +37,7 @@
         v-bind="$props"
         :family="family"
         :open-form.sync="openForm"
+        :reload-status.sync="statusReload"
         :child="true"
       />
     </template>
@@ -95,13 +97,13 @@ export default {
       loading: false,
     }
   },
-  watch: {
-    openForm: {
-      immediate: true,
-      handler(value) {
-        if (value === false) {
-          this.$emit('update:reloadStatus', true)
-        }
+  computed: {
+    statusReload: {
+      get() {
+        return this.reloadStatus
+      },
+      set(value) {
+        this.$emit('update:reloadStatus', value)
       },
     },
   },
@@ -110,10 +112,13 @@ export default {
       try {
         this.loading = true
         await deleteFamily(this.userId, this.family._id)
-        this.$emit('update:reloadStatus', true)
+      } catch (err) {
+        alert(err)
+      } finally {
         this.dialogDelete = false
         this.loading = false
-      } catch (err) {}
+        this.statusReload = true
+      }
     },
   },
 }

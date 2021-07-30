@@ -15,7 +15,8 @@ const auth = require('../middleware/auth')
 router.get('/:userId/user', auth, async (req, res) => {
   try {
     const userId = new ObjectId(req.params.userId)
-    const { families } = await db.collection('personal').findOne({ userId })
+    const personal = await db.collection('personal').findOne({ userId })
+    const families = personal?.families ?? []
     return res.json(families)
   } catch (err) {
     // eslint-disable-next-line no-console
