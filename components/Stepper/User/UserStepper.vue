@@ -1,19 +1,22 @@
 <template>
   <div>
-    <v-stepper v-model="step">
+    <v-stepper v-model="step" non-linear tile outlined>
       <v-stepper-header>
-        <v-stepper-step step="1" :complete="user !== null" @click="goToStep(1)"
+        <v-stepper-step step="1" :complete="user !== null"
           >Data User</v-stepper-step
         >
-        <v-divider />
+
         <v-stepper-step
           step="2"
           :complete="profileComplete"
-          @click="goToStep(2)"
-          >Personal</v-stepper-step
-        >
-        <v-divider />
-        <v-stepper-step step="3" :complete="familyComplete" @click="goToStep(3)"
+          :editable="user !== null"
+          >Personal
+        </v-stepper-step>
+
+        <v-stepper-step
+          step="3"
+          :editable="user !== null"
+          :complete="familyComplete"
           >Family</v-stepper-step
         >
       </v-stepper-header>
@@ -92,18 +95,6 @@ export default {
           this.user = value
         }
       },
-    },
-  },
-  methods: {
-    /**
-     * method for stepper go to specific step
-     * @param {number} step
-     *
-     */
-    goToStep(step) {
-      if (this.user !== null) {
-        this.step = step
-      }
     },
   },
 }
