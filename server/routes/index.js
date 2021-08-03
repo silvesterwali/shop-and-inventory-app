@@ -50,4 +50,8 @@ router.use('/branch', require('./BranchRoute'))
 router.use('/feedback', require('./feedbackRoute'))
 router.use('/item-dashboard', require('./itemDashboardRoute'))
 router.use('/email-test', require('./EmailTestRoute'))
+router.use(
+  '/count-product-transaction-in',
+  require('./countProductTransactionInRoute')
+)
 module.exports = router
