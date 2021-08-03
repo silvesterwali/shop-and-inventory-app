@@ -7,17 +7,21 @@
       dense
       class="mt-4"
       :server-items-length="items.length"
-      item-key="id"
+      item-key="serial"
       :options.sync="options"
-      fixed-header
       :footer-props="footerProps"
     >
+      <template #[`item.name`]="{ item }">
+        {{ truncateText(item.name, 15) }}
+      </template>
     </v-data-table>
   </div>
 </template>
 <script>
-import { getCountProductTransctionInResources } from '~/services/CountProductTransaction.js'
+import { getCountProductTransctionInResources } from '~/services/CountProductTransctionIn.js'
+import truncateText from '~/mixins/truncateText.js'
 export default {
+  mixins: [truncateText],
   data() {
     return {
       headers: [
@@ -31,11 +35,11 @@ export default {
         },
         {
           text: 'Stock Qty',
-          value: 'stockQty',
+          value: 'stock_qty',
         },
         {
           text: 'Qty In Trans...',
-          value: 'qtyInTransaction',
+          value: 'qty_in_transaction',
         },
       ],
       items: [],

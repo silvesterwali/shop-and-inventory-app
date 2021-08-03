@@ -64,22 +64,26 @@ exports.index = async (_req, res) => {
             from: 'products',
             localField: '_id',
             foreignField: '_id',
-            as: 'data',
+            as: 'product',
           },
         },
         // melalukan projection untuk beberapa fieds sebelum dibalikan ke client
         {
           $project: {
+            serial: {
+              $arrayElemAt: ['$product.serial', 0],
+            },
             name: {
-              $arrayElemAt: ['$data.name', 0],
+              $arrayElemAt: ['$product.name', 0],
             },
             stock_qty: {
-              $arrayElemAt: ['$data.stockQty', 0],
+              $arrayElemAt: ['$product.stockQty', 0],
             },
             qty_in_transaction: '$qty',
           },
         },
       ])
+      .toArray()
     return res.json(productInTransaction)
   } catch (err) {
     console.log(err)
