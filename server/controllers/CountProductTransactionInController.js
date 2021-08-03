@@ -4,7 +4,9 @@
  *
  **/
 
+const moment = require('moment')
 const db = require('../db').db
+const { stringToDateFormat } = require('../utilities/timeFormatUtils')
 
 /**
  *=====================================
@@ -18,7 +20,9 @@ const db = require('../db').db
  *
  * @see https://stackoverflow.com/a/68611742/12288929 - contoh query yang corensponding dengan masalah
  **/
-exports.index = async (req, res) => {
+exports.index = async (_req, res) => {
+  const startOfMonth = moment().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = moment().endOf('month').format('YYYY-MM-DD')
   try {
     const productInTransaction = await db
       .collection('IncomingStocks')
@@ -28,7 +32,11 @@ exports.index = async (req, res) => {
           // yang diinginkan
           $match: {
             transactionDate: {
-              $gte: new Date('Thu, 01 Jul 2021 00:00:00 GMT'),
+              $gte: stringToDateFormat(startOfMonth),
+              $lte: stringToDateFormat(endOfMonth),
+            },
+            status: {
+              $eq: 1,
             },
           },
         },
@@ -65,10 +73,10 @@ exports.index = async (req, res) => {
             name: {
               $arrayElemAt: ['$data.name', 0],
             },
-            retailPrice: {
-              $arrayElemAt: ['$data.retailPrice', 0],
+            stock_qty: {
+              $arrayElemAt: ['$data.stockQty', 0],
             },
-            qtyInTransaction: '$qty',
+            qty_in_transaction: '$qty',
           },
         },
       ])
