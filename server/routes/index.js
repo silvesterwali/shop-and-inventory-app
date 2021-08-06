@@ -54,4 +54,8 @@ router.use(
   '/count-product-transaction-in',
   require('./countProductTransactionInRoute')
 )
+router.use(
+  '/count-product-transaction-out',
+  require('./countProductTransactionOutRoute')
+)
 module.exports = router
