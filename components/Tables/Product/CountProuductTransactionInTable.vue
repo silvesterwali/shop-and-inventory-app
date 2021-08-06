@@ -59,22 +59,6 @@ export default {
     // use options.page to skip pagination in backend
     // call the service axios here
   },
-  methods: {
-    /**
-     * deleteItem
-     **/
-    deleteItem(item) {
-      this.selectedItem = item
-      this.deleteDialog = true
-    },
-    /**
-     * editItem
-     **/
-    editItem(item) {
-      this.selectedItem = item
-      this.editDialog = true
-    },
-  },
 }
 </script>
 <style lang="scss" scoped></style>
