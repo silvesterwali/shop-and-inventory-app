@@ -69,10 +69,10 @@ exports.index = async (_req, res) => {
         {
           $project: {
             _id: 1,
-            qty: 1,
-            'product.name': 1,
-            'product.serial': 1,
-            'product.stockQty': 1,
+            serial: '$product.serial',
+            name: '$product.name',
+            stock_qty: '$product.stockQty',
+            qty_in_transaction: '$qty',
           },
         },
       ])
