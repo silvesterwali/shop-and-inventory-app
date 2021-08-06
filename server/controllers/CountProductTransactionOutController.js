@@ -1,7 +1,8 @@
 /**
  * @copyright 2021
- *
- *
+ * - this controller is responsible for provide
+ * product data in transaction in date selector
+ * in transation out
  **/
 const moment = require('moment')
 const db = require('../db').db
