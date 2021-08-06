@@ -12,16 +12,18 @@
       :footer-props="footerProps"
     >
       <template #[`item.name`]="{ item }">
-        {{ truncateText(item.name, 15) }}
+        <TruncateTextHover :text-string="item.name" />
       </template>
     </v-data-table>
   </div>
 </template>
 <script>
 import { getCountProductTransctionInResources } from '~/services/CountProductTransctionIn.js'
-import truncateText from '~/mixins/truncateText.js'
+import TruncateTextHover from '~/components/Hover/TruncateTextHover.vue'
 export default {
-  mixins: [truncateText],
+  components: {
+    TruncateTextHover,
+  },
   data() {
     return {
       headers: [
