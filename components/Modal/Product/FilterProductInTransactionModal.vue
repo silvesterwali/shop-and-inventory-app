@@ -8,9 +8,19 @@
           <VDatePicker v-model="filter.end_date" label="End Date" />
         </v-card-text>
         <v-card-actions>
-          <v-btn color="red darken-1" text @click="dialog = false">No</v-btn>
+          <v-btn
+            color="red darken-1"
+            :loading="loading"
+            text
+            @click="dialog = false"
+            >No</v-btn
+          >
           <v-spacer />
-          <v-btn color="green darken-1" text @click="$emit('reload', true)"
+          <v-btn
+            color="green darken-1"
+            :loading="loading"
+            text
+            @click="$emit('reload', true)"
             >Load</v-btn
           >
         </v-card-actions>
@@ -35,11 +45,10 @@ export default {
       type: Object,
       default: null,
     },
-  },
-  data() {
-    return {
-      loading: false,
-    }
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     // make sure  that ***dialogFilter*** is using ***sync*** props

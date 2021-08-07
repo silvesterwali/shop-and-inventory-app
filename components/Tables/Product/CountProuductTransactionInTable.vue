@@ -22,6 +22,7 @@
       <FilterProductInTransactionModal
         v-model="params"
         :dialog-filter.sync="dialogFilter"
+        :loading="$fetchState.pending"
         @reload="$fetch"
       />
     </template>
