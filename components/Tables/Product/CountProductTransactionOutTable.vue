@@ -12,17 +12,26 @@
       :footer-props="footerProps"
     >
       <template #[`item.name`]="{ item }">
-        <TruncateTextHover :length="15" :text-string="item.name" />
+        <TruncateTextHover :length="10" :text-string="item.name" />
       </template>
     </v-data-table>
+    <template v-if="dialogFilter">
+      <FilterProductInTransactionModal
+        v-model="params"
+        :dialog-filter.sync="dialogFilter"
+        @reload="$fetch"
+      />
+    </template>
   </div>
 </template>
 <script>
 import { getCountProductTransactionOutResources } from '~/services/CountProductTransactionOut.js'
 import TruncateTextHover from '~/components/Hover/TruncateTextHover.vue'
+import FilterProductInTransactionModal from '~/components/Modal/Product/FilterProductInTransactionModal.vue'
 export default {
   components: {
     TruncateTextHover,
+    FilterProductInTransactionModal,
   },
   data() {
     return {
@@ -36,12 +45,16 @@ export default {
           value: 'name',
         },
         {
-          text: 'Stock Qty',
-          value: 'stock_qty',
+          text: 'Stock',
+          value: 'qty_stock',
         },
         {
-          text: 'Qty In Trans...',
+          text: 'Qty',
           value: 'qty_in_transaction',
+        },
+        {
+          text: 'Total',
+          value: 'total',
         },
       ],
       items: [],
@@ -52,6 +65,11 @@ export default {
         'items-per-page-options': [5, 10, 15, 50, 100],
       },
       options: { page: 1, itemsPerPage: 15 },
+      params: {
+        start_date: null,
+        end_date: null,
+      },
+      dialogFilter: false,
     }
   },
   async fetch() {

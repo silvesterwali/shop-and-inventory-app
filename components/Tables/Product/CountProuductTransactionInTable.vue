@@ -1,5 +1,8 @@
 <template>
   <div>
+    {{ params.start_date ? ' Start Date ' + params.start_date : '' }}
+
+    {{ params.end_date ? ' - End Date ' + params.end_date : '' }}
     <v-data-table
       :headers="headers"
       :items="items"
@@ -12,17 +15,32 @@
       :footer-props="footerProps"
     >
       <template #[`item.name`]="{ item }">
-        <TruncateTextHover :text-string="item.name" />
+        <TruncateTextHover :text-string="item.name" :length="10" />
       </template>
     </v-data-table>
+    <template v-if="dialogFilter">
+      <FilterProductInTransactionModal
+        v-model="params"
+        :dialog-filter.sync="dialogFilter"
+        @reload="$fetch"
+      />
+    </template>
   </div>
 </template>
 <script>
 import { getCountProductTransctionInResources } from '~/services/CountProductTransctionIn.js'
 import TruncateTextHover from '~/components/Hover/TruncateTextHover.vue'
+import FilterProductInTransactionModal from '~/components/Modal/Product/FilterProductInTransactionModal.vue'
 export default {
   components: {
     TruncateTextHover,
+    FilterProductInTransactionModal,
+  },
+  props: {
+    filter: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -36,12 +54,16 @@ export default {
           value: 'name',
         },
         {
-          text: 'Stock Qty',
+          text: 'Stock',
           value: 'stock_qty',
         },
         {
-          text: 'Qty In Trans...',
+          text: 'Qty',
           value: 'qty_in_transaction',
+        },
+        {
+          text: 'Total',
+          value: 'total',
         },
       ],
       items: [],
@@ -52,14 +74,29 @@ export default {
         'items-per-page-options': [5, 10, 15, 50, 100],
       },
       options: { page: 1, itemsPerPage: 15 },
+      params: {
+        start_date: null,
+        end_date: null,
+      },
     }
   },
   async fetch() {
-    const { data } = await getCountProductTransctionInResources()
+    const { data } = await getCountProductTransctionInResources(this.params)
     this.items = data
+    this.dialogFilter = false
     // use options.itemsPerPage for limit pagination
     // use options.page to skip pagination in backend
     // call the service axios here
+  },
+  computed: {
+    dialogFilter: {
+      set(value) {
+        this.$emit('update:filter', value)
+      },
+      get() {
+        return this.filter
+      },
+    },
   },
 }
 </script>

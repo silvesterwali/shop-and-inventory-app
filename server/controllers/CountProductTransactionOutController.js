@@ -51,6 +51,9 @@ exports.index = async (_req, res) => {
             qty: {
               $sum: '$productsInTransactions.qty',
             },
+            total: {
+              $sum: '$productsInTransactions.total',
+            },
           },
         },
         {
@@ -71,8 +74,9 @@ exports.index = async (_req, res) => {
             _id: 1,
             serial: '$product.serial',
             name: '$product.name',
-            stock_qty: '$product.stockQty',
+            qty_stock: '$product.stockQty',
             qty_in_transaction: '$qty',
+            total: 1,
           },
         },
       ])

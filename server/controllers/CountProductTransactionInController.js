@@ -20,9 +20,15 @@ const { stringToDateFormat } = require('../utilities/timeFormatUtils')
  *
  * @see https://stackoverflow.com/a/68611742/12288929 - contoh query yang corensponding dengan masalah
  **/
-exports.index = async (_req, res) => {
-  const startOfMonth = moment().startOf('month').format('YYYY-MM-DD')
-  const endOfMonth = moment().endOf('month').format('YYYY-MM-DD')
+exports.index = async (req, res) => {
+  const startOfMonth =
+    req.query.start_date === ''
+      ? moment().startOf('month').format('YYYY-MM-DD')
+      : req.query.start_date
+  const endOfMonth =
+    req.query.end_date === ''
+      ? moment().endOf('month').format('YYYY-MM-DD')
+      : req.query.end_date
   try {
     const productInTransaction = await db
       .collection('IncomingStocks')
@@ -56,6 +62,9 @@ exports.index = async (_req, res) => {
             qty: {
               $sum: '$productsInTransactions.qty',
             },
+            total: {
+              $sum: '$productsInTransactions.total',
+            },
           },
         },
         // melakukan join dari products collections
@@ -69,17 +78,15 @@ exports.index = async (_req, res) => {
         },
         // melalukan projection untuk beberapa fieds sebelum dibalikan ke client
         {
+          $unwind: '$product',
+        },
+        {
           $project: {
-            serial: {
-              $arrayElemAt: ['$product.serial', 0],
-            },
-            name: {
-              $arrayElemAt: ['$product.name', 0],
-            },
-            stock_qty: {
-              $arrayElemAt: ['$product.stockQty', 0],
-            },
+            serial: '$product.serial',
+            name: '$product.name',
+            stock_qty: '$product.stockQty',
             qty_in_transaction: '$qty',
+            total: 1,
           },
         },
       ])
