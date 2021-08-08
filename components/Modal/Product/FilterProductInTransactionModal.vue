@@ -1,11 +1,11 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="400">
+    <v-dialog v-model="dialog" persistent max-width="600">
       <v-card :loading="loading">
-        <v-card-title> Filter Start Date And End Date </v-card-title>
+        <v-card-title> Filter Berdasarakan rentang waktu </v-card-title>
         <v-card-text>
-          <VDatePicker v-model="filter.start_date" label="Start Date" />
-          <VDatePicker v-model="filter.end_date" label="End Date" />
+          <VDatePicker v-model="filter.start_date" label="Awal Mulai" />
+          <VDatePicker v-model="filter.end_date" label="Hingga Tanggal" />
         </v-card-text>
         <v-card-actions>
           <v-btn
@@ -13,13 +13,12 @@
             :loading="loading"
             text
             @click="dialog = false"
-            >No</v-btn
+            >Cancel</v-btn
           >
           <v-spacer />
           <v-btn
-            color="green darken-1"
+            color="primary"
             :loading="loading"
-            text
             @click="$emit('reload', true)"
             >Load</v-btn
           >
