@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{ params.start_date ? ' Start Date ' + params.start_date : '' }}
+    {{ params.end_date ? ' - End Date ' + params.end_date : '' }}
     <v-data-table
       :headers="headers"
       :items="items"
@@ -32,6 +34,12 @@ export default {
   components: {
     TruncateTextHover,
     FilterProductInTransactionModal,
+  },
+  props: {
+    filter: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -69,15 +77,25 @@ export default {
         start_date: null,
         end_date: null,
       },
-      dialogFilter: false,
     }
   },
   async fetch() {
-    const { data } = await getCountProductTransactionOutResources()
+    const { data } = await getCountProductTransactionOutResources(this.params)
     this.items = data
+    this.dialogFilter = false
     // use options.itemsPerPage for limit pagination
     // use options.page to skip pagination in backend
     // call the service axios here
+  },
+  computed: {
+    dialogFilter: {
+      set(value) {
+        this.$emit('update:filter', value)
+      },
+      get() {
+        return this.filter
+      },
+    },
   },
 }
 </script>

@@ -7,7 +7,7 @@
  *
  **/
 import ApiClient from './apiClient.js'
-
+import { QueryParams } from './Query/QueryParams.js'
 // endpoint for api endpoint
 
 const url = `api/count-product-transaction-out`
@@ -19,6 +19,7 @@ const url = `api/count-product-transaction-out`
  * @async
  *
  */
-export const getCountProductTransactionOutResources = async () => {
-  return await ApiClient.get(`/${url}`)
+export const getCountProductTransactionOutResources = async (params) => {
+  const query = QueryParams(params)
+  return await ApiClient.get(`/${url}` + query)
 }

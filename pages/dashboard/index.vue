@@ -18,16 +18,7 @@
         <ProductInTransCard />
       </v-col>
       <v-col lg="6" md="6" sm="12" cols="12">
-        <v-card>
-          <v-card-title>Qty Product Keluar</v-card-title>
-          <v-card-subtitle
-            >Data Default adalah data transaksi pada bulan
-            berlangsung</v-card-subtitle
-          >
-          <v-card-text>
-            <CountProductTransactionOutTable />
-          </v-card-text>
-        </v-card>
+        <ProductOutTransCard />
       </v-col>
     </v-row>
   </v-container>
@@ -37,12 +28,12 @@
 import ItemDashboardCard from '~/components/Card/ItemDashboardCard.vue'
 import { getItemDashboardResources } from '~/services/ItemDashboard'
 import ProductInTransCard from '~/components/Card/Product/ProductInTransCard.vue'
-import CountProductTransactionOutTable from '~/components/Tables/Product/CountProductTransactionOutTable.vue'
+import ProductOutTransCard from '~/components/Card/Product/ProductOuTransCard.vue'
 export default {
   components: {
     ItemDashboardCard,
     ProductInTransCard,
-    CountProductTransactionOutTable,
+    ProductOutTransCard,
   },
 
   async asyncData() {
