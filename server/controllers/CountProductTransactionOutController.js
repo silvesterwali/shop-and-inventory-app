@@ -17,9 +17,15 @@ const { stringToDateFormat } = require('../utilities/timeFormatUtils')
  * @param {express.Response} res
  * @async
  **/
-exports.index = async (_req, res) => {
-  const startOfMonth = moment().startOf('month').format('YYYY-MM-DD')
-  const endOfMonth = moment().endOf('month').format('YYYY-MM-DD')
+exports.index = async (req, res) => {
+  const startOfMonth =
+    req.query.start_date !== ''
+      ? req.query.start_date
+      : moment().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth =
+    req.query.end_date !== ''
+      ? req.query.end_date
+      : moment().endOf('month').format('YYYY-MM-DD')
   try {
     const products = await db
       .collection('stockOutTransactions')
