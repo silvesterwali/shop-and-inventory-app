@@ -34,6 +34,7 @@
         </v-stepper-content>
         <v-stepper-content step="3">
           <FamilyGroup
+            v-if="user !== null"
             :user-id="user._id"
             :family-complete.sync="familyComplete"
             :in-stepper="true"
