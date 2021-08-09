@@ -8,7 +8,7 @@
 const ObjectID = require('mongodb').ObjectID
 const db = require('../db').db
 const { totalPages } = require('../utilities/totalPagesUtils.js')
-
+const { UserRules } = require('../utilities/UserRulesUtils')
 /**
  * getProducts
  *
@@ -30,7 +30,11 @@ exports.getProducts = async (req, res) => {
   const endIndex = page * limit
 
   const result = {} // store result query for client
-  const query = {}
+  const query = {
+    isDelete: {
+      $eq: false,
+    },
+  }
   try {
     result.totalRows = await db.collection('products').find(query).count()
     // apply next pagination
@@ -101,6 +105,7 @@ exports.createProduct = async (req, res) => {
         brandId: brandId ? new ObjectID(brandId) : null,
         createdBy: new ObjectID(req.user._id),
         createdAt: new Date(),
+        isDelete: false,
       },
 
       false,
@@ -190,6 +195,22 @@ exports.updateProduct = async (req, res) => {
  */
 exports.deleteProduct = async (req, res) => {
   try {
+    if (UserRules(req.user, 'admin')) {
+      await db.collection('products').deleteOne({
+        _id: new ObjectID(req.params.productId),
+      })
+    } else {
+      await db.collection('products').updateOne(
+        {
+          _id: new ObjectID(req.params.productId),
+        },
+        {
+          isDelete: true,
+          deleteAt: new Date(),
+        }
+      )
+    }
+
     await db.collection('products').deleteOne({
       _id: new ObjectID(req.params.productId),
     })
