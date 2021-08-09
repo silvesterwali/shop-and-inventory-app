@@ -58,7 +58,7 @@ router.post('/login', guest, loginRules(), validate, async (req, res) => {
     if (!isPasswordValid) {
       return res.status(422).json({ message: 'Email or password wrong' })
     }
-    await saveUseragent(user, req.useragent)
+    await saveUseragent(user, req.useragent, true)
     return res.json({
       token: generateToken(user),
     })
@@ -99,7 +99,8 @@ router.get('/me', auth, gate('making node'), (req, res) => {
  * @param {express.Response} res
  *
  */
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
+  await saveUseragent(req.user, req.useragent, false)
   return res.json({ message: 'logout ' })
 })
 

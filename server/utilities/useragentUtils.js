@@ -3,8 +3,10 @@
  *
  *
  */
+
 const ObjectId = require('mongodb').ObjectID
 const db = require('../db').db
+const { currentDateFormat } = require('./timeFormatUtils')
 
 /**
  * save last login user
@@ -13,26 +15,31 @@ const db = require('../db').db
  * @param {Object} useragent
  * @return boolean
  */
-const saveUseragent = async (user, useragent) => {
+const saveUseragent = async (user, useragent, isActive) => {
   try {
     const userId = new ObjectId(user._id)
-    const { browser, version, os, platform, geoIp, source } = useragent
+    const { browser, version, isMobile, isDesktop, os, platform, source } =
+      useragent
+
+    const activities = {
+      _id: new ObjectId(),
+      isActive,
+      browser,
+      version,
+      isMobile,
+      isDesktop,
+      os,
+      platform,
+      source,
+      date: await currentDateFormat(),
+    }
 
     // TODO : how to update the sub document if property already exists
     await db.collection('usersLoginTracking').updateOne(
       { userId },
       {
         $push: {
-          activities: {
-            isActive: true,
-            browser,
-            version,
-            os,
-            platform,
-            geoIp,
-            source,
-            date: new Date(),
-          },
+          activities,
         },
       },
       { upsert: true }
