@@ -7,7 +7,7 @@
  * @returns {Boolean}
  */
 exports.UserRules = (user, roleName) => {
-  const arrayOfUserRole = new Array(user.rules)
+  const arrayOfUserRole = user.rules
   if (arrayOfUserRole.includes[roleName]) return true
   return false
 }

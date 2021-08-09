@@ -195,7 +195,8 @@ exports.updateProduct = async (req, res) => {
  */
 exports.deleteProduct = async (req, res) => {
   try {
-    if (UserRules(req.user, 'admin')) {
+    const isAdmin = UserRules(req.user, 'admin')
+    if (isAdmin === true) {
       await db.collection('products').deleteOne({
         _id: new ObjectID(req.params.productId),
       })
@@ -205,15 +206,17 @@ exports.deleteProduct = async (req, res) => {
           _id: new ObjectID(req.params.productId),
         },
         {
-          isDelete: true,
-          deleteAt: new Date(),
+          $set: {
+            isDelete: true,
+            deleteAt: new Date(),
+          },
+        },
+        {
+          upsert: true,
         }
       )
     }
 
-    await db.collection('products').deleteOne({
-      _id: new ObjectID(req.params.productId),
-    })
     return res.json({ message: 'Success delete product ' })
   } catch (err) {
     // eslint-disable-next-line no-console
