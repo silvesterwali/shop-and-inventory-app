@@ -83,6 +83,7 @@ exports.index = async (req, res) => {
             preserveNullAndEmptyArrays: true,
           },
         },
+
         {
           // exclude some field  from return result to client
           $project: {
@@ -92,6 +93,14 @@ exports.index = async (req, res) => {
             'createdBy.updated_at': 0,
             'supplier.createdAt': 0,
             'supplier.updatedAt': 0,
+          },
+        },
+
+        {
+          $addFields: {
+            grand_total: {
+              $sum: '$productsInTransactions.total',
+            },
           },
         },
 

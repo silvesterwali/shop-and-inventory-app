@@ -151,6 +151,10 @@ export default {
         value: 'supplier.name',
       },
       {
+        text: 'Grand Total',
+        value: 'grand_total',
+      },
+      {
         text: 'Status',
         value: 'status',
       },

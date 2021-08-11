@@ -145,7 +145,10 @@ export default {
         text: 'Type',
         value: 'type',
       },
-
+      {
+        text: 'Grand Total',
+        value: 'grand_total',
+      },
       {
         text: 'Status',
         value: 'status',

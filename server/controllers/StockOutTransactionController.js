@@ -84,6 +84,13 @@ exports.index = async (req, res) => {
           },
         },
         {
+          $addFields: {
+            grand_total: {
+              $sum: '$productsInTransactions.total',
+            },
+          },
+        },
+        {
           // exclude some field  from return result to client
           $project: {
             'createdBy.password': 0,
