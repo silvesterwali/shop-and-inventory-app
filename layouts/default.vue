@@ -166,7 +166,7 @@ export default {
         },
         {
           icon: 'mdi-apps',
-          title: 'inventory',
+          title: 'Inventory',
           child: [
             {
               title: 'Product',
