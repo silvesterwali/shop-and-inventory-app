@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * @copyright 2021
  * - this controller is responsible for provide
@@ -18,10 +19,10 @@ const { stringToDateFormat } = require('../utilities/timeFormatUtils')
  * @async
  **/
 exports.index = async (req, res) => {
+  const { start_date, end_date } = req.query
   const startOfMonth =
-    req.query?.start_date ?? moment().startOf('month').format('YYYY-MM-DD')
-  const endOfMonth =
-    req.query?.end_date ?? moment().endOf('month').format('YYYY-MM-DD')
+    start_date || moment().startOf('month').format('YYYY-MM-DD')
+  const endOfMonth = end_date || moment().endOf('month').format('YYYY-MM-DD')
   try {
     const products = await db
       .collection('stockOutTransactions')
