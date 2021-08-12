@@ -88,6 +88,9 @@ export default {
     // call the service axios here
   },
   computed: {
+    /**
+     * modify the filter props
+     */
     dialogFilter: {
       set(value) {
         this.$emit('update:filter', value)
