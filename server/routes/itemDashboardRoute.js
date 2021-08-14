@@ -12,7 +12,7 @@
 
 const express = require('express')
 const router = express.Router()
-const ItemDashboard = require('../controllers/ItemDashboard')
+const ItemDashboard = require('../controllers/ItemDashboardController')
 const auth = require('../middleware/auth')
 router.use(auth)
 router.get('/', ItemDashboard.index)
