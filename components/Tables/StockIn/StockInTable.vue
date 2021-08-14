@@ -142,6 +142,10 @@ export default {
         value: 'transactionDate',
       },
       {
+        text: 'Transaction Type',
+        value: 'transactionType',
+      },
+      {
         text: 'Create By',
         value: 'createdBy.username',
       },
