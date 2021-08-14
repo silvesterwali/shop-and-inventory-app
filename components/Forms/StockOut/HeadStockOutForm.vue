@@ -61,18 +61,7 @@
             placeholder="Customer"
           ></v-select>
         </v-col>
-        <v-col cols="12" sm="12" md="12">
-          <v-radio-group
-            v-model="dataForm.transactionType"
-            :rules="[(v) => !!v || 'Type Transaksi tidak boleh kosong']"
-          >
-            <template #label>
-              <div>Tentukan type <strong>Transaksi anda</strong></div>
-            </template>
-            <v-radio label="Non Retur" value="Non Retur"></v-radio>
-            <v-radio label="Retur" value="Retur"></v-radio>
-          </v-radio-group>
-        </v-col>
+
         <v-col cols="12" sm="12" md="12">
           <v-textarea
             v-model="dataForm.description"
@@ -124,10 +113,9 @@ export default {
         description: null,
         type: null,
         costumerId: null,
-        transactionType: null, // type pada transaksi
         transactionDate: new Date().toISOString().substr(0, 10),
       },
-      typesTransaction: ['Production', 'Retun'],
+      typesTransaction: ['Production', 'Distribusi', 'Retur'],
       datePicker: false,
       errors: null,
       loading: false,
