@@ -133,7 +133,7 @@ exports.index = async (req, res) => {
  * @async
  **/
 exports.store = async (req, res) => {
-  const { description, supplierId, transactionDate } = req.body
+  const { description, supplierId, transactionDate, transactionType } = req.body
   const supplierID =
     req.body.supplier !== null ? new ObjectID(supplierId) : null
   try {
@@ -142,10 +142,13 @@ exports.store = async (req, res) => {
       serialNumber: await StockNumber.stockInNumber(),
       transactionDate: timeFormatUtils.stringToDateFormat(transactionDate),
       supplierId: supplierID,
+      // transaction type [retur,non return]
+      transactionType,
       description,
       status: 0, // recent create
       createdBy: new ObjectID(req.user._id),
       createdAt: new Date(),
+      // will contain all detail transation
       productsInTransactions: [],
     })
 
@@ -245,7 +248,7 @@ exports.show = async (req, res) => {
  * @async
  **/
 exports.update = async (req, res) => {
-  const { description, supplierId, transactionDate } = req.body
+  const { description, supplierId, transactionDate, transactionType } = req.body
   const supplierID = req.body.supplier ? new ObjectID(supplierId) : null
   try {
     const IncomingStock = await db
@@ -259,6 +262,8 @@ exports.update = async (req, res) => {
             transactionDate:
               timeFormatUtils.stringToDateFormat(transactionDate),
             supplierId: supplierID,
+            // transation type [return,non retur]
+            transactionType,
             description,
             updatedBy: new ObjectID(req.user._id),
             updatedAt: new Date(),
