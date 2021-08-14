@@ -50,13 +50,27 @@
           </v-menu>
         </v-col>
         <v-col cols="12" sm="12" md="12">
+          <v-radio-group
+            v-model="dataForm.transactionType"
+            :rules="[(v) => !!v || 'Type Transaksi tidak boleh kosong']"
+          >
+            <template #label>
+              <div>Tentukan type <strong>Transaksi anda</strong></div>
+            </template>
+            <v-radio label="Non Retur" value="Non Retur"></v-radio>
+            <v-radio label="Retur" value="Retur"></v-radio>
+          </v-radio-group>
+        </v-col>
+        <v-col cols="12" sm="12" md="12">
           <v-textarea
             v-model="dataForm.description"
+            label="Description"
             :rules="[errorKey('description')]"
             class="Description/Note (Optional)"
             rows="2"
           ></v-textarea>
         </v-col>
+
         <v-col cols="12" sm="12" md="12">
           <p>
             mohon mengisi header sebelum mengisi detail product pada transaksi
@@ -95,9 +109,10 @@ export default {
     return {
       dataForm: {
         _id: null,
-        serialNumber: null,
+        serialNumber: null, // will auto provide in backend
         description: null,
-        supplierId: null,
+        supplierId: null, // supplier
+        transactionType: null, // type of transation in
         transactionDate: new Date().toISOString().substr(0, 10),
       },
       supliers: [],
