@@ -4,6 +4,7 @@
       dark
       alt="https://www.pexels.com/photo/dessert-served-on-brown-wooden-tray-109836/"
       :src="require(`~/assets/pexels-mike-109836.png`)"
+      class="mb-10"
     >
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
@@ -12,12 +13,20 @@
         </v-col>
       </v-row>
     </v-parallax>
+
+    <ProductItemShow key="2" class="mt-10" />
+
+    <ProductItemShow key="1" class="mt-10 mb-5" />
   </div>
 </template>
 
 <script>
+import ProductItemShow from '~/components/Item/ProductItemShow.vue'
 export default {
   auth: false,
+  components: {
+    ProductItemShow,
+  },
   data() {
     return {
       title: 'Prima Rasa Group',
