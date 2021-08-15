@@ -5,7 +5,6 @@ const db = require('../db').db
 const { generateToken } = require('../utilities/authUtils')
 const { passwordHash } = require('../utilities/passwordHashUtils')
 const { loginRules, registrationRules, validate } = require('../validate')
-const { saveUseragent } = require('../utilities/useragentUtils')
 const auth = require('../middleware/auth')
 const guest = require('../middleware/guest')
 const gate = require('../middleware/gate')
@@ -58,7 +57,7 @@ router.post('/login', guest, loginRules(), validate, async (req, res) => {
     if (!isPasswordValid) {
       return res.status(422).json({ message: 'Email or password wrong' })
     }
-    await saveUseragent(user, req.useragent, true)
+
     return res.json({
       token: generateToken(user),
     })
@@ -99,8 +98,7 @@ router.get('/me', auth, gate('making node'), (req, res) => {
  * @param {express.Response} res
  *
  */
-router.post('/logout', async (req, res) => {
-  await saveUseragent(req.user, req.useragent, false)
+router.post('/logout', (_req, res) => {
   return res.json({ message: 'logout ' })
 })
 
