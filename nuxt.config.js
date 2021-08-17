@@ -17,14 +17,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/axios.js',
-    '~/plugins/axios-port.js',
-    {
-      src: '~/plugins/draggable.js',
-      ssr: false,
-    },
-  ],
+  plugins: ['~/plugins/axios.js', '~/plugins/axios-port.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,

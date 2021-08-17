@@ -8,39 +8,44 @@
           </v-chip>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <div>
+        <div class="float-right">
           <v-btn
             fab
             x-small
             color="primary"
-            right
             @click.prevent="openForm = !openForm"
           >
             <v-icon>{{ openForm ? 'mdi-minus' : 'mdi-plus' }} </v-icon>
           </v-btn>
         </div>
       </v-toolbar>
-      <v-card-text class="pa-1">
-        <template v-if="openForm">
-          <InlineTodoForm
-            :open-form.sync="openForm"
-            :todo="selectedItem"
-            :status="status"
-          />
-        </template>
+      <Board :id="status" @reload="$fetch">
+        <v-card-text class="pa-1">
+          <template v-if="openForm">
+            <InlineTodoForm
+              :open-form.sync="openForm"
+              :todo="selectedItem"
+              :status="status"
+            />
+          </template>
 
-        <Board :id="status" @reload="$fetch">
-          <span v-for="todo in todos" :key="todo.id">
+          <span v-for="todo in items.data" :key="todo.id">
             <TodoSheet
               :id="todo._id"
               :todo="todo"
               :draggable="true"
               @edit="edit"
               @deleteItem="deleteItem"
+              @reload="$fetch"
             />
           </span>
-        </Board>
-      </v-card-text>
+        </v-card-text>
+      </Board>
+      <v-card-actions>
+        <span style="font-size: 9px">
+          You Change the status with drag the todo to another card
+        </span>
+      </v-card-actions>
     </v-card>
     <template v-if="dialogDelete">
       <DeleteTodoModal
@@ -87,7 +92,6 @@ export default {
   async fetch() {
     this.selectedItem = null
     const { data } = await getTodoResources(this.params)
-    this.todos = data.data
     this.items = data
   },
   watch: {

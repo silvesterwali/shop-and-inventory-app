@@ -1,5 +1,5 @@
 <template>
-  <div
+  <v-card
     v-show="show"
     :id="id"
     :draggable="draggable"
@@ -36,7 +36,7 @@
         </v-sheet>
       </template>
     </v-hover>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -70,8 +70,8 @@ export default {
       e.dataTransfer.setData('todo', JSON.stringify(this.todo))
       const self = this
       setTimeout(() => {
-        self.show = false
-      }, 1000)
+        self.$emit('reload', true)
+      }, 5000)
     },
   },
 }

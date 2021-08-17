@@ -1,5 +1,10 @@
 <template>
-  <div :id="id" style="min-height: 50px" @dragover.prevent @drop.prevent="drop">
+  <div
+    :id="id"
+    style="min-height: 150px"
+    @dragover.prevent
+    @drop.prevent="drop"
+  >
     <slot />
   </div>
 </template>

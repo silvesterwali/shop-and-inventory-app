@@ -32,8 +32,7 @@
     "mongodb": "^3.6.7",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.3",
-    "nuxt": "^2.15.3",
-    "vuedraggable": "^2.24.3"
+    "nuxt": "^2.15.3"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
