@@ -40,7 +40,7 @@ export default {
   mixins: [setMessage],
   props: {
     // control the ***dialog*** with this props
-    dialogTodo: {
+    value: {
       type: Boolean,
       default: false,
     },
@@ -65,10 +65,10 @@ export default {
     // make sure  that ***dialogTodo*** is using ***sync*** props
     dialog: {
       set(value) {
-        this.$emit('update:dialogTodo', value)
+        this.$emit('input', value)
       },
       get() {
-        return this.dialogTodo
+        return this.value
       },
     },
   },
