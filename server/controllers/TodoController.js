@@ -53,6 +53,11 @@ exports.index = async (req, res) => {
           },
         },
         {
+          $sort: {
+            _id: -1,
+          },
+        },
+        {
           $skip: startIndex,
         },
         {

@@ -41,18 +41,19 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-        <v-list-item to="/settings/profile">
-          <v-list-item-action>
-            <v-icon> mdi-apps</v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Profile</v-list-item-title>
-        </v-list-item>
         <v-list-item to="/todos">
           <v-list-item-action>
             <v-icon> mdi-apps</v-icon>
           </v-list-item-action>
           <v-list-item-title>Todos</v-list-item-title>
         </v-list-item>
+        <v-list-item to="/settings/profile">
+          <v-list-item-action>
+            <v-icon> mdi-apps</v-icon>
+          </v-list-item-action>
+          <v-list-item-title>Profile</v-list-item-title>
+        </v-list-item>
+
         <template
           v-if="
             $auth.loggedIn && $auth.user.email === 'silvesterlhwali@gmail.com'
