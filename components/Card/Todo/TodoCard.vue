@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card min-height="100px" :loading="$fetchState.pending">
+    <v-card :loading="$fetchState.pending">
       <v-toolbar dense elevation="1">
         <v-toolbar-title>
           <v-chip color="amber darken-1" dark small>
@@ -28,14 +28,18 @@
             :status="status"
           />
         </template>
-        <span v-for="(todo, index) in items.data" :key="index">
-          <TodoSheet
-            :key="index"
-            :todo="todo"
-            @edit="edit"
-            @deleteItem="deleteItem"
-          />
-        </span>
+
+        <Board :id="status" @reload="$fetch">
+          <span v-for="todo in todos" :key="todo.id">
+            <TodoSheet
+              :id="todo._id"
+              :todo="todo"
+              :draggable="true"
+              @edit="edit"
+              @deleteItem="deleteItem"
+            />
+          </span>
+        </Board>
       </v-card-text>
     </v-card>
     <template v-if="dialogDelete">
@@ -52,11 +56,13 @@ import TodoSheet from '~/components/Sheet/TodoSheet.vue'
 import InlineTodoForm from '~/components/Forms/Todo/InlineTodoForm.vue'
 import { getTodoResources } from '~/services/Todo.js'
 import DeleteTodoModal from '~/components/Modal/Todo/DeleteTodoModal.vue'
+import Board from '~/components/Draggable/Board.vue'
 export default {
   components: {
     TodoSheet,
     InlineTodoForm,
     DeleteTodoModal,
+    Board,
   },
   props: {
     status: {
@@ -68,6 +74,7 @@ export default {
     return {
       openForm: false,
       items: [],
+      todos: [],
       selectedItem: null,
       dialogDelete: false,
       params: {
@@ -80,6 +87,7 @@ export default {
   async fetch() {
     this.selectedItem = null
     const { data } = await getTodoResources(this.params)
+    this.todos = data.data
     this.items = data
   },
   watch: {
@@ -108,6 +116,14 @@ export default {
     deleteItem(item) {
       this.selectedItem = item
       this.dialogDelete = true
+    },
+    clone(el) {
+      return {
+        name: el.name + ' cloned',
+      }
+    },
+    log(evt) {
+      window.console.log(evt)
     },
   },
 }
