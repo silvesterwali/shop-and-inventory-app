@@ -21,8 +21,9 @@ const totalPages = require('../utilities/totalPagesUtils').totalPages
  **/
 exports.index = async (req, res) => {
   const { limit, page, startIndex, endIndex } = QueryPageUtils(req.query)
+  const status = req.query.status
   const result = {}
-  const query = { userId: new ObjectID(req.user._id) }
+  const query = { userId: new ObjectID(req.user._id), status }
   try {
     result.totalRows = await db.collection('todos').find(query).count()
     result.totalPages = totalPages(result.totalRows, limit)
@@ -42,8 +43,13 @@ exports.index = async (req, res) => {
       .collection('todos')
       .aggregate([
         {
-          $macth: {
-            userId: new ObjectID(req.user._id),
+          $match: {
+            userId: {
+              $eq: new ObjectID(req.user._id),
+            },
+            status: {
+              $eq: status,
+            },
           },
         },
         {
@@ -156,6 +162,7 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
   try {
     await db.collection('todos').deleteOne({ _id: new ObjectID(req.params.id) })
+    return res.json({ message: 'Success delete todo' })
   } catch (err) {
     console.log(err)
     return res.status(500).json({ message: 'Internal Server Error' })

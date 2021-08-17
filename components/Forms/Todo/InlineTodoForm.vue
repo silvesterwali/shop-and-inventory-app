@@ -1,15 +1,21 @@
 <template>
   <v-form ref="form" @submit.prevent="submitForm">
+    <span
+      v-if="dataForm.description"
+      class="text-center"
+      style="font-size: 10px"
+      >press enter to submit</span
+    >
     <v-textarea
       v-model="dataForm.description"
       dense
       auto-grow
+      :disabled="loading"
       placeholder="Todo"
       flat
       :rules="[(v) => !!v || 'todo is required']"
       @keyup.enter="submitForm"
     />
-    <v-btn type="submit" block color="primary" ti>Submit</v-btn>
   </v-form>
 </template>
 
@@ -42,6 +48,7 @@ export default {
         description: null,
         status: this.status,
       },
+      loading: false,
     }
   },
   watch: {
@@ -58,6 +65,7 @@ export default {
   methods: {
     submitForm() {
       if (this.$refs.form.validate()) {
+        this.loading = true
         if (this.dataForm._id === null) {
           this.sendCreate()
         } else {
@@ -73,6 +81,7 @@ export default {
         this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
       } finally {
         this.$emit('update:openForm', false)
+        this.loading = false
       }
     },
     async sendUpdate() {
@@ -86,6 +95,7 @@ export default {
         this.SET_MESSAGE({ text: err.response.data.message, color: 'error' })
       } finally {
         this.$emit('update:openForm', false)
+        this.loading = false
       }
     },
   },
