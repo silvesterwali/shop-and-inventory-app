@@ -12,7 +12,6 @@
       auto-grow
       :disabled="loading"
       placeholder="Todo"
-      flat
       :rules="[(v) => !!v || 'todo is required']"
       @keyup.enter="submitForm"
     />
