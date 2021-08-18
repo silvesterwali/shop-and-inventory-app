@@ -69,9 +69,14 @@ export default {
     dragStart(e) {
       e.dataTransfer.setData('todo', JSON.stringify(this.todo))
       const self = this
+
+      setTimeout(() => {
+        self.show = false
+      }, 2000)
+
       setTimeout(() => {
         self.$emit('reload', true)
-      }, 5000)
+      }, 4000)
     },
   },
 }
