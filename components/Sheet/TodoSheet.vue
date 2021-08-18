@@ -69,11 +69,11 @@ export default {
     dragStart(e) {
       e.dataTransfer.setData('todo', JSON.stringify(this.todo))
       const self = this
-
+      // hide the current element from parent component
       setTimeout(() => {
         self.show = false
       }, 2000)
-
+      // recall the fetch method in parent  components
       setTimeout(() => {
         self.$emit('reload', true)
       }, 4000)
